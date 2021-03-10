@@ -3,6 +3,10 @@
 \usepackage{url,amsmath,graphicx,amssymb,booktabs}
 \usepackage[top=1.5cm, bottom=1.5cm, left=2.5cm, right=2.5cm]{geometry}
 
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+
 \title{MA3650 - Numerical Methods for Differential Equations}
 \author{Luke Dando}
 \date{\today}
@@ -15,14 +19,72 @@
 
 \section{Revision of Taylor series and Newton's method}
 \subsection{Lecture 1}
-
+\subsubsection{Newton's method}
+Let $x_0$ be an initial guess of a root to a function $f(x)$. Then
+\begin{equation}
+    x_{n+1} = x_n - \frac{f(x)}{f^\prime(x)},\quad n\geq0. \label{eq:newton}
+\end{equation}
 
 \subsection{Lecture 2}
-
+\subsubsection{IVT: Intermediate Value Theorem}
+\begin{theorem}
+Let $f:[a,b]\to \mathbb{R}$ be a continuous function, then $f$ achieves all values of the interval $[f(a),f(b)]$.\\
+As a corollary, if $f(a)\cdot f(b)<0$, then $f$ has a root on $(a,b)$ (in the interior of $[a,b]$).
+\end{theorem}
+\subsubsection{Complex convergence}
+\begin{lemma}
+    The map $g:(0,\infty)\to\mathbb{R},\,g(x) = ln(e/x)$, maps $(e,\infty)$ into $(-\infty, 0)$ and $(0, e)$
+to $(0, e)$.
+\end{lemma}
+\begin{corollary}
+    Newton's method for $f(x) = ln(x)$ is possible for for any $x_0\in(0,e)$, and impossible when $x_0>e$.
+\end{corollary}
 
 \section{Convergence of Newton's method}
 \subsection{Lecture 3}
+\subsubsection{Babylonian iteration}
+Let $\alpha>0$. To get an approximate value for $\sqrt{\alpha}$, start with a crude guess $x_1$ and improve on the approximation using
+\begin{equation}
+    x_{n+1} = \frac{(x_n+\alpha/x_n)}{2},\quad n\geq1. \label{eq:bab}
+\end{equation}
+\subsubsection{Error estimates}
+\begin{lemma}
+    Let $x_n$ be given by eq.~(\ref{eq:bab}). Then,
+    \begin{equation}
+        x_{n+1}-\sqrt{\alpha}=(x_n-\sqrt{\alpha})^2/2x_n. \label{eq:error1}
+    \end{equation}
+\end{lemma}
+\subsubsection{Convergence close to the square root}
+When $x_n\approx \sqrt{\alpha}$,
+\begin{equation}
+    (x_{n+1}-\sqrt{\alpha}) = \frac{(x_{n}-\sqrt{\alpha})^2}{2x_n} \approx \frac{(x_{n}-\sqrt{\alpha})^2}{2\sqrt{\alpha}}
+\end{equation}
+We define the error $e_n$ (at iterate $n$ as
+\begin{equation}
+    e_n = x_n - \sqrt{\alpha},
+\end{equation}
+allowing us to rewrite the estimate eq.~(\ref{eq:error1}) as
+\begin{equation}
+    e_{n+1} \approx \frac{e_n^2}{2\sqrt{\alpha}}
+\end{equation}
+
 \subsection{Lecture 4}
+\subsubsection{Newton's method theory}
+\begin{theorem}
+    Let $I=[a,b]$ and $f:I\to\mathbb{R}$ be twice continuously differentiable. Suppose that
+    \begin{equation}
+        f(a)\cdot f(b)<0 \nonumber
+    \end{equation}
+    and that there are constants m and M, such that
+    \begin{equation}
+        0<m\leq \vert f^\prime(x)\vert\quad and \quad \vert f^{\prime\prime}(x)\vert \leq M
+    \end{equation}
+    for all $x\in I$. Let $K=M/2m$. Then, choose a root $r$ of $f$ in $I$ and $0<\delta<1/K$ such that $J=[r-\delta,r+\delta]\subseteq I$. Then, for any $x_0\in J$, the sequence defined by Newton's method in eq.~(\ref{eq:newton}) belongs to $J$ and ${x_n}_{n=1}^\infty$ converges to $r$. Moreover
+    \begin{equation}
+        \vert x_{n+1}-r\vert \leq K\vert x_n-r\vert^2,\quad n\geq0,
+    \end{equation}
+    so the convergence is quadratic.
+\end{theorem}
 
 
 \section{Wrapping up chapter 1}
