@@ -1,17 +1,17 @@
- [x] Revision of Taylor series and Newton’s method  return
- [x] Convergence of Newton’s method  return
- [ ] Wrapping up chapter 1  return
- [ ] Finite differences
- [ ] Explicit numerical schemes for the heat equation
- [ ] Further numerical schemes for the heat equation
- [ ] Numerical schemes for complex boundary conditions
- [ ] Numerical schemes for complex boundary conditions 2
- [ ] Matrix norms
- [ ] Matrix perturbations and condition numbers
- [ ] Interpolation, Lagrange polynomials
- [ ] Interpolation, splines
- [ ] Different schemes for the heat equation, consistency
- [ ] Consistency
- [ ] Convergence
- [ ] Stability Fourier method
- [ ] Stability matrix method
+-[x] Revision of Taylor series and Newton’s method  return
+-[x] Convergence of Newton’s method  return
+-[ ] Wrapping up chapter 1  return
+-[ ] Finite differences
+-[ ] Explicit numerical schemes for the heat equation
+-[ ] Further numerical schemes for the heat equation
+-[ ] Numerical schemes for complex boundary conditions
+-[ ] Numerical schemes for complex boundary conditions 2
+-[ ] Matrix norms
+-[ ] Matrix perturbations and condition numbers
+-[ ] Interpolation, Lagrange polynomials
+-[ ] Interpolation, splines
+-[ ] Different schemes for the heat equation, consistency
+-[ ] Consistency
+-[ ] Convergence
+-[ ] Stability Fourier method
+-[ ] Stability matrix method
