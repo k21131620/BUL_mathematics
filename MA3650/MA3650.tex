@@ -1,0 +1,122 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{url,amsmath,graphicx,amssymb,booktabs}
+\usepackage[top=1.5cm, bottom=1.5cm, left=2.5cm, right=2.5cm]{geometry}
+
+\title{MA3650 - Numerical Methods for Differential Equations}
+\author{Luke Dando}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Revision of Taylor series and Newton's method}
+\subsection{Lecture 1}
+
+
+\subsection{Lecture 2}
+
+
+\section{Convergence of Newton's method}
+\subsection{Lecture 3}
+\subsection{Lecture 4}
+
+
+\section{Wrapping up chapter 1}
+\subsection{Lecture 6}
+\subsection{Summary}
+
+
+\section{Finite differences}
+\subsection{Lecture 7}
+\subsection{Lecture 8}
+
+
+\section{Explicit numerical schemes for the heat equation}
+\subsection{Lecture 9}
+\subsection{Lecture 10}
+
+
+\section{Further numerical schemes for the heat equation}
+\subsection{Lecture 11}
+\subsection{Lecture 12}
+
+
+\section{Numerical schemes for complex boundary conditions}
+\subsection{Lecture 13}
+
+
+\section{Numerical schemes for complex boundary conditions 2}
+\subsection{Lecture 14}
+\subsection{Lecture 15}
+\subsection{Lecture 16}
+
+
+\section{Matrix norms}
+\subsection{Lecture 17}
+
+
+\section{Matrix perturbations and condition numbers}
+\subsection{Lecture 18}
+\subsection{Lecture 19}
+
+
+\section{Interpolation, Lagrange polynomials}
+\subsection{Lecture 21}
+\subsection{Lecture 22}
+
+
+\section{Interpolation, splines}
+\subsection{Lecture 23}
+\subsection{Lecture 24}
+
+
+\section{Different schemes for the heat equation, consistency}
+\subsection{Lecture 25}
+
+
+\section{Consistency}
+\subsection{Lecture 26}
+
+
+\section{Convergence}
+\subsection{Lecture 27}
+\subsection{Lecture 28}
+
+
+\section{Stability Fourier method}
+\subsection{Lecture 29}
+\subsection{Lecture 30}
+\subsection{Lecture 31}
+
+
+\section{Stability matrix method}
+\subsection{Lecture 32}
+\subsection{Lecture 33}
+\subsection{Lecture 34}
+
+
+\section{Polynomial Interpolation}
+\subsection{Lagrange Polynomial}
+For the Lagrange polynomials, $y_i$ and $f(x_i)$ can be used interchangeably.
+Given $n+1$ points $(x_i,y_i) \in \mathbb{R}^2,\,0\leq i\leq n$, with $x_i\neq x_j$ when $i\neq j$. The polynomials
+\begin{equation}
+    L_i(x) = \prod_{j=0,\,\neq i}^n \left(\frac{x-x_j}{x_i-x_j}\right),\quad 0\leq i \leq n,
+\end{equation}
+satisfy $L_i(x_i)=1$ and $L_i(x_j)=0$ for $j\neq i$.
+Now, given $n+1$ points $(x_i,y_i) \in \mathbb{R}^2,\,0\leq i\leq n$, with $x_i\neq x_j$ when $i\neq j$. The Lagrange polynomial $p$ is a polynomial of degree up to $n$ equal to
+\begin{equation}
+    p(x) = \sum_{i=0}^n y_iL_i(x).
+\end{equation}
+This is \textit{linear} if $n=1$ and \textit{quadratic} if $n=2$.
+\subsection{Vandermonde Method}
+Given $p(x)=ax^2+bx+c$, with $a,\,b$ and $c$ to be determined from the conditions $p(x_i)=y_i,\, i=0,\,1,\,2$, we can input this into a matrix know as the Vandermonde matrix and solve it for values $a,\,b$ and $c$.
+\begin{equation}
+    \begin{pmatrix}  x_0^2 & x_0 & 1 \\ x_1^2 & x_1 & 1 \\ x_2^2 & x_2 & 1 \end{pmatrix}\begin{pmatrix} a \\ b \\ c \end{pmatrix} = \begin{pmatrix} y_0 \\ y_1 \\ y_2 \end{pmatrix}.
+\end{equation}
+This can be extended for larger polynomials trivially.
+
+\end{document}
