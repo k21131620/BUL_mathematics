@@ -1,0 +1,82 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{url,amsmath,graphicx,amssymb,booktabs}
+
+\title{MA3676 - Stochastic Models}
+\author{Luke Dando}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Sums}
+
+\begin{enumerate}
+    \item \textbf{Geometric:} 
+    \begin{equation}
+        1+r+r^2+r^3+\ldots=\sum_{x=0}^\infty r^x = \frac{1}{1-r},\quad |r|<1.
+    \end{equation}
+    
+    \item \textbf{Binomial:}
+    \begin{equation}
+        \sum_{x=0}^n \begin{pmatrix} n\\x \end{pmatrix}p^x q^{n-x} = (p+q)^n.
+    \end{equation}
+    
+    \item \textbf{Exponential:}
+    \begin{equation}
+        \sum_{x=0}^\infty \frac{\lambda^x}{x!}=e^\lambda.
+    \end{equation}
+    Note: $e^\lambda=\lim_{n\rightarrow\infty}(1+\frac{\lambda}{n})^n$.
+\end{enumerate}
+
+\section{Generating Functions}
+
+A generating function $G$ on a distribution $X$ with respect to $s$ is defined as:
+\begin{equation}
+    G_X(s)=\mathbb{E}[s^X]=\sum_np_ns^n,\quad p_n=\mathbb{P}[X=n].
+\end{equation}
+It is important to note :
+\begin{itemize}
+    \item $ G_X(1)=1 $,
+    \item $ G_X(0)=\mathbb{P}[X=0]$,
+    \item $\mathbb{E}[X]=G_X^\prime(1)$,
+    \item $G_{X+Y}(s)=G_X(s)G_Y(s)$.
+\end{itemize}
+
+\begin{enumerate}
+    \item \textbf{Bernoulli:}
+    \begin{align}
+        G_X(s)=\sum_{n=0}^1 s^np_n &= s^0\cdot (1-p)+s^1\cdot(p),\quad p_n=\mathbb{P}[X=n], \\
+        &=1+(s-1)p.
+    \end{align}
+    
+    \item \textbf{Geometric:}
+    \begin{align}
+        G_X(s) = \sum_{n=1}^\infty s^n(1-p)^{n-1}&=(1-p)s\sum_{n=1}^\infty (sp)^{n-1}, \\
+        &=(1-p)s\sum_{k=0}^\infty (sp)^{k},\quad k=n-1, \\
+        &=(1-p)s \cdot \frac{1}{1-sp}, \\
+        &=\frac{(1-p)s}{1-sp}.
+    \end{align}
+    
+    \item \textbf{Binomial:} $Y_n=\sum_{i=1}^n I_n$, where $I_n$ are steps of 0 or 1, with probabilities of $p$ and $q=1-p$ respectively.
+    \begin{align}
+        G_{Y_n}(s) = \mathbb{E}[s^{Y_n}]&=\mathbb{E}[s^{\sum_{i=1}^\infty I_n}], \\
+        &=\mathbb{E}[s^{I_1}\cdot s^{I_2} \ldots s^{I_n}], \\
+        &=\mathbb{E}\left[\prod_{i=1}^n s^{I_n}\right], \\
+        &=\prod_{i=1}^n\mathbb{E}[s^{I_n}], \\
+        &=\prod_{i=1}^n(ps+q) = (ps+q)^n, \\
+        &= \sum_{m=0}^n \begin{pmatrix} n\\m \end{pmatrix}(ps)^m(q)^{n-m}.
+    \end{align}
+    \item \textbf{Poisson:} Let $\mathbb{P}[X=x]=\frac{\lambda^x e^{-\lambda}}{x!}$,
+    \begin{align}
+        G_x(s)&=\sum_{x=0}^\infty s^x\frac{\lambda^x}{x!}e^{-\lambda}, \\
+        &=e^{-\lambda}\sum_{x=0}^\infty \frac{(\lambda s)^x}{x!}, \\
+        &=e^{-\lambda}e^{\lambda s}, \\
+        &= e^{\lambda(s-1)}.
+    \end{align}
+\end{enumerate}
+
+\end{document}
