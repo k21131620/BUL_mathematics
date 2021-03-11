@@ -6,6 +6,8 @@
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
 \newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
 
 \title{MA3650 - Numerical Methods for Differential Equations}
 \author{Luke Dando}
@@ -89,26 +91,154 @@ allowing us to rewrite the estimate eq.~(\ref{eq:error1}) as
 
 \section{Wrapping up chapter 1}
 \subsection{Lecture 6}
-\subsection{Summary}
+\subsubsection{Absolute and relative error}
+\begin{definition}
+    If $a$ is a number and $\hat{a}$ is an approximation to $a$, the absolute error is $\vert a-\hat{a}\vert$ and the relative error is $\frac{\vert a-\hat{a}\vert}{\vert a \vert}$ provided $a\neq0$.  
+\end{definition}
 
 
 \section{Finite differences}
 \subsection{Lecture 7}
-\subsection{Lecture 8}
+\subsubsection{Euler scheme}
+For every $0\leq i \leq n$, we denote by $v_i$ the approximation of $u(t_i)$, the value of the exact solution at $t=t_i$. We approximate by the forward difference
+\begin{equation}
+    u^\prime (t_i) \approx \frac{v_{i+1} - v_i}{h}
+\end{equation}
+\subsubsection{Two dimensional grids}
+Consider a function $u:\Omega \to \mathbb{R} $ where $\Omega = I\times J$ is the cartesian product of two real intervals, say $x\in I$ and $t\in J$. Although $I$ and $J$ can be infinite, numerical schemes consider finite grids, although they can be of arbitrary length. Let $I=[a,b]$ and $J=[c,d]$. We approximate $u$ at grid points $(x_i,t_j)$ such that
+\begin{enumerate}
+    \item $x_i=a+i(\delta x),\,0\leq i\leq N$ with $N\cdot(\delta x)=b-a$, that is, $\delta x=(b-a)/N$. The quantity $\delta x$ is the spatial step-size. 
+    \item $t_j=c+j(\delta t),\,0\leq j\leq M$ with $m\cdot(\delta t)=d-c$, that is, $\delta t=(d-c)/M$. The quantity $\delta t$ is the temporal step-size. 
+\end{enumerate}
+\subsubsection{Standard approximations}
+We denote by $v_{i,j}$ the numerical scheme approximation of $u(x_i,t_j)$. We shall need the following approximations.
+\begin{enumerate}
+    \item \textbf{Forward difference}:
+    \begin{equation}
+        \left(\frac{\partial u}{\partial x}\right)_{i,j} \approx \frac{v_{i+1,j}-v_{i,j}}{\delta x},
+    \end{equation}
+    \item \textbf{Backward difference}:
+    \begin{equation}
+        \left(\frac{\partial u}{\partial x}\right)_{i,j} \approx \frac{v_{i,j}-v_{i-1,j}}{\delta x},
+    \end{equation}
+    \item \textbf{Central (or symmetric) differences}:
+    \begin{equation}
+        \left(\frac{\partial u}{\partial x}\right)_{i,j} \approx \frac{v_{i+1,j}-v_{i-1,j}}{2(\delta x)},
+    \end{equation}
+    \item \textbf{Second order difference}:
+    \begin{equation}
+        \left(\frac{\partial^2 u}{\partial x^2}\right)_{i,j} \approx \frac{v_{i+1,j}+v_{i-1,j}-2v_{i,j}}{(\delta x)^2}.
+    \end{equation}
+    This is obtained by using the forward difference of $\frac{\partial^2 u}{\partial x^2}$, where we use the backward difference for the first derivative at $(x_{i+1},t_j)$ and the forward difference for the derivative at $(x_i,t_j)$.
+\end{enumerate}
 
+
+\subsection{Lecture 8}
+\subsubsection{Errors for the standard approximation}
+The error for the forward difference approximation is 
+\begin{equation}
+    \left\vert f^\prime (a)-\frac{f(a+h)-f(a)}{h} \right\vert = \vert f^{\prime\prime}(\xi)\vert \frac{h}{2}\leq \max_{x\in [a,a+h]}(\vert f^{\prime\prime}(x)\vert)\frac{h}{2}.
+\end{equation}
+The error is linear in $h$.\\
+For the central difference approximation, the error is
+\begin{equation}
+    \left\vert f^\prime (a)-\frac{f(a+h)-f(a-h)}{2h} \right\vert = \vert f^{\prime\prime\prime}(\xi)-f^{\prime\prime\prime}(\zeta)\vert \frac{h^2}{12}\leq \max_{x\in [a-h,a+h]}(\vert f^{\prime\prime\prime}(x)\vert)\frac{h^2}{6}.
+\end{equation}
+The error is now quadratic in $h$.
+
+\subsubsection{Order symbol}
+\begin{definition}
+    Let $f:I_0\to\mathbb{R}$ be a real valued function, we say that $f$ is of order not exceeding, or bounded with respect to, $x^\alpha$ as $x$ tends to $0$, denoted by
+    \begin{equation}
+        f=O(x^\alpha), \nonumber
+    \end{equation}
+    if there exists $\alpha\in \mathbb{R},\,C>0$ such that 
+    \begin{equation}
+        \vert f(x) \vert \leq C\vert x \vert^\alpha
+    \end{equation}
+    for all $x\in I_0$.
+\end{definition}
+\subsubsection{Local error of standard finite differences}
+Consider a grid $(x_i,t_j)$ of step-sizes $\delta x$ and $\delta t$, respectively. Let $u_j$ represent $u(x_i,t_j)$. The following relations are exact:
+\begin{enumerate}
+    \item $\frac{\partial u}{\partial x}(x_i,t_j) = \frac{u_{i+1,j}-u_{i,j}}{\delta x} + O(\delta x)$,
+    \item $\frac{\partial u}{\partial x}(x_i,t_j) = \frac{u_{i,j}-u_{i-1,j}}{\delta x} + O(\delta x)$,
+    \item $\frac{\partial u}{\partial x}(x_i,t_j) = \frac{u_{i+1,j}-u_{i-1,j}}{2(\delta x)} + O((\delta x)^2)$,
+    \item $\frac{\partial u}{\partial x}(x_i,t_j) = \frac{u_{i+1,j}+u_{i-1,j}-2u_{i,j}}{(\delta x)^2} + O(\delta x)$.
+\end{enumerate}
 
 \section{Explicit numerical schemes for the heat equation}
 \subsection{Lecture 9}
+\subsubsection{Explicit scheme of the heat equation}
+\begin{equation}
+    \frac{v_{i,j+1}-v_{i,j}}{(\delta t)}=\frac{v_{i+1,j}+v_{i-1,j}-2v_{i,j}}{(\delta x)^2}\nonumber,
+\end{equation}
+can be rearranged to give
+\begin{equation}
+    v_{i,j+1} = \rho v_{i-1,j}+(1-2\rho)v_{i,j}+\rho v_{i+1,j},\quad 1\leq i\leq N-1,\, 1\leq j \leq M-1, \label{eq:1dheatexpl}
+\end{equation}
+where the values of $u$ at $t_{j+1}$ are given from the values at $t_j$ and $\rho$ is the Courant number $\frac{\delta t}{(\delta x)^2}$.
 \subsection{Lecture 10}
-
+\subsubsection{Matrix form for the explicit heat equation}
+We can rewrite eq.~(\ref{eq:1dheatexpl}) as 
+\begin{equation}
+    \underline{v}_{j+1}=A\underline{v}_j,\quad 0\leq j\leq M-1,\nonumber
+\end{equation}
+where $A$ is the tridiagonal matrix
+\begin{equation}
+    A = 
+    \begin{pmatrix}
+        1-2\rho & \rho & 0 & \cdots & 0 & 0 \\
+        \rho & 1-2\rho & \rho & \cdots & 0 & 0 \\
+        0 & \rho & 1-2\rho & \cdots & 0 & 0 \\
+        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+        0 & 0 & 0 & \rho & 1-2\rho & \rho \\
+        0 & 0 & 0 & \cdots & \rho & 1-2\rho  
+    \end{pmatrix}.
+\end{equation}
 
 \section{Further numerical schemes for the heat equation}
 \subsection{Lecture 11}
-\subsection{Lecture 12}
+\subsubsection{Implicit scheme of the heat equation}
+\begin{equation}
+    \frac{v_{i,j}-v_{i,j-1}}{(\delta t)}=\frac{v_{i+1,j}+v_{i-1,j}-2v_{i,j}}{(\delta x)^2}\nonumber,
+\end{equation}
+can be rearranged to give
+\begin{equation}
+    -\rho v_{i-1,j}+(1+2\rho)v_{i,j}-\rho v_{i+1,j} = v_{i,j-1},\quad 1\leq i\leq N-1,\, 1\leq j \leq M-1, \label{eq:1dheatimpl}
+\end{equation}
+where the values of $u$ at $t_{j}$ are given from the values at $t_{-1j}$ and $\rho$ is the Courant number $\frac{\delta t}{(\delta x)^2}$.
+\subsubsection{Matrix form for the implicit heat equation}
+The scheme in eq.~(\ref{eq:1dheatimpl}) can be written as
+\begin{equation}
+    B\underline{v}_j=\underline{v}_{j-1},\quad 1\leq j\leq M,\nonumber
+\end{equation}
+where $B$ is the tridiagonal matrix
+\begin{equation}
+    B = 
+    \begin{pmatrix}
+        1+2\rho & -\rho & 0 & \cdots & 0 & 0 \\
+        -\rho & 1+2\rho & -\rho & \cdots & 0 & 0 \\
+        0 & -\rho & 1+2\rho & \cdots & 0 & 0 \\
+        \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
+        0 & 0 & 0 & -\rho & 1+2\rho & -\rho \\
+        0 & 0 & 0 & \cdots & -\rho & 1+2\rho  
+    \end{pmatrix}.
+\end{equation}
+\subsubsection{Crank-Nicholson Scheme}
+\begin{equation}
+    \frac{v_{i,j+1}-v_{i,j}}{(\delta t)}=\frac{1}{(\delta x)^2}[\theta(v_{i-1,j+1}+2v_{i,j+1}+v_{i+1,j})+(1-\theta)(v_{i-1,j}-2v_{i,j}+v_{i+1,j})],
+\end{equation}
+where $\theta$ is a weight. The Crank-Nicholson scheme is written in matrix form by
+\begin{equation}
+    C\underline{v}_{j+1} = D\underline{v}_j \nonumber
+\end{equation}
+where matrices $C$ and $D$ are determined as before.
 
 
 \section{Numerical schemes for complex boundary conditions}
 \subsection{Lecture 13}
+\subsubsection{}
 
 
 \section{Numerical schemes for complex boundary conditions 2}
@@ -119,16 +249,162 @@ allowing us to rewrite the estimate eq.~(\ref{eq:error1}) as
 
 \section{Matrix norms}
 \subsection{Lecture 17}
+\subsubsection{Vector Norms}
+\begin{definition}
+    A norm on $\mathbb{R}^n$ is a mapping $\left\Vert \ \right\Vert:\mathbb{R}^n\to\mathbb{R}$ satisfying the following axioms.
+    \begin{enumerate}
+        \item $\left\Vert \underline{x} \right\Vert\geq0$ for all vectors $\underline{x}\in \mathbb{R}^n$ with $\left\Vert \underline{x} \right\Vert=0$ iff $\underline{x}=\underline{0}$ (separation axiom).
+        \item $\left\Vert \alpha\underline{x} \right\Vert=\vert\alpha\vert\cdot\left\Vert \underline{x} \right\Vert,\, \forall\alpha\in\mathbb{R},\,\forall\underline{x}\in\mathbb{R}^n$, (scaling axiom).
+        \item $\left\Vert \underline{x}+\underline{y} \right\Vert\leq\left\Vert \underline{x} \right\Vert+\left\Vert \underline{y} \right\Vert,\,\forall\underline{x},\underline{y}\in\mathbb{R}^n$, (triangle inequality).
+    \end{enumerate}
+\end{definition}
+\subsubsection{Matrix norms}
+\begin{definition}
+    A function $\left\Vert \ \right\Vert:M_n(\mathbb{R})\to\mathbb{R}$ is a matrix norm provided the following conditions are satisfied:
+    \begin{enumerate}
+        \item $\left\Vert A \right\Vert\geq0,\,\forall A\in M_n(\mathbb{R}),$ with $\left\Vert A \right\Vert=0$ iff $A=0$ (separation axiom).
+        \item $\left\Vert A+B \right\Vert\leq\left\Vert A \right\Vert+\left\Vert B \right\Vert,\,\forall A,B\in M_n(\mathbb{R})$, the triangle inequality.
+        \item $\left\Vert \alpha A \right\Vert = \vert\alpha\vert \cdot \left\Vert A \right\Vert,\,\forall A\in M_n(\mathbb{R}),\,\forall\alpha\in\mathbb{R}$, (scaling axiom).
+        \item $\left\Vert AB \right\Vert\leq\left\Vert A \right\Vert\cdot\left\Vert B \right\Vert,\,\forall A,B\in M_n(\mathbb{R})$, the sub-multiplicative condition.
+    \end{enumerate}
+\end{definition}
+\subsubsection{Compatible norm conditions}
+\begin{definition}
+    We say that a given matrix $\left\Vert \ \right\Vert_M$ is compatible with a vector norm $\left\Vert \ \right\Vert_{\underline{v}}$ on $\mathbb{R}^n$ if
+    \begin{equation}
+        \left\Vert A\underline{x} \right\Vert_{\underline{v}} \leq \left\Vert A \right\Vert_{M}\left\Vert \underline{x} \right\Vert_{\underline{v}},\quad \forall A\in M_n(\mathbb{R}),\,\forall\underline{x}\in\mathbb{R}^n.\nonumber
+    \end{equation}
+\end{definition}
+\begin{proposition}
+    For any compatible matrix norm $\left\Vert \ \right\Vert$, $\rho(A)\leq\left\Vert A \right\Vert$.
+\end{proposition}
 
+\subsubsection{Subordinate norm condition}
+\begin{definition}
+    Given any vector norm $\left\Vert \ \right\Vert_{\underline{v}}$, we can define a corresponding matrix norm $\left\Vert \ \right\Vert_M$ which is said to be subordinate to $\left\Vert \ \right\Vert_{\underline{v}}$ by
+    \begin{equation}
+        \left\Vert A \right\Vert_M = \max_{\left\Vert x \right\Vert_{\underline{v}}=1}\left\Vert A\underline{x} \right\Vert_{\underline{v}}.
+    \end{equation}
+\end{definition}
+\begin{proposition}
+    The spectral norm ($2$-norm) of a matrix is subordinate to the Euclidean norm on $\mathbb{R}^n$.
+\end{proposition}
+\begin{proposition}
+    \begin{enumerate}
+        \item In general, $\left\Vert I_n \right\Vert\geq 1$.
+        \item If a matrix norm $\left\Vert \ \right\Vert_M$ is subordinate to a vector norm, $\left\Vert I_n \right\Vert_M=1$.
+        \item The Frobenius norm is not subordinate to any vector norm, but it is compatible with $\left\Vert \ \right\Vert_2$.
+    \end{enumerate}
+\end{proposition}
 
 \section{Matrix perturbations and condition numbers}
 \subsection{Lecture 18}
+\subsubsection{Small norm perturbation of the identity}
+\begin{theorem}
+    Let $\left\Vert \ \right\Vert$ be a matrix norm subordinate to a vector norm. Let $E\in M_n(\mathbb{R})$ with $\left\Vert E \right\Vert<1$. Then $I_n-E$ is invertible and
+    \begin{equation}
+        \frac{1}{1+\left\Vert E \right\Vert}\leq\left\Vert (I_n-E)^{-1} \right\Vert\leq \frac{1}{1-\left\Vert E \right\Vert},
+    \end{equation}
+    as well as
+    \begin{equation}
+        \frac{\left\Vert E \right\Vert}{1+\left\Vert E \right\Vert}\leq\left\Vert (I_n-E)^{-1}-I_n \right\Vert\leq \frac{\left\Vert E \right\Vert}{1-\left\Vert E \right\Vert}.
+    \end{equation}
+\end{theorem}
+\subsubsection{Perturbations of Linear Systems}
+\begin{theorem}
+    Given a subordinate matrix norm $\left\Vert \ \right\Vert$, a non-singular matrix $A$, two vectors $\underline{b},\delta\underline{b}\neq\underline{0}$ and a matrix $\delta A$ such that $\left\Vert \delta A \right\Vert<1/\left\Vert A^{-1} \right\Vert$, then $\underline{x}$ such that $A\underline{x}=\underline{b}$ and $(\underline{x}+\delta\underline{x})$ such that $(A+\delta A)(\underline{x}+\delta\underline{x}) = \underline{b} + \delta\underline{b}$ satisfy
+    \begin{equation}
+        \frac{\left\Vert \delta\underline{x} \right\Vert}{\left\Vert \underline{x} \right\Vert}\quad\leq\quad \frac{\left\Vert A \right\Vert\cdot \left\Vert A^{-1} \right\Vert}{1-\left\Vert \delta A \right\Vert\cdot \left\Vert A^{-1} \right\Vert}\left( \frac{\left\Vert \delta A \right\Vert}{\left\Vert A \right\Vert} + \frac{\left\Vert \delta\underline{b} \right\Vert}{\left\Vert \underline{b} \right\Vert} \right).
+    \end{equation}
+\end{theorem}
+
 \subsection{Lecture 19}
-
-
+\subsubsection{Condition numbers}
+\begin{definition}
+    Given a matrix norm $\left\Vert \ \right\Vert$ and a non-singular matrix $A$, the condition number of $A$ relative to the norm $\left\Vert \ \right\Vert$ is defined by
+    \begin{equation}
+        \kappa(A)=\left\Vert A \right\Vert\cdot\left\Vert A^{-1} \right\Vert.\nonumber
+    \end{equation}
+\end{definition}
+\begin{proposition}
+    \begin{enumerate}
+        \item When $\left\Vert \ \right\Vert$ is a subordinate to some other vector norm, $\kappa(A)\geq1$. In particular, $\kappa(I_n)=1$.
+        \item When $O$ is orthogonal ($O^{-1}=O^T$), $\kappa_2(O)=1$, so there are non-identity matrices with condition number $\kappa_2$ equal to $1$.
+    \end{enumerate}
+\end{proposition}
+\begin{definition}
+    A matrix $A$ is perfectly conditioned if $\kappa(A)=1$, it is well-conditioned if $\kappa(a)$ is `close to $1$' and is ill-conditioned if $\kappa(A)$ is `much larger than $1$'.
+\end{definition}
+\begin{proposition}
+    Let A be an invertible matrix and $\left\Vert \ \right\Vert$ a matrix norm.
+    \begin{enumerate}
+        \item $\kappa(\alpha A)=\kappa(A)$ for any $\alpha\neq 0$.
+        \item $\kappa(A^{-1})=\kappa(A)$.
+        \item Let $\left\Vert \ \right\Vert$ be compatible with a vector norm a vector norm, let $\vert\lambda_{\max}\vert=\rho(A)$ be the largest eigenvalue of $A$ in modulus and $\vert \lambda_{\min}\vert>0$ be the smallest eigenvalue of $A$ in modulus. Then,
+        \begin{equation}
+            \kappa(A)\geq\frac{\vert\lambda_{\max}\vert}{\vert\lambda_{\min}\vert}. \nonumber
+        \end{equation}
+        \item If $\left\Vert \ \right\Vert$ is subordinate ($\left\Vert I_n \right\Vert$=1) and $\left\Vert A-I_n \right\Vert<1$, then
+        \begin{equation}
+            \kappa(A)\leq \frac{\left\Vert A \right\Vert}{1-\left\Vert A-I_n \right\Vert}.
+        \end{equation}
+    \end{enumerate}
+\end{proposition}
+\subsubsection{Spectral condition number and singular values of matrices}
+\begin{proposition}
+    Let $A$ be a normal matrix ($AA^T = A^TA$), in particular symmetric, then
+    \begin{equation}
+        \kappa_2(A) = \frac{\max\{\vert\lambda\vert:\lambda\in\sigma(A)\}}{\min\{\vert\lambda\vert:\lambda\in\sigma(A)\}}.\nonumber
+    \end{equation}
+\end{proposition}
+\begin{proposition}
+    Let A be an invertible matrix.
+    \begin{enumerate}
+        \item There exist two orthonormal matrices $O_1$ and $O_2$ such that
+        \begin{equation}
+            A=O_1 DO_2^T
+        \end{equation}
+        where $D$ is a diagonal matrix with positive entries.
+        \item Moreover, let $\sigma_{\max},\,\sigma_{\min}$ be the largest, respectively smallest, singular value of $A$:
+        \begin{equation}
+            \kappa_2(A)=\frac{\sigma_{\max}}{\sigma_{\min}}.\nonumber
+        \end{equation}
+    \end{enumerate}
+\end{proposition}
 \section{Interpolation, Lagrange polynomials}
 \subsection{Lecture 21}
+\subsubsection{Construction of Lagrange Polynomials}
+For the Lagrange polynomials, $y_i$ and $f(x_i)$ can be used interchangeably.
+\begin{lemma}
+    Given $n+1$ points $(x_i,y_i) \in \mathbb{R}^2,\,0\leq i\leq n$, with $x_i\neq x_j$ when $i\neq j$. The polynomials
+\begin{equation}
+    L_i(x) = \prod_{j=0,\,\neq i}^n \left(\frac{x-x_j}{x_i-x_j}\right),\quad 0\leq i \leq n,
+\end{equation}
+satisfy $L_i(x_i)=1$ and $L_i(x_j)=0$ for $j\neq i$.
+\end{lemma}
+\begin{definition}
+    Given $n+1$ points $(x_i,y_i) \in \mathbb{R}^2,\,0\leq i\leq n$, with $x_i\neq x_j$ when $i\neq j$. The Lagrange polynomial $p$ is a polynomial of degree up to $n$ equal to
+\begin{equation}
+    p(x) = \sum_{i=0}^n y_iL_i(x).
+\end{equation}
+This is \textit{linear} if $n=1$ and \textit{quadratic} if $n=2$.
+\end{definition}
+\subsubsection{Vandermonde Method}
+Given $p(x)=ax^2+bx+c$, with $a,\,b$ and $c$ to be determined from the conditions $p(x_i)=y_i,\, i=0,\,1,\,2$, we can input this into a matrix know as the Vandermonde matrix and solve it for values $a,\,b$ and $c$.
+\begin{equation}
+    \begin{pmatrix}  x_0^2 & x_0 & 1 \\ x_1^2 & x_1 & 1 \\ x_2^2 & x_2 & 1 \end{pmatrix}\begin{pmatrix} a \\ b \\ c \end{pmatrix} = \begin{pmatrix} y_0 \\ y_1 \\ y_2 \end{pmatrix}.
+\end{equation}
+This can be extended for larger polynomials trivially.
+
 \subsection{Lecture 22}
+\subsubsection{Error estimates for Lagrange interpolation}
+\begin{proposition}
+    Suppose $f\in C^{n+1}[a,b]$. Then, the error function $e$ between $f$ and it's Lagrange interpolant $p$ at $\{x_i\}_{i=0}^n$ is given by
+    \begin{equation}
+        e(x)=f(x)-p(x)=\frac{f^{(n+1)}(\xi)}{(n+1)!}(x-x_0)\cdots(x-x_n),\nonumber
+    \end{equation}
+    where $\xi=\xi(x)$ lies in $(a,b)$.
+\end{proposition}
 
 
 \section{Interpolation, splines}
@@ -161,24 +437,5 @@ allowing us to rewrite the estimate eq.~(\ref{eq:error1}) as
 \subsection{Lecture 34}
 
 
-\section{Polynomial Interpolation}
-\subsection{Lagrange Polynomial}
-For the Lagrange polynomials, $y_i$ and $f(x_i)$ can be used interchangeably.
-Given $n+1$ points $(x_i,y_i) \in \mathbb{R}^2,\,0\leq i\leq n$, with $x_i\neq x_j$ when $i\neq j$. The polynomials
-\begin{equation}
-    L_i(x) = \prod_{j=0,\,\neq i}^n \left(\frac{x-x_j}{x_i-x_j}\right),\quad 0\leq i \leq n,
-\end{equation}
-satisfy $L_i(x_i)=1$ and $L_i(x_j)=0$ for $j\neq i$.
-Now, given $n+1$ points $(x_i,y_i) \in \mathbb{R}^2,\,0\leq i\leq n$, with $x_i\neq x_j$ when $i\neq j$. The Lagrange polynomial $p$ is a polynomial of degree up to $n$ equal to
-\begin{equation}
-    p(x) = \sum_{i=0}^n y_iL_i(x).
-\end{equation}
-This is \textit{linear} if $n=1$ and \textit{quadratic} if $n=2$.
-\subsection{Vandermonde Method}
-Given $p(x)=ax^2+bx+c$, with $a,\,b$ and $c$ to be determined from the conditions $p(x_i)=y_i,\, i=0,\,1,\,2$, we can input this into a matrix know as the Vandermonde matrix and solve it for values $a,\,b$ and $c$.
-\begin{equation}
-    \begin{pmatrix}  x_0^2 & x_0 & 1 \\ x_1^2 & x_1 & 1 \\ x_2^2 & x_2 & 1 \end{pmatrix}\begin{pmatrix} a \\ b \\ c \end{pmatrix} = \begin{pmatrix} y_0 \\ y_1 \\ y_2 \end{pmatrix}.
-\end{equation}
-This can be extended for larger polynomials trivially.
 
 \end{document}
