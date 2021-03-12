@@ -3,8 +3,14 @@
 \usepackage{url,amsmath,graphicx,amssymb,booktabs}
 \usepackage[top=1.5cm, bottom=1.5cm, left=2.5cm, right=2.5cm]{geometry}
 
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+
 \title{MA3614 - Complex Variable Methods and Applications}
-\author{Luke Dando}
+\author{1720996}
 \date{\today}
 
 \begin{document}
@@ -13,28 +19,212 @@
 
 \tableofcontents
 
-\section{Cauchy's Integral Formula, Consequences and Bounds}
-\subsection{The Cauchy Integral Formula}
-The basic formula is as follows:
+\section{Week 1}
+\subsection{Fundamentals}
+\subsubsection{Representations of $z$ and $\overline{z}$}
+A complex number $z$ can be defined in both cartesian or polar form:
 \begin{equation}
-    f(z)=\frac{1}{2\pi i}\oint_\Gamma \frac{f(\zeta)}{\zeta-z}\,d\zeta
+    z = x+iy=re^{i\theta},
 \end{equation}
-This can be generalised to give
-\begin{equation}
-    f^{(n)}(z)=\frac{n!}{2\pi i}\oint_\Gamma \frac{f(\zeta)}{(\zeta-z)^{n+1}}\,d\zeta
-,\quad n=0,1,2,\ldots \end{equation}
-\subsection{Morera's Theorem}
-If
-\begin{equation}
-    \oint_\Gamma f(z)\,dz=0
-\end{equation}
-for all loops $\Gamma$, then $f$ is analytic inside $\Gamma$
+where $x=r\cos\theta$ and $y=r\sin\theta$. Here, $r$ is the modulus and $\theta$ is the argument. 
+\begin{definition}
+The principal argument of $z$ is
+    \begin{equation}
+        \arg z\in(-\pi,\pi],
+    \end{equation}
+    where $\arg z$ is multi-valued.
+\end{definition}
+Note, $\vert z\vert^2 = z\overline{z}$. $\vert z\vert=$ absolute value of $z$.
 
-\subsection{Harmonic Functions}
-Let $f$ be analytic. Then all partial derivatives of $u$ and $v$ also exist, such that. 
+\subsubsection{Multiplication, powers and roots of unity}
+Suppose $z=re^{i\theta},\,z_1 = r_1e^{i\theta_1},\,r_2e^{i\theta_2}$.
+\begin{itemize}
+    \item \textbf{Multiplication:} $z_1 z_2 = r_1 r_2 e^{i(\theta_1\theta_2)}$.
+    \item \textbf{Powers:} $z^n=r^n e^{in\theta},\,n=0,\,\pm1,\,\pm2,\,\ldots$.
+    \item Observe that $e^{2\pi i}=\exp(2\pi i) = 1$.
+    \item \textbf{Roots of unity:} Let $\omega = \exp(2\pi i/n)$. $1,\,\omega,\,\omega^2,\,\ldots,\,\omega^{n-1}$ all satisfy $z^n-1=0$ and are uniformly spaced on the unit circle.
+\end{itemize}
+\subsubsection{Triangle inequality in $\mathbb{C}$}
+\begin{definition}
+    \begin{equation}
+        \vert \vert z_1\vert - \vert z_2 \vert \vert \leq  \vert z_1 +z_2 \vert \leq \vert z_1\vert + \vert z_2 \vert
+    \end{equation}
+\end{definition}
+
+\subsubsection{Convergence of a sequence in $\mathbb{C}$}
+\begin{definition}
+    A sequence $z_0,\,z_1,\,z_2,\,\ldots$ converges to $z$ if for every $\epsilon>0$ there exists an $N=N(\epsilon)$ such that
+    \begin{equation}
+        \vert z_n-z\vert<\epsilon,\quad \forall n\geq N.
+    \end{equation}
+\end{definition}
+From here on, $\vert \ \vert$ now means the absolute value of a complex number.
+
+\section{Week 2}
+\subsection{Foundations of complex numbers}
+\begin{theorem}
+    A polynomial of degree $n$ can always be factorised in the form
+    \begin{align}
+        p_n(z)&=a_nz^n+a_{n-1}z^{n-1}+\cdots+a_1z+a_0 \\
+        &= a_n(z-\alpha_1)(z-\alpha_2)\cdots(z-\alpha_n).
+    \end{align}
+    where $a_0,\,\ldots,\,a_n,\,\alpha_1,\,\ldots,\,\alpha_n\in\mathbb{C}$ and $a_n\neq0$.
+\end{theorem}
+
+\subsubsection{Roots of the unity polynomial}
+Let $\omega=\exp(2\pi i/n)$. Let $\xi=\rho\exp(i\alpha)$ and let $z_0=\sqrt[n]{\rho}\exp(i\alpha/n)$ be one solution. The $n$ roots of $\xi$ are $z_0,\,z_0\omega,\,\ldots,\,z_0\omega^{n-1}$.
+\subsubsection{Some definitions}
+Let $A\subset\mathbb{C}$. We write
 \begin{equation}
-    f^\prime(z)=\frac{\partial u}{\partial x} + i \frac{\partial v}{\partial x} = \frac{\partial v}{\partial y} -i\frac{\partial u}{\partial y}.
+    f:A\to\mathbb{C} \nonumber
 \end{equation}
-where $u$ and $v$ are harmonic.
+with $A$ denoting the domain of definition of $f$.
+\begin{itemize}
+    \item \textbf{Open disk}: A set of the form
+    \begin{equation}
+        \{ z\in\mathbb{C}:\vert z-z_0\vert<\rho \},\quad \rho>0.
+    \end{equation}
+    The boundary is the unit circle $\vert z-z_0\vert=\rho$ which is \textit{not} part of the set.
+    \item \textbf{Unit disk}: This is the set
+    \begin{equation}
+        \{ z\in\mathbb{C}:\vert z\vert<1 \}.
+    \end{equation}
+    \item \textbf{Neighbourhood}: A neighbourhood of a point $z_0$ means a disk of the form $ \{ z\in\mathbb{C}:\vert z-z_0\vert<\rho \} $ for some $\rho>0$.
+    \item \textbf{Interior point}: The interior point of $A$ is a point $z_0\in A$ such that a neighbourhood of $z_0$ is also in $A$.
+    \item \textbf{Open set}: A set such that every point is an interior point.
+    \item \textbf{Boundary point}: A boundary point of $A$ is a point $z_0$ such that every neighbourhood of $z_0$ contains points which are in $A$ and also contain points which are not in $A$.
+    \item \textbf{Boundary}: The boundary of $A$ is the set of all it's boundary points.
+    \item \textbf{Polygonal path}: Let $w_1,\,w_2,\,\ldots,\,w_{n+1}$ be points in $\mathbb{C}$ and let $l_k$ be the straight line segment joining $w_k$ to $w_{k+1}$. The successive line segments $l_1,\,l_2,\,\ldots,\,l_{n+1}$ is a polygonal path joining $w_1$ to $w_{n+1}$.
+    \item \textbf{Connected}: A set $A$ is connected if every pair of points $z_1$ and $z_2$ in $A$ can be joined by a polygonal path which is contained in $A$.
+    \item \textbf{Domain}: An open connected set.
+    \item \textbf{Region}: A domain or a domain together with some or all of the boundary points.
+    \item \textbf{Bounded}: A set $A$ is bounded if there exists $R>0$ such that the set is contained in the disk $\{ z:\vert z\vert<R \}$.
+    \item \textbf{Unbounded}: A set is unbounded if it's not bounded.
+    \item A domain (which is thus connected) and does not have holes.
+\end{itemize}
+
+\subsubsection{Limits}
+\begin{definition}
+    Let $f$ be defined in a neighbourhood of $z_0$ and let $f_0\in\mathbb{C}$. If for every $\epsilon>0$ there exists a real number $\delta>0$ such that
+    \begin{equation}
+        \vert f(z)\vert <\epsilon\,\text{for all }z\text{ satisfying }0<\vert z-z_0\vert<\delta, \nonumber
+    \end{equation}
+    then we say that
+    \begin{equation}
+        \lim_{z\to z_0}f(z)=f_0.
+    \end{equation}
+\end{definition}
+
+\subsubsection{Continuity}
+\begin{definition}
+    A function $w=f(z)$ is continuous at $z=z_0$ provided $f(z_0)$ is defined and
+    \begin{equation}
+        \lim_{z\to z_0}f(z)=f(0).
+    \end{equation}
+\end{definition}
+Suppose that $f(z)$ and $g(z)$ are continuous at $z_0$.
+\begin{itemize}
+    \item $f(z)\pm g(z)$ and $f(z)g(z)$ are continuous at $z_0$.
+    \item $f(z)/g(z)$ is continuous at $z_0$ provided $g(z)\neq 0$.
+\end{itemize}
+Suppose that $f(z)$ is continuous at $z_0$ and $g(z)$ is continuous at $f(z_0)$ then $g(f(z))$ is continuous at $z_0$.
+\linebreak
+Let $f(z)=u(x,y)+iv(x,y).$ If $f$ is continuous at $z_0=x_0+i y_0$ then $u$ and $v$ are both continuous as functions on $\mathbb{R}^2$ at $(x_0,y_0)$. Conversely, if $u$ and $v$ are both continuous at $(x_0,y_0)$ then $f$ is continuous at $z_0=x_0+i y_0$.
+
+\section{Week 3}
+\subsection{Functions and the Cauchy-Riemann equations}
+\subsubsection{Analytic functions}
+\begin{theorem}
+    Let $f$ be a complex valued function defined in a neighbourhood of $z_0$. The derivative of $f$ at $z_0$ is given by
+    \begin{equation}
+        \frac{df}{dz}(z_0)\equiv f^\prime(z_0):=\lim_{h\to 0}\frac{f(z_0+h)-f(z_0)}{h}
+    \end{equation}
+    provided the limit exists. Note that here $h\in\mathbb{C}$. 
+\end{theorem}
+\begin{itemize}
+    \item A function $f$ is analytic at $z_0$if $f$ is differentiable at all points in some neighbourhood of $z_0$.
+    \item A function $f$ is analytic in a domain if $f$ is analytic at all points in the domain.
+    \item A function $f:\mathbb{C}\to\mathbb{C}$ is an entire function if it is analytic on the whole complex plane $\mathbb{C}$.
+\end{itemize}
+
+\subsubsection{Combining differentiable functions}
+Let $f$ and $g$ be differentiable at $z_0$. We have the following:
+\begin{enumerate}
+    \item 
+    \begin{equation}
+        (f\pm g)^\prime (z_0) = f^\prime(z_0)\pm g^\prime(z_0). \nonumber
+    \end{equation}
+    \item
+    \begin{equation}
+        (cf)^\prime(z_0)=cf^\prime(z_0) \nonumber
+    \end{equation}
+    for all constants $c\in\mathbb{C}$.
+    \item
+    \begin{equation}
+        (fg)^\prime(z_0)=f(z_0)g^\prime(z_0)+f^\prime(z_0)g(z_0).
+    \end{equation}
+    This is the product rule.
+    \item
+    \begin{equation}
+        (\frac{f}{g})^\prime (z_0) = \frac{g(z_0)g^\prime(z_0)-f(z_0)g^\prime(z_0)}{g(z_0)^2},\quad \text{if }g(z_0)\neq 0.
+    \end{equation}
+    This is the quotient rule.
+    \item Let now $f$ be a function which is differentiable at $g(z_0)$. Then
+    \begin{equation}
+        \left.\frac{d}{dz}f(g(z))\right\rvert_{z=z_0} = f^\prime(g(z_0))g^\prime(z_0).
+    \end{equation}
+    This is the chain rule.
+\end{enumerate}
+
+\subsubsection{The Cauchy-Riemann equations}
+Let $f(z)=u(x,y)+iv(x,y)$. When $f$ is analytic at $z_0$ the following limit exists:
+\begin{equation}
+    \frac{df}{dz}(z_0)\equiv f^\prime(z_0):=\lim_{h\to 0}\frac{f(z_0+h)-f(z_0)}{h}.
+\end{equation}
+By considering the case when $h$ is real and then purely imaginary we get
+\begin{align}
+    f^\prime(z) &= \frac{\partial u}{\partial x}+i\frac{\partial v}{\partial x}, \\
+    &= \frac{1}{i}\left( \frac{\partial u}{\partial y}+i\frac{\partial v}{\partial y} \right) = \frac{\partial v}{\partial y} -i\frac{\partial u}{\partial y}.
+\end{align}
+Equating the real and imaginary parts gives the Cauchy-Riemann equations.
+\begin{theorem}
+    \begin{equation}
+        \frac{\partial u}{\partial x} = \frac{\partial v}{\partial y}\quad\text{and}\quad\frac{\partial u}{\partial y}=-\frac{\partial v}{\partial x}.
+    \end{equation}
+\end{theorem}
+
+\section{Week 4}
+\subsection{Analytic functions}
+
+\section{Week 5}
+\subsection{Analytic functions}
+
+\section{Week 6}
+\subsection{Elementary functions of $z$}
+
+\section{Week 7}
+\subsection{Elementary functions of $z$}
+
+\section{Week 8}
+
+\section{Week 9}
+
+\section{Week 10}
+
+\section{Week 11}
+
+\section{Week 17}
+
+\section{Week 18}
+
+\section{Week 19}
+
+\section{Week 20}
+
+\section{Week 21}
+
+\section{Week 22}
+
+\section{Week 23}
 
 \end{document}
