@@ -1,9 +1,23 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 \usepackage{url,amsmath,graphicx,amssymb,booktabs}
+\usepackage[top=1.5cm, bottom=1.5cm, left=2.5cm, right=2.5cm]{geometry}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{Proposition}{Proposition}
+
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Space}{\mathbb{S}}
+\newcommand{\Var}{\text{Var}}
+\newcommand{\MR}{\mathcal{R}}
+\newcommand{\MT}{\mathcal{T}}
 
 \title{MA3676 - Stochastic Models}
-\author{Luke Dando}
+\author{1720996}
 \date{\today}
 
 \begin{document}
@@ -12,71 +26,355 @@
 
 \tableofcontents
 
-\section{Sums}
-
-\begin{enumerate}
-    \item \textbf{Geometric:} 
-    \begin{equation}
-        1+r+r^2+r^3+\ldots=\sum_{x=0}^\infty r^x = \frac{1}{1-r},\quad |r|<1.
-    \end{equation}
-    
-    \item \textbf{Binomial:}
-    \begin{equation}
-        \sum_{x=0}^n \begin{pmatrix} n\\x \end{pmatrix}p^x q^{n-x} = (p+q)^n.
-    \end{equation}
-    
-    \item \textbf{Exponential:}
-    \begin{equation}
-        \sum_{x=0}^\infty \frac{\lambda^x}{x!}=e^\lambda.
-    \end{equation}
-    Note: $e^\lambda=\lim_{n\rightarrow\infty}(1+\frac{\lambda}{n})^n$.
-\end{enumerate}
-
-\section{Generating Functions}
-
-A generating function $G$ on a distribution $X$ with respect to $s$ is defined as:
-\begin{equation}
-    G_X(s)=\mathbb{E}[s^X]=\sum_np_ns^n,\quad p_n=\mathbb{P}[X=n].
-\end{equation}
-It is important to note :
+\section{Week 1}
+\subsection{Axioms of Probability and conditional probabilities}
+\subsubsection{Axioms of probability}
 \begin{itemize}
-    \item $ G_X(1)=1 $,
-    \item $ G_X(0)=\mathbb{P}[X=0]$,
-    \item $\mathbb{E}[X]=G_X^\prime(1)$,
-    \item $G_{X+Y}(s)=G_X(s)G_Y(s)$.
+    \item \textbf{Axiom $1$}: To each event $E$ there corresponds a number $\Prob[E]\geq0$, where $\Prob[E]$ is called the probability of $E$.
+    \item \textbf{Axiom $2$}: $\Prob[\Space]=1$.
+    \item \textbf{Axiom 3}: If events $A_1,\,A_2,\,A_3,\ldots$ are mutually exclusive then
+    \begin{equation}
+        \Prob\left[ \bigcup_{i=1}^\infty A_i \right] = \sum_{i=1}^\infty \Prob[A_i].
+    \end{equation}
 \end{itemize}
 
-\begin{enumerate}
-    \item \textbf{Bernoulli:}
+\subsubsection{Conditional probability}
+\begin{definition}
+\begin{equation}
+    \Prob[A\vert B]=\frac{\Prob[A\cap B]}{\Prob[B]}.
+\end{equation}
+\end{definition}
+
+\begin{definition}
+    Two events $A$ and $B$ are independent if $\Prob[A\cap B]=\Prob[A]\Prob[B]$.
+\end{definition}
+
+\begin{definition}
+    \begin{equation}
+        \Prob[A_i\vert B] = \frac{\Prob[A_i]\Prob[B\vert A_i]}{\sum_{j+1}^n\Prob[A_j]\Prob[B\vert A_j]}.
+    \end{equation}
+\end{definition}
+
+\section{Week 2}
+\subsection{Discrete random variables}
+\subsubsection{Bernoulli distribution}
+\begin{definition}
+    If the probability of event $E$ is $p$, then the variable $I_E$ is an indicator variable, which is said to follow the Bernoulli distribution with parameter $P$
+    \begin{equation}
+        \Prob[I_E=1]=p,\,\Prob[I_E=0]=1-p,
+    \end{equation}
+    or in shorthand, $\Prob[1]=p,\,\Prob[0]=1-p$.
+\end{definition}
+
+\subsubsection{Independence of random variables}
+\begin{definition}
+    Two random variables $X$ and $Y$ are independent if for any possible value $x$ of $X$ and any possible value $y$ of $Y$ the events $\{X=x\}$ and $\{Y=y\}$ are independent.
+\end{definition}
+
+\subsubsection{Binomial distribution}
+\begin{definition}
+    \begin{equation}
+        \Prob[\{ Y_n=m \}] = \begin{pmatrix} n \\ m \end{pmatrix}p^m1^{n-m}.
+    \end{equation}
+\end{definition}
+
+\subsubsection{Poisson distribution}
+\begin{definition}
+    \begin{equation}
+        P(m) = \frac{\lambda^m}{m!}e^{-\lambda}.
+    \end{equation}
+\end{definition}
+
+\subsubsection{Geometric Distribution}
+\begin{definition}
+    \begin{equation}
+        P(n) = p^{n-1}(1-p).
+    \end{equation}
+\end{definition}
+
+
+\subsection{Sums and Series}
+\subsubsection{Finite geometric sum}
+\begin{definition}
+    \begin{equation}
+        S_n=\sum_{k=0}^n a^k= 1+a+a^2+\cdots+a^n,
+    \end{equation}
+    hence
+    \begin{equation}
+        S_n = \frac{1-a^{n+1}}{1-a}.
+    \end{equation}
+\end{definition}
+\subsubsection{Convergence of series}
+In order for the series $\sum_{n=1}^\infty b_n$ to converge, the limit $\lim_{A\to\infty}(b_1+b_2+b_3+\cdots+b_A)$ must exist. \\
+A necessary condition for the convergence of this series is that the limit of the sequence $b_n$ exists and is equal to $0$:
+\begin{equation}
+    \lim_{n\to\infty} b_n=0
+\end{equation}
+
+\subsubsection{Series examples}
+\begin{definition}
+Geometric series:
+    \begin{equation}
+        \sum_{n=0}^\infty a^n = \frac{1}{1-a}.
+    \end{equation}
+\end{definition}
+\begin{definition}
+Power series:
+    \begin{equation}
+        \sum_{n=0}^\infty \frac{x^n}{n!}=e^x.
+    \end{equation}    
+\end{definition}
+\begin{definition}
+    Logarithmic series:
+    \begin{equation}
+        \sum_{n=1}^\infty \frac{x^n}{n} = -ln(1-x).
+    \end{equation}
+\end{definition}
+\begin{definition}
+    Trigonometric series:
+    \begin{equation}
+        \sum_{n=0}^\infty \frac{(-1)^n x^{2n+1}}{(2n+1)!} = \sin x,
+    \end{equation}
+    \begin{equation}
+        \sum_{n=0}^\infty \frac{(-1)^n x^{2n}}{(2n)!} = \cos x.
+    \end{equation}
+\end{definition}
+
+\section{Week 3}
+\subsection{Expectation value}
+\subsubsection{Expectation of a random variable}
+\begin{definition}
+    Consider a discrete random variable $X$ which takes its values in a set $\{ x_1,\,x_2,\,\ldots \}$ with probabilities $\Prob[\{X=x_i\}]=p_i$. Then, the expectation value of $X$ is defined as
+    \begin{equation}
+        \E[X] = \sum_i x_i p_i.
+    \end{equation}
+\end{definition}
+\subsubsection{Expectation of functions of random variables}
+\begin{definition}
+    \begin{equation}
+        \E[g(X)] = \sum_i g(x_i)p_i.
+    \end{equation}
+\end{definition}
+\subsubsection{Linearity of expectation}
+\begin{definition}
+    \begin{equation}
+        \E[aX+bY] = a\E[X]+b\E[Y].
+    \end{equation}
+\end{definition}
+
+
+\subsection{Expectation and variance values}
+\subsubsection{Variance of a random variable}
+\begin{definition}
+    \begin{equation}
+        \Var[X] =\E[(X-\E[X])^2]. 
+    \end{equation}
+\end{definition}
+
+\subsubsection{Variance of a binomial random variable}
+\begin{definition}
+    \begin{equation}
+        \Var[\sum_{i+1}^n X_i] = n\Var[X].
+    \end{equation}
+\end{definition}
+
+\section{Week 4}
+\subsection{Generating functions}
+\subsubsection{The concept of a stochastic process: terminology}
+\begin{itemize}
+    \item The collection of all indices marking the random variables: the index set.
+    \item All possible values of each $X_i$: the state space.
+    \item Particular values $x_i$ taken by $X_i$ are the states of the process.
+    \item The elements of the index set are conventionally called times.
+    \item The whole collection of values $\{ x_i \}_{i=1}^N$ is a realisation of the process run for $N$ steps.
+    \item A stochastic process can be viewed as a single, multi-component random variable.
+\end{itemize}
+
+\subsubsection{Definitions and basic properties}
+\begin{definition}
+    A (discrete) ``Random Walk'' is a stochastic process $S_n$ which can be represented as a sum of random variables (``steps''):
+    \begin{equation}
+        S_n = S_0+\sum_{k=1}^n X_k.
+    \end{equation}
+\end{definition}
+\begin{definition}
+    A ``Simple Random Walk'' is obtained if $X_k$ are independently identically distributed (i.i.d.) modified Bernoulli random variables taking values in the set $\{-1,\,1\}$, i.e.
+    \begin{equation}
+        \Prob[X_k=1]=p,\quad\Prob[X_k=-1]=1,\quad p+q=1,\quad \forall k\in \mathbb{N}. \nonumber
+    \end{equation}
+\end{definition}
+\subsubsection{Generating functions: definition}
+\begin{definition}
+    Consider a discrete random variable $X$, and denote $\Prob[X=n]=p_n$. We now define the corresponding generating function $G(s)$ as
+    \begin{equation}
+        G(s) = \E[s^X].
+    \end{equation}
+\end{definition}
+\begin{definition}
+    \begin{equation}
+        G(s) = \sum_n p_n s^n.
+    \end{equation}
+\end{definition}
+\subsubsection{Expectation of a generating function}
+\begin{definition}
+    \begin{equation}
+        \E[X]=G^\prime (1)
+    \end{equation}
+\end{definition}
+\subsubsection{Variance of a generating function}
+\begin{definition}
+    \begin{equation}
+        \Var[X] = G^{\prime\prime}(1) + G^\prime(1)-G^\prime(1)^2
+    \end{equation}
+\end{definition}
+
+
+
+\section{Week 5}
+\subsection{Random Walks}
+\subsubsection{Probability mass function}
+\begin{definition}
+    \begin{equation}
+        G_{S_n}=\sum_{m=0}^n \begin{pmatrix} n \\ m \end{pmatrix} p^{n-m}q^{m}s^{n-2m},
+    \end{equation}
+\end{definition}
+where the powers of $s$ correspond to values of $S_n$.
+\begin{definition}
+    The probability of displacement by $k$ is denoted as
+    \begin{equation}
+        P_k^{(n)} \equiv \Prob[S_n-S_0=k]=\begin{pmatrix} n \\ \frac{n-k}{2} \end{pmatrix}p^{\frac{n+k}{2}}q^{\frac{n-k}{2}}.
+    \end{equation}
+\end{definition}
+\subsubsection{General random walks}
+\begin{theorem}
+    Suppose $S_n = \sum_{k=1}^n X_k$ is a random walk such that $X_k$'s are i.i.d. random variables, characterised by a generating function $G_X(s)=\E[s^X]$. Then, the generating function of $S_n$ is
+    \begin{equation}
+        G_{S_n}(s)=G_X(s)^n
+    \end{equation}
+\end{theorem}
+\subsubsection{Returning to the initial position}
+\begin{theorem}
+    For an unrestricted unbiased one-dimensional random walk the probability of return $\MR=1$.
+\end{theorem}
+Here, the number of returns $N$ to the state $i$ is represented by $\E[N]$.
+\begin{lemma}
+    \begin{equation}
+        E[N]=\sum_{n=1}^\infty P_0^{(n)}.
+    \end{equation}
+\end{lemma}
+\begin{lemma}
+    If $\MR<1$, then
+    \begin{equation}
+        \E[N]=\frac{\MR}{1-\MR}.
+    \end{equation}
+\end{lemma}
+
+\section{Week 6}
+\subsection{Gambler's ruin}
+Denote events such that:
+\begin{itemize}
+    \item $R_n$: player A is eventually ruined starting from initial capital $n$.
+    \item $W_n$: player A wins the first game starting from initial capital $n$.
+    \item $L_n=\overline{W}_n$: player A loses the first game starting from initial capital $n$.
+\end{itemize}
+\subsubsection{Probability of ruin}
+\begin{definition}
+The probability of ruin of a player from initial capital $n$ is
+    \begin{equation}
+        \Prob[R_n] = \Prob[R_n\vert W_n]\Prob[W_n] + \Prob[R_n\vert L_n]\Prob[L_n],
+    \end{equation}
+    which simplifies to
+    \begin{equation}
+        P_n = pP_{n+1} +qP_{n-1},
+    \end{equation}
+    where $\Prob[R_n\vert L_n]=P_{n-1}$, $\Prob[R_n\vert W_n]=P_{n+1}$, $\Prob[W_n]=p$ and $\Prob[L_n]=q=1-p$. 
+\end{definition}
+\begin{definition}
+    The probability of ruin from initial capital $a$ with total pool $a+b$ is given by
+    \begin{equation}
+        P_a=\frac{1-(1/p)^b}{(p/q)^a-(1/p)^b},
+    \end{equation}
+    where $p\neq q$. If $p=q=1/2$, then
+    \begin{equation}
+        P_a = \frac{b}{a+b}.
+    \end{equation}
+\end{definition}
+
+\section{Week 7}
+\subsection{First step decomposition}
+\subsubsection{Time to absorption}
+\begin{definition}
+    Let $T_n$ be the random variable equal to the number of steps, starting from $n$, which the random walker will make before reaching wither of the boundaries. Denote as
+    \begin{equation}
+        \MT = \E[T_n] \nonumber
+    \end{equation}
+    the expected number of steps until the walker reaches either of the boundaries.
+\end{definition}
+\begin{definition}
     \begin{align}
-        G_X(s)=\sum_{n=0}^1 s^np_n &= s^0\cdot (1-p)+s^1\cdot(p),\quad p_n=\mathbb{P}[X=n], \\
-        &=1+(s-1)p.
+        \MT_n &= A+B(q/p)^n+\frac{n}{q-p},\quad &p\neq q, \\
+        \MT_n &= A+Bn-n^2,\quad &q=p=1/2.
     \end{align}
-    
-    \item \textbf{Geometric:}
-    \begin{align}
-        G_X(s) = \sum_{n=1}^\infty s^n(1-p)^{n-1}&=(1-p)s\sum_{n=1}^\infty (sp)^{n-1}, \\
-        &=(1-p)s\sum_{k=0}^\infty (sp)^{k},\quad k=n-1, \\
-        &=(1-p)s \cdot \frac{1}{1-sp}, \\
-        &=\frac{(1-p)s}{1-sp}.
-    \end{align}
-    
-    \item \textbf{Binomial:} $Y_n=\sum_{i=1}^n I_n$, where $I_n$ are steps of 0 or 1, with probabilities of $p$ and $q=1-p$ respectively.
-    \begin{align}
-        G_{Y_n}(s) = \mathbb{E}[s^{Y_n}]&=\mathbb{E}[s^{\sum_{i=1}^\infty I_n}], \\
-        &=\mathbb{E}[s^{I_1}\cdot s^{I_2} \ldots s^{I_n}], \\
-        &=\mathbb{E}\left[\prod_{i=1}^n s^{I_n}\right], \\
-        &=\prod_{i=1}^n\mathbb{E}[s^{I_n}], \\
-        &=\prod_{i=1}^n(ps+q) = (ps+q)^n, \\
-        &= \sum_{m=0}^n \begin{pmatrix} n\\m \end{pmatrix}(ps)^m(q)^{n-m}.
-    \end{align}
-    \item \textbf{Poisson:} Let $\mathbb{P}[X=x]=\frac{\lambda^x e^{-\lambda}}{x!}$,
-    \begin{align}
-        G_x(s)&=\sum_{x=0}^\infty s^x\frac{\lambda^x}{x!}e^{-\lambda}, \\
-        &=e^{-\lambda}\sum_{x=0}^\infty \frac{(\lambda s)^x}{x!}, \\
-        &=e^{-\lambda}e^{\lambda s}, \\
-        &= e^{\lambda(s-1)}.
-    \end{align}
-\end{enumerate}
+\end{definition}
+
+\section{Week 8}
+\subsection{Boundary Conditions}
+Use first step decomposition on the boundary conditions to solve for A and B. Use examples to understand.
+
+\section{Week 9}
+\subsection{Introduction to Markov chains}
+\begin{definition}
+    A stochastic process $S_n$ with discrete state space and discrete index set is a Markov chain if $\Prob[S_{n+1}=j\vert S_0=i_0,\,S_1=i_1,\ldots,\,S_n=i_n]=\Prob[S_{n+1}=j\vert S_n=i_n],\,\forall j,\, i_0,\, i_1,\ldots,\,i_n$ and $\forall n\in \mathbb{N}$.
+\end{definition}
+This says that the future ($S_{n+1}$) is conditionally independent of the past $(\{ S_i \}_{i+1}^{n-1})$, given the knowledge of the present $S_n$.
+\subsection{Markov chains}
+\subsubsection{Random walk on a circle}
+\begin{definition}
+    Treat $p_{ij}$ as elements of an $(n\times n)$-matrix and $\mathbf{p}_i (n)$ as elements of an $n$-component row vector $\underline{\pi}(n)$ where the matrix $\mathbf{p}$ provides the full description of transitions and $\underline{\pi}$ the current states of each position. The total probability decomposition is a product of these such that:
+    \begin{equation}
+        \underline{\pi}(n+1)=\underline{\pi}(n)\mathbf{p}.
+    \end{equation}
+\end{definition}
+\subsubsection{Chapman-Kolmogorov equation}
+\begin{theorem}
+    \begin{equation}
+        \underline{\pi}(n)=\underline{\pi}(0)\mathbf{p}^n.
+    \end{equation}
+\end{theorem}
+
+\subsubsection{Multiplying stochastic matrices}
+\begin{theorem}
+    A product of two (or more, by induction) stochastic matrices is again a stochastic matrix.
+\end{theorem}
+
+\section{Week 10}
+\subsection{Markov chains}
+\subsubsection{Equilibrium distribution}
+\begin{theorem}
+    If such a distribution exists, then it means formally the existence of the limit
+    \begin{equation}
+        \lim_{n\to\infty}\underline{\pi}(n)=\underline{\pi},
+    \end{equation}
+    and therefore
+    \begin{equation}
+        \underline{\pi} = \underline{\pi}\mathbf{p}.
+    \end{equation}
+\end{theorem}
+\subsubsection{Matrix analysis of Markov chains}
+\begin{theorem}
+    $\lambda=1$ is an eigenvalue of any stochastic matrix $\mathbf{p}$.
+\end{theorem}
+
+\section{Week 17}
+
+\section{Week 18}
+
+\section{Week 19}
+
+\section{Week 20}
+
+\section{Week 21}
+
+\section{Week 23}
 
 \end{document}
