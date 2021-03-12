@@ -1,0 +1,40 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{url,amsmath,graphicx,amssymb,booktabs}
+\usepackage[top=1.5cm, bottom=1.5cm, left=2.5cm, right=2.5cm]{geometry}
+
+\title{MA3614 - Complex Variable Methods and Applications}
+\author{Luke Dando}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Cauchy's Integral Formula, Consequences and Bounds}
+\subsection{The Cauchy Integral Formula}
+The basic formula is as follows:
+\begin{equation}
+    f(z)=\frac{1}{2\pi i}\oint_\Gamma \frac{f(\zeta)}{\zeta-z}\,d\zeta
+\end{equation}
+This can be generalised to give
+\begin{equation}
+    f^{(n)}(z)=\frac{n!}{2\pi i}\oint_\Gamma \frac{f(\zeta)}{(\zeta-z)^{n+1}}\,d\zeta
+,\quad n=0,1,2,\ldots \end{equation}
+\subsection{Morera's Theorem}
+If
+\begin{equation}
+    \oint_\Gamma f(z)\,dz=0
+\end{equation}
+for all loops $\Gamma$, then $f$ is analytic inside $\Gamma$
+
+\subsection{Harmonic Functions}
+Let $f$ be analytic. Then all partial derivatives of $u$ and $v$ also exist, such that. 
+\begin{equation}
+    f^\prime(z)=\frac{\partial u}{\partial x} + i \frac{\partial v}{\partial x} = \frac{\partial v}{\partial y} -i\frac{\partial u}{\partial y}.
+\end{equation}
+where $u$ and $v$ are harmonic.
+
+\end{document}

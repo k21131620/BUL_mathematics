@@ -1,0 +1,105 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{url,amsmath,graphicx,amssymb,booktabs}
+\usepackage[top=1.5cm, bottom=1.5cm, left=2.5cm, right=2.5cm]{geometry}
+
+\title{MA3614 - Complex Variable Methods and Applications}
+\author{Luke Dando}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Introductory Material}
+\subsection{Euler's Formula}
+\begin{equation}
+    r(e^{ix})= r(\cos(x)+i\sin(x)).
+\end{equation}
+
+\subsection{Polar Form of a `Complex' Number Raised to a Power}
+First, convert the real or imaginary base to polar form, then divide the power by the original exponent and add the unit circle in equal sized portions. Here's a general worked solution where the base has already been converted to its polar form:
+\begin{align}
+    R=z^n&=r^n(e^{i(\theta+2k\pi)}),\quad \quad k = 1,2,\ldots,n\\
+    z&=r(e^{i(\frac{\theta+2k\pi}{n})}),\\
+    &=re^{i(\frac{\theta}{n}+\frac{2k\pi}{n})}.
+\end{align}
+
+\subsection{Argument}
+\begin{equation}
+    \text{Arg}(z)=\text{Arg}(re^{i\theta})=\theta.
+\end{equation}
+
+\subsection{Real and Imaginary Parts of a Complex Number}
+Let $z=a+ib$
+\begin{align}
+    \text{Re}(z) &= a,\\
+    \text{Im}(z) &= b.
+\end{align}
+
+\section{Functions of a Complex Variable}
+\subsection{Geometric Series}
+\begin{equation}
+    1+z+z^2+\cdots+z^n = \frac{z^{n+1}-1}{z-1}.
+\end{equation}
+
+
+\section{The Complex Derivative and Analytic Functions}
+\subsection{Differentials}
+\begin{align}
+    &\frac{\partial}{\partial x}(\sin(\alpha x)) = \alpha\cos(\alpha x).\\
+    &\frac{\partial}{\partial x}(\cos(\alpha x)) = -\alpha\sin(\alpha x).\\
+    &\frac{\partial}{\partial x}(\cosh(\alpha x)) = \alpha\sinh(\alpha x).\\
+    &\frac{\partial}{\partial x}(\sinh(\alpha x)) = \alpha\cosh(\alpha x).
+\end{align}
+
+\subsection{Integrals}
+\begin{align}
+    &\int\sin(\alpha x)\, dx =  -\frac{1}{\alpha}\cos(\alpha x) + C.\\
+    &\int\cos(\alpha x)\, dx =  \frac{1}{\alpha}\sin(\alpha x) + C.\\
+    &\int\cosh(\alpha x)\, dx =  \frac{1}{\alpha}\sinh(\alpha x) + C.\\
+    &\int\sinh(\alpha x)\, dx =  \frac{1}{\alpha}\cosh(\alpha x) + C.
+\end{align}
+
+\subsection{Analytical Functions}
+\subsubsection{Cauchy-Riemann Equations}
+A function (generally given as $f = u +iv$) is \textbf{\textit{analytic}} on the complex plane if both the Cauchy-Riemann equations~(\ref{eq:CR}) are satisfied.
+\begin{equation}
+    \frac{\partial u}{\partial x} = \frac{\partial v}{\partial y},\qquad \frac{\partial v}{\partial x} = -\frac{\partial u}{\partial y}\label{eq:CR}
+\end{equation}
+
+\subsection{Harmonic Functions}
+\subsubsection{Harmonic Equations}
+An equation $u(x,y)$ is considered \textbf{\textit{harmonic}} if:
+\begin{equation}
+    \nabla^2u = \frac{\partial^2u}{\partial x^2}+\frac{\partial^2u}{\partial y^2} =0.
+\end{equation}
+
+\subsection{Exponential forms of Trigonometric Functions}
+\begin{align}
+    &\cos(x)=\frac{e^{ix}+e^{-ix}}{2}, && -1\leq\cos(x)\leq 1.\\
+    &\sin(x)=\frac{e^{ix}-e^{-ix}}{2}, && -1\leq\sin(x)\leq 1.\\
+    &\cosh(x)=\frac{e^{x}+e^{-x}}{2}, && 1\leq \cosh(x)<\infty.\\
+    &\sinh(x)=\frac{e^{x}-e^{-x}}{2}, && -\infty<\sinh(x)<\infty.
+\end{align}
+
+\section{The Elementary Functions of a Complex Variable}
+\section{Contour Integrals}
+\section{Other Useful Information}
+
+\subsection{De Moivre's Formula}
+Not sure if taught, but could be useful in some contexts:
+\begin{equation}
+    (\cos(x) + i\sin(x))^n = \cos(nx) + i\sin(nx).
+\end{equation}
+
+Here's proof if you have time to add it to ensure marks:
+\begin{align}
+    (\cos(x) + i\sin(x))^n &= (e^{ix})^n,\\
+    &=e^{inx},\\
+    &=\cos(nx) + i\sin(nx).
+\end{align}
+
+\end{document}
