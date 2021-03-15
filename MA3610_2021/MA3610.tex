@@ -3,8 +3,14 @@
 \usepackage{url,amsmath,graphicx,amssymb,booktabs}
 \usepackage[top=1.5cm, bottom=1.5cm, left=2.5cm, right=2.5cm]{geometry}
 
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+
 \title{MA3614 - Complex Variable Methods and Applications}
-\author{Luke Dando}
+\author{1720996}
 \date{\today}
 
 \begin{document}
@@ -13,93 +19,256 @@
 
 \tableofcontents
 
-\section{Introductory Material}
-\subsection{Euler's Formula}
+\section{Introduction and Revision}
+\subsection{Some definitions and notations}
+\begin{definition}
+    An ordinary differential equation (ODE) is an equation involving one or more derivatives of an unknown function of one variable.
+\end{definition}
+\begin{definition}
+    The order of an ODE is the order of the highest derivative of the unknown function in the equation.
+\end{definition}
+\begin{definition}
+    Suppose that $y$ is the unknown function and $x$ is the independent variable. Then the $ODE$ is linear (of order $m\in \mathbb{N}$) if one can represent it in the form:
+    \begin{equation}
+        a_m(x)\frac{d^m y}{dx^m} + a_{m-1}(x)\frac{d^{m-1}}{dx^{m-1}} + \ldots + a_1(x)\frac{dy}{dx}+a_)(x) y=f(x). \label{eq:order}
+    \end{equation}
+    Any other type of ODE is nonlinear.
+\end{definition}
+\begin{definition}
+    A linear ODE is homogeneous if $f(x)\equiv 0$ in eq.~(\ref{eq:order}).
+\end{definition}
+
+\begin{table}[h]
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+   & ODE & Order & Linear & Homogeneous \\ \hline
+ $1$ & $ 5\frac{d^2 y}{dx^2} - 6\frac{dy}{dx} + y = xe^x $ & $2$ & Yes & No \\ 
+ $2$ & $xy\frac{dy}{dx} + \frac{d^4 y}{dx^4} = \sin{x}$ & $4$ & No & No \\
+ $3$ & $x^2\frac{d^2 y}{dx^2} + x\frac{dy}{dx} + (x^2 - 1)y = 0$ & $2$ & Yes & Yes \\
+ $4$ & $\left( y+\frac{d^3 y}{dx^3} \right)^2 + \frac{dy}{dx} = ye^x$ & $3$ & No & No \\
+ $5$ & $x^2\frac{d^2 y}{dx^2}+y\cos{x} = x^2$ & $2$ & Yes & No \\ \hline
+\end{tabular}
+\end{table}
+\subsection{First-order ODEs}
+We can write a general form for a first-order ODE as
 \begin{equation}
-    r(e^{ix})= r(\cos(x)+i\sin(x)).
+    F(x,y,y^\prime) = 0,\nonumber
+\end{equation}
+where $F$ is a given function of three variables.
+\subsubsection{Direct Integration}
+This is appropriate for ODEs of the type:
+\begin{equation}
+    \frac{dy}{dx} = f(x).
 \end{equation}
 
-\subsection{Polar Form of a `Complex' Number Raised to a Power}
-First, convert the real or imaginary base to polar form, then divide the power by the original exponent and add the unit circle in equal sized portions. Here's a general worked solution where the base has already been converted to its polar form:
-\begin{align}
-    R=z^n&=r^n(e^{i(\theta+2k\pi)}),\quad \quad k = 1,2,\ldots,n\\
-    z&=r(e^{i(\frac{\theta+2k\pi}{n})}),\\
-    &=re^{i(\frac{\theta}{n}+\frac{2k\pi}{n})}.
-\end{align}
-
-\subsection{Argument}
+\subsubsection{The method of seperation of variables}
+This method is appropriate for the ODEs of the type:
 \begin{equation}
-    \text{Arg}(z)=\text{Arg}(re^{i\theta})=\theta.
+    \frac{dy}{dx} = p(x)q(y),
+\end{equation}
+where $p(x)$ and $q(x)$ are known functions.
+
+\subsubsection{Integrating factor method}
+General first order linear ODEs of the form:
+\begin{equation}
+    \frac{dy}{dx} + P(x)y = Q(x)
+\end{equation}
+can be solved using an integrating factor $\lambda$, where
+\begin{equation}
+    \lambda(x) = e^{\int P(x)\,dx}.
+\end{equation}
+Hence,
+\begin{equation}
+    y(x) = \frac{1}{\lambda(x)}\int \lambda(x)Q(x)\,dx+\frac{C}{\lambda(x)}.
 \end{equation}
 
-\subsection{Real and Imaginary Parts of a Complex Number}
-Let $z=a+ib$
-\begin{align}
-    \text{Re}(z) &= a,\\
-    \text{Im}(z) &= b.
-\end{align}
-
-\section{Functions of a Complex Variable}
-\subsection{Geometric Series}
+\section{Second order linear ODEs}
+\subsection{Some theory}
+A second order linear ODE has the general form
 \begin{equation}
-    1+z+z^2+\cdots+z^n = \frac{z^{n+1}-1}{z-1}.
+    a_2(x)y^{\prime\prime} + a_1(x)y^\prime + a_0(x)y = f(x).
 \end{equation}
+\begin{theorem}
+    Consider the IVP
+    \begin{equation}
+        y^{\prime\prime} + \tilde{a}_1(x)y^\prime + \tilde{a}_0(x)y = 0,\quad y(x_0)=\alpha,\quad y^\prime(x_0)=\beta
+    \end{equation}
+    where $\tilde{a}_1(x)$, $\tilde{a}_0$ are continuous on an open interval, say $(a,b)$, containing $x_0$. There is exactly one solution $y=\phi(x)$ to the IVP and the solution exists throughout $(a,b)$.
+\end{theorem}
 
-
-\section{The Complex Derivative and Analytic Functions}
-\subsection{Differentials}
-\begin{align}
-    &\frac{\partial}{\partial x}(\sin(\alpha x)) = \alpha\cos(\alpha x).\\
-    &\frac{\partial}{\partial x}(\cos(\alpha x)) = -\alpha\sin(\alpha x).\\
-    &\frac{\partial}{\partial x}(\cosh(\alpha x)) = \alpha\sinh(\alpha x).\\
-    &\frac{\partial}{\partial x}(\sinh(\alpha x)) = \alpha\cosh(\alpha x).
-\end{align}
-
-\subsection{Integrals}
-\begin{align}
-    &\int\sin(\alpha x)\, dx =  -\frac{1}{\alpha}\cos(\alpha x) + C.\\
-    &\int\cos(\alpha x)\, dx =  \frac{1}{\alpha}\sin(\alpha x) + C.\\
-    &\int\cosh(\alpha x)\, dx =  \frac{1}{\alpha}\sinh(\alpha x) + C.\\
-    &\int\sinh(\alpha x)\, dx =  \frac{1}{\alpha}\cosh(\alpha x) + C.
-\end{align}
-
-\subsection{Analytical Functions}
-\subsubsection{Cauchy-Riemann Equations}
-A function (generally given as $f = u +iv$) is \textbf{\textit{analytic}} on the complex plane if both the Cauchy-Riemann equations~(\ref{eq:CR}) are satisfied.
+\subsection{Second order linear ODEs with constant coefficients}
+This is in the form:
 \begin{equation}
-    \frac{\partial u}{\partial x} = \frac{\partial v}{\partial y},\qquad \frac{\partial v}{\partial x} = -\frac{\partial u}{\partial y}\label{eq:CR}
+    a_2\frac{d^2 y}{dx^2} + a_1\frac{dy}{dx} + a_0 y = f(x)
 \end{equation}
+where $a_0,\,a_1,\,a_2$ are constants.
 
-\subsection{Harmonic Functions}
-\subsubsection{Harmonic Equations}
-An equation $u(x,y)$ is considered \textbf{\textit{harmonic}} if:
+\subsubsection{The homogeneous case}
+
+\begin{itemize}
+    \item \textbf{Real distinct roots: }Let the roots be $m_1$ and $m_2$ where $m_1\neq m_2$. Then $y_1 = e^{m_1 x}$ and $y_2 = e^{m_2 x}$ are both solutions. The general solution is the linear combination:
+    \begin{equation}
+        y = Ae^{m1_x} + Be^{m_2 x}.
+    \end{equation}
+    \item \textbf{Real repeated roots: }Let the roots be equal so that $m_1=m_2$. Then one solution is $y_1 = e^{m_1 x}$ and the second is $y=xe^{m_1}$. Thus the general solution is:
+    \begin{equation}
+        y = (Ax + B)e^{m_1 x}.
+    \end{equation}
+    \item \textbf{Complex roots: }Let the roots be complex such that $m_1 = \alpha+i\beta$ and $m_2 = \alpha - i\beta$ where $\alpha$ and $\beta$ are real numbers. There are two distinct solutions to the ODE, namely $y_1 = e^{(\alpha + i\beta)x}$ and $y_2 = e^{(\alpha - i\beta)x}$. The general solutions is a linear combination which may be written as:
+    \begin{equation}
+        y = e^{\alpha x}(Ae^{i\beta x}+Be^{-i\beta x}).
+    \end{equation}
+    Equivalently:
+    \begin{equation}
+        y = e^{\alpha x}[C\cos{(\beta x)}+D\sin{(\beta x)}],
+    \end{equation}
+    where the two arbitrary constants are $C=A+B$ and $D = i(A+B)$.
+\end{itemize}
+
+\subsubsection{The particular integral}
+Look through examples.
+
+\subsection{Euler equations (homogeneous)}
+This class of ODE has the general form:
 \begin{equation}
-    \nabla^2u = \frac{\partial^2u}{\partial x^2}+\frac{\partial^2u}{\partial y^2} =0.
+    ax^2\frac{d^2 y}{dx^2} + bx\frac{dy}{dx} + cy = f(x)
 \end{equation}
-
-\subsection{Exponential forms of Trigonometric Functions}
-\begin{align}
-    &\cos(x)=\frac{e^{ix}+e^{-ix}}{2}, && -1\leq\cos(x)\leq 1.\\
-    &\sin(x)=\frac{e^{ix}-e^{-ix}}{2}, && -1\leq\sin(x)\leq 1.\\
-    &\cosh(x)=\frac{e^{x}+e^{-x}}{2}, && 1\leq \cosh(x)<\infty.\\
-    &\sinh(x)=\frac{e^{x}-e^{-x}}{2}, && -\infty<\sinh(x)<\infty.
-\end{align}
-
-\section{The Elementary Functions of a Complex Variable}
-\section{Contour Integrals}
-\section{Other Useful Information}
-
-\subsection{De Moivre's Formula}
-Not sure if taught, but could be useful in some contexts:
+where $a,\, b$ are constants. 
+\begin{itemize}
+    \item \textbf{Real distinct roots: }Let the roots be $m_1$ and $m_2$ where $m_1\neq m_2$. Then $y_1 = x^{m_1}$ and $y_2 = x^{m_2}$ are both solutions. The general solution is the following:
+    \begin{equation}
+        y = Ae^{\frac{m_1}{2}\ln{x^2}} + Be^{\frac{m_2}{2}\ln{x^2}},\quad x<0\,\text{ or }\, x>0.
+    \end{equation}
+    \item \textbf{Real repeated roots: }Let the roots be equal so that $m_1=m_2$. The one solution to the ODE is $y_1 = x^{m_1}$ and the second is $y = x^{m_1}\ln{x}$. Thus, the general solution is:
+    \begin{equation}
+        y = (\tilde{A}\ln{x^2}+B)e^{\frac{m_1}{2}\ln{x^2}},\quad x<0\,\text{ or }\,x>0,
+    \end{equation}
+    where $\tilde{A} = A/2$ is arbitrary.
+    \item \textbf{Complex roots: }Let the roots be complex such that $m_1 = \alpha+i\beta$ and $m_2 = \alpha - i\beta$ where $\alpha$ and $\beta$ are real numbers. There are two distinct solutions to the ODE, namely $y_1 = x^{(\alpha + i\beta)}$ and $y_2 = x^{(\alpha - i\beta)}$. The general solutions is a linear combination which may be written as:
+    \begin{equation}
+        y = e^{\frac{\alpha}{2}\ln{x^2}}\left[ C\cos{\left( \frac{\beta}{2}\ln{x^2} \right)} + D\sin{\left( \frac{\beta}{2}\ln{x^2} \right)} \right],\quad x<0\,\text{ or }\, x>0.
+    \end{equation}
+\end{itemize}
+\textbf{Note: }For an Euler equation of the form
 \begin{equation}
-    (\cos(x) + i\sin(x))^n = \cos(nx) + i\sin(nx).
+    a(x-x_0)^2\frac{d^2 y}{dx^2} + b(x-x_0)\frac{dy}{dx} + cy = 0,
 \end{equation}
+the solution is exactly the same except that we look for solutions of the form $y = (x-x_0)^m$.
 
-Here's proof if you have time to add it to ensure marks:
-\begin{align}
-    (\cos(x) + i\sin(x))^n &= (e^{ix})^n,\\
-    &=e^{inx},\\
-    &=\cos(nx) + i\sin(nx).
-\end{align}
+\subsection{Linearly independent solutions}
+\begin{theorem}
+    If $y_1$ and $y_2$ are two solutions of the differential equation
+    \begin{equation}
+        y^{\prime\prime}+\tilde{a}_1(x)y^\prime + \tilde{a}_0(x)y = 0, \label{eq:LIS}
+    \end{equation}
+    then the linear combination
+    \begin{equation}
+        y = Ay_1 + By_2 \label{eq:lincom}
+    \end{equation}
+    is also a solution for any values of $A$ and $B$.
+\end{theorem}
+\begin{definition}
+    Two solutions, $y_1$ and $y_2$, of eq.~(\ref{eq:LIS}) form a fundamental set of solutions if every solution of eq.~(\ref{eq:LIS}) can be expressed as a linear combination of the form eq.~(\ref{eq:lincom}). 
+\end{definition}
+\begin{definition}
+    Two functions, $y_1(x)$ and $y_2(x)$ are said to be linearly independent on an interval $(a,b)$ if the only solution to $Ay_1(x)+By_1(x) = 0$ on $(a,b)$ is $A=B=0$. 
+\end{definition}
+\begin{theorem}
+    Let $\tilde{a}_1(x)$ and $\tilde{a}_0(x)$ be continuous on $(a,b)$ and let $y_1$ and $y_2$ be two solutions of the differential eq.~(\ref{eq:LIS}). Then the following three statements are equivalent:
+    \begin{enumerate}
+        \item $y_1$ and $y_2$ are a fundamental set;
+        \item $y_1$ and $y_2$ are linearly independent;
+        \item the Wronskian $W(y_1,y_2;x_0)$ does not vanish at any interior point $x_0$ of $(a,b)$ (it could be, however, vanish as $x_0\to a$ or $x_0\to b$).
+    \end{enumerate}
+\end{theorem}
+\begin{theorem}
+    Let $\tilde{a}_1(x)$ and $\tilde{a}_0(x)$ be continuous on $(a,b)$, then the Wronskian of the differential eq.~(\ref{eq:LIS}) is given by
+    \begin{equation}
+        W=C\exp \left\{ -\int\tilde{a}_1(x)\, dx \right\}.
+    \end{equation}
+\end{theorem}
+
+\subsection{Reduction of order}
+Look through examples.
+
+\subsection{Normal Form ODEs}
+Look through examples.
+
+\subsection{ODEs with singular points}
+Consider the general seconds order linear ODE
+\begin{equation}
+    a_2(x)y^{\prime\prime}+a_1(x)y^\prime + a_0(x)y = f(x).
+\end{equation}
+The solution of such ODEs in an interval, say $(a,b)$, is closely linked to the behaviour of $a_2(x)$ in that interval.
+\begin{itemize}
+    \item A point $x_0\in(a,b)$ such that $a_2(x_0)/neq 0$ is called an ordinary point.
+    \item A point $x_0\in(a,b)$ such that $a_2(x_0) = 0$ but $a_1(x_0)\neq 0$ and/or $a_0(x_0)\neq 0$ is called a singular point.
+\end{itemize}
+A singular point is a regular singular point if
+\begin{equation}
+    \lim_{x\to x_0}(x-x_0)\frac{a_1(x)}{a_2(x)}\quad \text{and}\quad \lim_{x\to x_0}(x-x_0)^2\frac{a_0(x)}{a_2(x)}
+\end{equation}
+both exist. A singular point that does not satisfy this is called an irregular singular point.
+
+\section{Perturbation techniques}
+\subsection{Regular Perturbation}
+Use examples.
+
+\subsection{The WKB method}
+Use examples.
+
+\section{Sturm-Liouville theory}
+\subsection{Introduction to eigenvalues and eigenfunctions}
+Use examples.
+
+\subsection{Sturm-Liouville eigenvalue problems}
+Use examples.
+
+\begin{theorem}
+    All the eigenvalues of the Sturm-Liouville problem are real.
+\end{theorem}
+
+\begin{theorem}
+    If $\phi_1(x)$ and $\phi_2(x)$ are two eigenfunctions of the Sturm-Liouville problem with corresponding eigenfunctions $\lambda_1$ and $\lambda_2$, $\lambda_1\neq \lambda_2$, then
+    \begin{equation}
+        \int_0^1 r(x)\phi_1 \phi_2\,dx=0.
+    \end{equation}
+\end{theorem}
+\begin{theorem}
+    The eigenvalues of the Sturm-Liouville problem are all simple. That is, to each eigenvalue there corresponds only one linearly independent eigenfunction. Further, the eigenvalues form an infinite sequence and can be ordered according to increasing magnitude so that:
+    \begin{equation}
+        \lambda_1<\lambda_2<\lambda_3<\lambda_4<\ldots<\lambda_n<\ldots.
+    \end{equation}
+    Moreover, $\lambda_n\to\infty$ as $n\to\infty$.
+\end{theorem}
+
+
+\section{Week 3}
+
+\section{Week 4}
+
+\section{Week 5}
+
+\section{Week 6}
+
+\section{Week 7}
+
+\section{Week 8}
+
+\section{Week 9}
+
+\section{Week 10}
+
+\section{Week 11}
+
+\section{Week 12}
+
+\section{Week 17}
+
+\section{Week 18}
+
+\section{Week 19}
+
+\section{Week 20}
 
 \end{document}
