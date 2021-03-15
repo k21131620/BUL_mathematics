@@ -3,8 +3,14 @@
 \usepackage{url,amsmath,graphicx,amssymb,booktabs}
 \usepackage[top=1.5cm, bottom=1.5cm, left=2.5cm, right=2.5cm]{geometry}
 
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+
 \title{MA3614 - Complex Variable Methods and Applications}
-\author{Luke Dando}
+\author{1720996}
 \date{\today}
 
 \begin{document}
@@ -13,28 +19,569 @@
 
 \tableofcontents
 
-\section{Cauchy's Integral Formula, Consequences and Bounds}
-\subsection{The Cauchy Integral Formula}
-The basic formula is as follows:
+\section{Week 1}
+\subsection{Fundamentals}
+\subsubsection{Representations of $z$ and $\overline{z}$}
+A complex number $z$ can be defined in both cartesian or polar form:
 \begin{equation}
-    f(z)=\frac{1}{2\pi i}\oint_\Gamma \frac{f(\zeta)}{\zeta-z}\,d\zeta
+    z = x+iy=re^{i\theta},
 \end{equation}
-This can be generalised to give
-\begin{equation}
-    f^{(n)}(z)=\frac{n!}{2\pi i}\oint_\Gamma \frac{f(\zeta)}{(\zeta-z)^{n+1}}\,d\zeta
-,\quad n=0,1,2,\ldots \end{equation}
-\subsection{Morera's Theorem}
-If
-\begin{equation}
-    \oint_\Gamma f(z)\,dz=0
-\end{equation}
-for all loops $\Gamma$, then $f$ is analytic inside $\Gamma$
+where $x=r\cos\theta$ and $y=r\sin\theta$. Here, $r$ is the modulus and $\theta$ is the argument. 
+\begin{definition}
+The principal argument of $z$ is
+    \begin{equation}
+        \arg z\in(-\pi,\pi],
+    \end{equation}
+    where $\arg z$ is multi-valued.
+\end{definition}
+Note, $\vert z\vert^2 = z\overline{z}$. $\vert z\vert=$ absolute value of $z$.
 
-\subsection{Harmonic Functions}
-Let $f$ be analytic. Then all partial derivatives of $u$ and $v$ also exist, such that. 
+\subsubsection{Multiplication, powers and roots of unity}
+Suppose $z=re^{i\theta},\,z_1 = r_1e^{i\theta_1},\,r_2e^{i\theta_2}$.
+\begin{itemize}
+    \item \textbf{Multiplication:} $z_1 z_2 = r_1 r_2 e^{i(\theta_1\theta_2)}$.
+    \item \textbf{Powers:} $z^n=r^n e^{in\theta},\,n=0,\,\pm1,\,\pm2,\,\ldots$.
+    \item Observe that $e^{2\pi i}=\exp(2\pi i) = 1$.
+    \item \textbf{Roots of unity:} Let $\omega = \exp(2\pi i/n)$. $1,\,\omega,\,\omega^2,\,\ldots,\,\omega^{n-1}$ all satisfy $z^n-1=0$ and are uniformly spaced on the unit circle.
+\end{itemize}
+\subsubsection{Triangle inequality in $\mathbb{C}$}
+\begin{definition}
+    \begin{equation}
+        \vert \vert z_1\vert - \vert z_2 \vert \vert \leq  \vert z_1 +z_2 \vert \leq \vert z_1\vert + \vert z_2 \vert
+    \end{equation}
+\end{definition}
+
+\subsubsection{Convergence of a sequence in $\mathbb{C}$}
+\begin{definition}
+    A sequence $z_0,\,z_1,\,z_2,\,\ldots$ converges to $z$ if for every $\epsilon>0$ there exists an $N=N(\epsilon)$ such that
+    \begin{equation}
+        \vert z_n-z\vert<\epsilon,\quad \forall n\geq N.
+    \end{equation}
+\end{definition}
+From here on, $\vert \ \vert$ now means the absolute value of a complex number.
+
+\section{Week 2}
+\subsection{Foundations of complex numbers}
+\begin{theorem}
+    A polynomial of degree $n$ can always be factorised in the form
+    \begin{align}
+        p_n(z)&=a_nz^n+a_{n-1}z^{n-1}+\cdots+a_1z+a_0 \\
+        &= a_n(z-\alpha_1)(z-\alpha_2)\cdots(z-\alpha_n).
+    \end{align}
+    where $a_0,\,\ldots,\,a_n,\,\alpha_1,\,\ldots,\,\alpha_n\in\mathbb{C}$ and $a_n\neq0$.
+\end{theorem}
+
+\subsubsection{Roots of the unity polynomial}
+Let $\omega=\exp(2\pi i/n)$. Let $\xi=\rho\exp(i\alpha)$ and let $z_0=\sqrt[n]{\rho}\exp(i\alpha/n)$ be one solution. The $n$ roots of $\xi$ are $z_0,\,z_0\omega,\,\ldots,\,z_0\omega^{n-1}$.
+\subsubsection{Some definitions}
+Let $A\subset\mathbb{C}$. We write
 \begin{equation}
-    f^\prime(z)=\frac{\partial u}{\partial x} + i \frac{\partial v}{\partial x} = \frac{\partial v}{\partial y} -i\frac{\partial u}{\partial y}.
+    f:A\to\mathbb{C} \nonumber
 \end{equation}
-where $u$ and $v$ are harmonic.
+with $A$ denoting the domain of definition of $f$.
+\begin{itemize}
+    \item \textbf{Open disk}: A set of the form
+    \begin{equation}
+        \{ z\in\mathbb{C}:\vert z-z_0\vert<\rho \},\quad \rho>0.
+    \end{equation}
+    The boundary is the unit circle $\vert z-z_0\vert=\rho$ which is \textit{not} part of the set.
+    \item \textbf{Unit disk}: This is the set
+    \begin{equation}
+        \{ z\in\mathbb{C}:\vert z\vert<1 \}.
+    \end{equation}
+    \item \textbf{Neighbourhood}: A neighbourhood of a point $z_0$ means a disk of the form $ \{ z\in\mathbb{C}:\vert z-z_0\vert<\rho \} $ for some $\rho>0$.
+    \item \textbf{Interior point}: The interior point of $A$ is a point $z_0\in A$ such that a neighbourhood of $z_0$ is also in $A$.
+    \item \textbf{Open set}: A set such that every point is an interior point.
+    \item \textbf{Boundary point}: A boundary point of $A$ is a point $z_0$ such that every neighbourhood of $z_0$ contains points which are in $A$ and also contain points which are not in $A$.
+    \item \textbf{Boundary}: The boundary of $A$ is the set of all it's boundary points.
+    \item \textbf{Polygonal path}: Let $w_1,\,w_2,\,\ldots,\,w_{n+1}$ be points in $\mathbb{C}$ and let $l_k$ be the straight line segment joining $w_k$ to $w_{k+1}$. The successive line segments $l_1,\,l_2,\,\ldots,\,l_{n+1}$ is a polygonal path joining $w_1$ to $w_{n+1}$.
+    \item \textbf{Connected}: A set $A$ is connected if every pair of points $z_1$ and $z_2$ in $A$ can be joined by a polygonal path which is contained in $A$.
+    \item \textbf{Domain}: An open connected set.
+    \item \textbf{Region}: A domain or a domain together with some or all of the boundary points.
+    \item \textbf{Bounded}: A set $A$ is bounded if there exists $R>0$ such that the set is contained in the disk $\{ z:\vert z\vert<R \}$.
+    \item \textbf{Unbounded}: A set is unbounded if it's not bounded.
+    \item A domain (which is thus connected) and does not have holes.
+\end{itemize}
+
+\subsubsection{Limits}
+\begin{definition}
+    Let $f$ be defined in a neighbourhood of $z_0$ and let $f_0\in\mathbb{C}$. If for every $\epsilon>0$ there exists a real number $\delta>0$ such that
+    \begin{equation}
+        \vert f(z)\vert <\epsilon\,\text{for all }z\text{ satisfying }0<\vert z-z_0\vert<\delta, \nonumber
+    \end{equation}
+    then we say that
+    \begin{equation}
+        \lim_{z\to z_0}f(z)=f_0.
+    \end{equation}
+\end{definition}
+
+\subsubsection{Continuity}
+\begin{definition}
+    A function $w=f(z)$ is continuous at $z=z_0$ provided $f(z_0)$ is defined and
+    \begin{equation}
+        \lim_{z\to z_0}f(z)=f(0).
+    \end{equation}
+\end{definition}
+Suppose that $f(z)$ and $g(z)$ are continuous at $z_0$.
+\begin{itemize}
+    \item $f(z)\pm g(z)$ and $f(z)g(z)$ are continuous at $z_0$.
+    \item $f(z)/g(z)$ is continuous at $z_0$ provided $g(z)\neq 0$.
+\end{itemize}
+Suppose that $f(z)$ is continuous at $z_0$ and $g(z)$ is continuous at $f(z_0)$ then $g(f(z))$ is continuous at $z_0$.
+\linebreak
+Let $f(z)=u(x,y)+iv(x,y).$ If $f$ is continuous at $z_0=x_0+i y_0$ then $u$ and $v$ are both continuous as functions on $\mathbb{R}^2$ at $(x_0,y_0)$. Conversely, if $u$ and $v$ are both continuous at $(x_0,y_0)$ then $f$ is continuous at $z_0=x_0+i y_0$.
+
+\section{Week 3}
+\subsection{Functions and the Cauchy-Riemann equations}
+\subsubsection{Analytic functions}
+\begin{theorem}
+    Let $f$ be a complex valued function defined in a neighbourhood of $z_0$. The derivative of $f$ at $z_0$ is given by
+    \begin{equation}
+        \frac{df}{dz}(z_0)\equiv f^\prime(z_0):=\lim_{h\to 0}\frac{f(z_0+h)-f(z_0)}{h}
+    \end{equation}
+    provided the limit exists. Note that here $h\in\mathbb{C}$. 
+\end{theorem}
+\begin{itemize}
+    \item A function $f$ is analytic at $z_0$ if $f$ is differentiable at all points in some neighbourhood of $z_0$.
+    \item A function $f$ is analytic in a domain if $f$ is analytic at all points in the domain.
+    \item A function $f:\mathbb{C}\to\mathbb{C}$ is an entire function if it is analytic on the whole complex plane $\mathbb{C}$.
+\end{itemize}
+
+\subsubsection{Combining differentiable functions}
+Let $f$ and $g$ be differentiable at $z_0$. We have the following:
+\begin{enumerate}
+    \item 
+    \begin{equation}
+        (f\pm g)^\prime (z_0) = f^\prime(z_0)\pm g^\prime(z_0). \nonumber
+    \end{equation}
+    \item
+    \begin{equation}
+        (cf)^\prime(z_0)=cf^\prime(z_0) \nonumber
+    \end{equation}
+    for all constants $c\in\mathbb{C}$.
+    \item
+    \begin{equation}
+        (fg)^\prime(z_0)=f(z_0)g^\prime(z_0)+f^\prime(z_0)g(z_0).
+    \end{equation}
+    This is the product rule.
+    \item
+    \begin{equation}
+        (\frac{f}{g})^\prime (z_0) = \frac{g(z_0)g^\prime(z_0)-f(z_0)g^\prime(z_0)}{g(z_0)^2},\quad \text{if }g(z_0)\neq 0.
+    \end{equation}
+    This is the quotient rule.
+    \item Let now $f$ be a function which is differentiable at $g(z_0)$. Then
+    \begin{equation}
+        \left.\frac{d}{dz}f(g(z))\right\rvert_{z=z_0} = f^\prime(g(z_0))g^\prime(z_0).
+    \end{equation}
+    This is the chain rule.
+\end{enumerate}
+
+\subsubsection{The Cauchy-Riemann equations}
+Let $f(z)=u(x,y)+iv(x,y)$. When $f$ is analytic at $z_0$ the following limit exists:
+\begin{equation}
+    \frac{df}{dz}(z_0)\equiv f^\prime(z_0):=\lim_{h\to 0}\frac{f(z_0+h)-f(z_0)}{h}.
+\end{equation}
+By considering the case when $h$ is real and then purely imaginary we get
+\begin{align}
+    f^\prime(z) &= \frac{\partial u}{\partial x}+i\frac{\partial v}{\partial x}, \\
+    &= \frac{1}{i}\left( \frac{\partial u}{\partial y}+i\frac{\partial v}{\partial y} \right) = \frac{\partial v}{\partial y} -i\frac{\partial u}{\partial y}.
+\end{align}
+Equating the real and imaginary parts gives the Cauchy-Riemann equations.
+\begin{theorem}
+The Cauchy-Riemann equations are
+    \begin{equation}
+        \frac{\partial u}{\partial x} = \frac{\partial v}{\partial y},\quad\frac{\partial u}{\partial y}=-\frac{\partial v}{\partial x}.
+    \end{equation}
+    The Cauchy-Riemann equations in polar coordinates are
+    \begin{equation}
+        \frac{\partial \tilde{u}}{\partial r} = \frac{1}{r}\frac{\partial \tilde{v}}{\partial \theta},\quad \frac{1}{r}\frac{\partial \tilde{u}}{\partial \theta} = -\frac{\partial \tilde{v}}{\partial r}.
+    \end{equation}
+\end{theorem}
+
+\section{Week 4}
+\subsection{Analytic functions}
+\subsubsection{Gradient}
+\begin{theorem}
+    Te gradient of $\phi$ is
+    \begin{equation}
+        \nabla\phi = \frac{\partial \phi}{\partial x}\underline{i} + \frac{\partial \phi}{\partial y}\underline{j} + \frac{\partial \phi}{\partial z}\underline{k}.
+    \end{equation}
+\end{theorem}
+\subsubsection{Directional derivative}
+\begin{theorem}
+    The directional derivative of $\phi$ in the direction of a unit vector $\underline{n}$ is
+    \begin{align}
+        \frac{\partial \phi}{\partial n}(\underline{r}) &= \left.\frac{\partial}{\partial s}\phi(\underline{r}+s\underline{n})\right\vert_{s=0} \\
+        &= \left( n_1\frac{\partial \phi}{\partial x_1} + n_2\frac{\partial \phi}{\partial x_2} + n_3\frac{\partial \phi}{\partial x_3} \right)(\underline{r})=\underline{n}\cdot\nabla\phi(\underline{r}).
+    \end{align}
+    When $s$ is small
+    \begin{equation}
+        \phi(\underline{r}+s\underline{n})-\phi(\underline{r})\approx s\frac{\partial \phi}{\partial n}(\underline{r}) = (s\underline{n})\cdot\nabla\phi(\underline{r}).
+    \end{equation}
+\end{theorem}
+\subsubsection{Analytic function definition}
+\begin{definition}
+    A function that is analytic holds the Cauchy-Riemann equations true.
+\end{definition}
+
+\section{Week 5}
+\subsection{Analytic functions}
+\subsubsection{Harmonic functions}
+\begin{theorem}
+    $\phi(x,y)$ is harmonic if
+    \begin{equation}
+        \nabla^2\phi = \frac{\partial \phi}{\partial x^2} + \frac{\partial^2 \phi}{\partial y^2} = 0.
+    \end{equation}
+\end{theorem}
+\subsubsection{Harmonic Conjugate}
+\begin{theorem}
+    If $f=u+iv$ is analytic then $u$ and $v$ are harmonic functions. $v$ is said to be the harmonic conjugate of $u$.
+\end{theorem}
+
+\section{Week 6}
+\subsection{Elementary functions of $z$}
+\subsubsection{Representation of polynomials and zeros}
+Polynomials are entire functions and can be represented in several ways.
+\begin{align}
+    p_n(z) &= \sum_{k=0}^n a_k z^k \nonumber \\
+    &= \sum_{k=0}^n \frac{p_n^{(k)}(0)}{k!}z^k,\, \text{finite Maclaurin series}, \nonumber \\
+    &= \sum_{k=0}^n \frac{p_n^{(k)}(z_0)}{k!}(z-z_0)^k,\, \text{Taylor polynomial }, \nonumber \\
+    &= a_n(z-\alpha_1)(z-\alpha_2)\cdots(z-\alpha_n),\,\text{in terms of the zeros,} \nonumber \\
+    &= a_n(z-\zeta_1)^{r_1}(z-\zeta_2)^{r_2}\cdots(z-\zeta_m)^{r_m}, \nonumber 
+\end{align}
+where $\zeta_1,\,\ldots,\,\zeta_m$ are the distinct zeros and $r_1+\cdots+r_m=n$.\\
+At the zero $\zeta_k$ of multiplicity $r_k$ we have
+\begin{equation}
+    p_n(\zeta_k) = p^\prime(\zeta_k)=\cdots=p_n^{(r_k-1)}(\zeta_k)=0,\,p_n^{(r_k)}(\zeta_k)\neq0.
+\end{equation}
+
+\subsubsection{Rational functions}
+\begin{theorem}
+    A ration function is the ratio of two polynomials, $p,\,q$, such that
+    \begin{equation}
+        R(z)=\frac{p(z)}{q(z)},\quad q(z) = (z-\zeta_1)(z-\zeta_2)\cdots(z-\zeta_n).\label{eq:rational}
+    \end{equation}
+    where $\zeta_1,\,\ldots,\,\zeta_n$ are singular points.
+\end{theorem}
+If the limits exists as $z\to\zeta_k$ then $\zeta_k$ is a removable singularity.\\
+Otherwise $R(z)$ has a pole singularity at $\zeta_k$. \\
+A simple pole is the case when $1/R(z)$ has a simple zero at $\zeta_k$.\\
+The order of the pole of $R(z)$ is the multiplicity of the zero of $1/R(z)$.
+\subsubsection{Partial fractions representation}
+From eq.~(\ref{eq:rational}), when $\deg p(z)<\deg q(z)$ and the zeros of $q(z)$ are simple we have the partial fraction representation of the form
+\begin{equation}
+    R(z) = \frac{p(z)}{q(z)} = \sum_{k=1}^n \frac{A_k}{z-\zeta_k}.
+\end{equation}
+When $\deg p(z)\geq \deg q(z)$ and the zeros of $q(z)$ are simple we have a representation of the form
+\begin{equation}
+    R(z) = \frac{p(z)}{q(z)} = (\text{some polynomial}) + \sum_{k=1}^n \frac{A_k}{z-\zeta_k}. \label{eq:simpole}
+\end{equation}
+In either case, $A_k$is the residue at $\zeta_k$.
+
+\subsubsection{Residues}
+When $R(z)$ is in the form of eq.~(\ref{eq:simpole}), to get $A_k$ we have
+\begin{align}
+    A_k &= \lim_{z\to\zeta_k}(z-\zeta_k)R(z) = \lim_{z\to\zeta_k}\frac{(z-\zeta_k)p(z)}{q(z)}, \nonumber \\
+    &= p(\zeta_k)\lim_{z\to\zeta_k}\frac{(z-\zeta_k)}{q(z)} = \frac{p(\zeta_k)}{q^\prime(\zeta_k)}.
+\end{align}
+When $q(z)$ has a zero at $\zeta$ of multiplicity $r\geq 1$ we need terms involving
+\begin{equation}
+    \frac{1}{z-\zeta},\,\frac{1}{(z-\zeta)^2},\,\ldots,\,\frac{1}{(z-\zeta)^r}. \nonumber
+\end{equation}
+The general case is as follows.\\
+Let
+\begin{equation}
+    R(z) = \frac{p(z)}{q(z)}.
+\end{equation}
+We re-label to concentrate on on of the zeros of $q(z)$ at $\zeta$ and write
+\begin{equation}
+    R(z) = \cdots + \frac{B_1}{z-\zeta}+\cdots+\frac{B_r}{(z-\zeta)^r}+\cdots .
+\end{equation}
+Then
+\begin{equation}
+    (z-\zeta)^r R(z) = B_r + B_{r-1}(z-\zeta)+\cdots+B_1(z-\zeta)^{r-1} + (z-\zeta)^r(\text{a function at }\zeta).
+\end{equation}
+To get the residue $B_1$ we have
+\begin{equation}
+    B_1 = \frac{1}{(r-1)!}\lim_{z\to\zeta}\left( \frac{d^{r-1}}{dz^{r-1}}(z-\zeta)^r R(z) \right).
+\end{equation}
+A similar type of calculation is done for the other coefficients. 
+
+\section{Week 7}
+\subsection{Elementary functions of $z$}
+\subsubsection{General case of the residues}
+Let 
+\begin{equation}
+    R(z) = \frac{p(z)}{(z-\zeta_1)^{r_1}(z-\zeta)^{r_2}\cdots(z-\zeta_n)^{r_n}}.
+\end{equation}
+With the procedures above we can get the coefficients in the following candidate representation of $R(z)$.
+\begin{equation}
+    \left( \frac{A_{1,1}}{z-\zeta_1} + \cdots + \frac{A_{r_1,1}}{(z-\zeta_1)^{r_1}} \right) + \cdots + \left( \frac{A_{1,n}}{z-\zeta_n} + \cdots + \frac{A_{r_n,n}}{(z-\zeta_n)^{r_n}} \right).
+\end{equation}
+The coefficients are 
+\begin{equation}
+    A_{i,j} = \frac{1}{(r_j-i)!}\lim_{z\to\zeta_j}\left( \frac{d^{r_j -i}}{dz^{r_j -i}}(z-\zeta_j)^{r_j}R(z) \right),\quad i=1,\,2,\,\ldots,\,r_j.
+\end{equation}
+\subsubsection{Complex trig functions}
+We define
+\begin{align}
+    &\cosh{z} = \frac{1}{1}(e^z+e^{-z}), &\sinh{z} = \frac{1}{1}(e^z - e^{-z}), \nonumber\\
+    &\cos{z} = \frac{1}{2}(e^{iz} + e^{-iz}), &\sin{z} = \frac{1}{2i}(e^{iz}-e^{-iz}). \nonumber
+\end{align}
+As in the real case
+\begin{align}
+    &\frac{d}{dz}\cosh{z} = \sinh{z}, &\frac{d}{dz}\sinh{z}=\cosh{z}, \nonumber \\
+    &\frac{d}{dz}\cos{z} = -\sin{z}, &\frac{d}{dz}\sin{z}=\cos{z}. \nonumber
+\end{align}
+We also have the identities
+\begin{equation}
+    \cos^2 z + \sin^2 z = \cosh^2 z - sinh^2 z = 1.
+\end{equation}
+For all $z_1,\,z_2\in\mathbb{C}$ we have the addition formulas
+\begin{align}
+    \sin{(z_1\pm z_2)} &= \sin{z_1}\cos{z_2}\pm\cos{z_1}\sin{z_2}, \\
+    \cos{(z_1\pm z_2)} &= \cos{z_1}\cos{z_2}\mp\sin{z_1}\sin{z_2}.
+\end{align}
+
+\subsubsection{The real and imaginary parts of $\sin(z)$ and $\cos(z)$}
+With $z=x+iy,\,x,y\in\mathbb{R}$ we have
+\begin{align}
+    \sin{(x+iy)} &= \sin{x}\cosh{y} + i\cos{x}\sinh{y}, \\
+    \cos{(x+iy)} &= \cos{x}\cosh{y}-i\sin{x}\sinh{y}.
+\end{align}
+The real and imaginary parts of these functions are hence harmonic functions.
+
+\section{Week 8}
+\subsubsection{Exponential function}
+\begin{equation}
+    e^z \equiv \exp{(z)}:=e^x e^{iy} = e^x (\cos{y}+i\sin{y}).
+\end{equation}
+As in the real case we have for all $z,\,z_1,\,z_2\in\mathbb{C}$,
+\begin{equation}
+    \frac{d}{dz}e^z=e^z,\quad e^{-z}=1/e^z,\quad e^{z_1+z_2}=e^{z_1}e^{z_2}.
+\end{equation}
+The function $w=\exp{(z)}$ is periodic with period $2\pi i$ and is one-to-one on
+\begin{equation}
+    G = \{ z=x+iy:\, -\pi<y\leq\pi \}
+\end{equation}
+with inverse
+\begin{equation}
+    \text{Log }w = \ln{\vert w\vert} + i\text{Arg }{w}
+\end{equation}
+which is the principal valued logarithm.
+
+\subsubsection{$\cot$ and $\tanh$}
+\begin{equation}
+    \cot{z} = \frac{\cos{z}}{\sin{z}},\quad \tan{z} = \frac{\sin{z}}{\cos{z}}=-\cot{(z+\pi/2)} = \frac{1}{\tan{(\pi/2-z)}}.
+\end{equation}
+$\cot{z}$ has simple poles at $k\pi$ and $\tan{z}$ has simple poles at $\pi/2+k\pi$ where $k\in\mathbb{Z}$.
+
+\subsubsection{$\text{Log }z$ and the multi-valued $\log{z}$}
+\begin{definition}
+    The principal valued logarithm is
+    \begin{equation}
+        \text{Log }z = \ln{\vert z\vert} + i\text{Arg }{z}.
+    \end{equation}
+\end{definition}
+The multi-valued version $w=\log{z}$ means all complex numbers such that
+\begin{equation}
+    e^w=z \nonumber
+\end{equation}
+and the set of values is
+\begin{equation}
+    \{ \text{Log }z + 2k\pi i:\, k\in\mathbb{Z} \}. \nonumber
+\end{equation}
+In both cases
+\begin{equation}
+    e^{\text{Log }z} = e^{\log{z}} = z. \nonumber
+\end{equation}
+
+\subsubsection{Complex powers $z^\alpha$}
+\begin{definition}
+    The principal value of $z^\alpha$ is defined as
+    \begin{equation}
+        e^{\alpha \text{Log }z}.
+    \end{equation}
+\end{definition}
+The possibly multi-valued version of this is
+\begin{equation}
+    e^{\alpha \log{z}}
+\end{equation}
+
+\section{Week 9}
+\subsection{Integrals, arcs and contours}
+\subsubsection{Series and the residue more generally}
+\textbf{Taylor series:} If $f(z)$ is analytic in the disk $\vert z-z_0\vert<R$ then
+\begin{equation}
+    f(z)=\sum_{n=0}^\infty \frac{f^{(n)}(z_0)}{n!}(z-z_0)^n
+\end{equation}
+and the series converges uniformly in $\vert z-z_0\vert\leq R^\prime<R$.\\
+\textbf{Laurent series:} If $f(z)$ is analytic in $0<r<\vert z-z_0\vert<R$ then
+\begin{equation}
+    f(z)=\sum_{n=0}^\infty a_n(z-z_0)^n + \sum_{n=1}^\infty\frac{a_{-n}}{(z-z_0)^n},
+\end{equation}
+there is uniform convergence in $0\leq r<r_1\leq\vert z-z_0\vert\leq R_1<R$. \\
+Both series are unique once $z_0$ is specified. \\
+All the coefficients can be written as loop integrals.\\
+The coefficients $a_{-1}$ is the residue at $z_0$ when $r=0$. 
+
+\subsection{Cauchy theorems}
+Let $f$ be a function which is analytic in a domain $D$ and let $\Gamma$ be a positively orientated loop in $D$ and let $z$ be a point inside $D$.
+\begin{theorem}
+    \textbf{The Cauchy-Goursat theorem:}
+    \begin{equation}
+        \oint_\Gamma f(\zeta)d\theta = 0.
+    \end{equation}
+\end{theorem}
+\begin{theorem}
+    \textbf{The Cauchy integral formula:}
+    \begin{equation}
+        f(z) = \frac{1}{2\pi i}\oint_\Gamma \frac{f(\zeta)}{\zeta-z}d\zeta.
+    \end{equation}
+\end{theorem}
+\begin{theorem}
+    \textbf{The generalised Cauchy integral formula:}
+    \begin{equation}
+        f^{(n)}(z) = \frac{n!}{2\pi i}\oint_\Gamma \frac{f(\zeta)}{(\zeta-z)^{n+1}}d\zeta,\quad n=0,\,1,\,2,\,\ldots 
+    \end{equation}
+\end{theorem}
+
+\subsubsection{Integral of a complex valued function}
+If $f:[a,b]\to\mathbb{C}$ with $f=u+iv$, $u,\,v\in\mathbb{R}$ then
+\begin{equation}
+    \int_a^b f(x)\,dx =  \int_a^b u(x)\,dx + i\int_a^b v(x)\,dx.
+\end{equation}
+
+\subsubsection{A smooth arc}
+\begin{definition}
+    A set $\gamma \subset \mathbb{C}$ is a smooth arc if the set can be described in the form
+    \begin{equation}
+        \{ z(t):\, a\leq t\leq b \}
+    \end{equation}
+    where $z^\prime (t)$ is continuous on $[a,b]$ and $z^\prime (t)\neq 0$ on $[a,b]$.
+\end{definition}
+The arc is said to be closed if the starting point $z(a)$ and the end point $z(b)$ are the same. \\
+If the arc is not closed then we also require that $z(t)$ is one-to-one on $[a,b]$, i.e. it does not intersect itself.\\
+If the arc is closed then we require that $z(t)$ is $one-to-one$ on $[a,b)$ with
+\begin{equation}
+    z(b)=z(a),\quad z^\prime(b) = z^\prime(a). \nonumber
+\end{equation}
+\begin{definition}
+    A smooth arc with a specific ordering of points is known as a directed smooth arc,
+\end{definition}
+
+\subsubsection{A contour}
+\begin{definition}
+    A contour is one point or a finite sequence of directed smooth arcs $\gamma_k$ with the end of $\gamma_k$ being the start of arc $\gamma_{k+1}$.
+\end{definition}
+\begin{theorem}
+    Let $\gamma = \{ z(t):\, a\leq t\leq b \}$ and let $a=t_0<t_1<\cdots<t_m=b$. The length of the arc is approximately
+    \begin{equation}
+        \sum_{i=1}^m \vert z(t_i)-z(t_{i-1})\vert.
+    \end{equation}
+    When $t-t_{i-1}$ is small, we have
+    \begin{equation}
+        l(\gamma) = \text{length of }\gamma = \int_a^b \vert z^\prime (t)\vert\,dt.
+    \end{equation}
+\end{theorem}
+\begin{definition}
+    Let $a = t_0<t_1<\cdots<t_m=b$ and let
+    \begin{equation}
+        A_m = \sum_{i=1}^m h_i f(z(t_{i-1/2})),\quad h_i = z(t_i)-z(t_{i-1}). \nonumber
+    \end{equation}
+    \begin{align}
+        h_i f(z(t_{i-1/2})) &= (z(t_i)-z(t_{i=1}))f(z(t_{i-1/2})) \nonumber \\
+        &\approx f(z(t_{i-1/2}))z^\prime(t_{i-1/2})(t_i-t_{i-1}). \nonumber
+    \end{align}
+    \begin{equation}
+        \int_\gamma f(z)\,dz = \lim_{\substack{m\to\infty \\ max_i\vert h_i\vert\to 0}}A_m = \int_a^b f(z(t))z^\prime(t)\,dt.
+    \end{equation}
+\end{definition}
+The value here does not depend on which particular valid parameterisation $z(t)$ that we use to describe $\gamma$.
+
+\subsubsection{The $ML$ inequality}
+\begin{lemma}
+    Let $M$ and $L$ be defined by
+    \begin{equation}
+        M = \max_{z\in\Gamma}\vert f(z)\vert\quad \text{and} \quad L=\text{length of }\Gamma.
+    \end{equation}
+    From the bound on $\vert f(z)\vert$ and the triangle inequality we have
+    \begin{equation}
+        \left\vert \sum_{i=1}^m h_i f(z(t_{i-1/2})) \right\vert \leq \sum_{i=1}^m \vert h_i\vert \vert f(z(t_{i-1/2}))\vert \leq M\sum_{i=1}^m\vert h_i\vert\leq ML. \nonumber
+    \end{equation}
+    As the bound above is independent of $m$ and as the integral is an appropriate limit of such a sum we have
+    \begin{equation}
+        \left\vert \int_\gamma f(z)\,dz \right\vert \leq ML.
+    \end{equation}
+\end{lemma}
+
+\subsubsection{Independence of path when $f = F^\prime$}
+\begin{theorem}
+    If there exists an anti-derivative $F$ along the path then
+    \begin{equation}
+        \frac{d}{dt}F(z(t)) = F^\prime (z(t))z^\prime(t) = f(z(t))z^\prime(t).
+    \end{equation}
+\end{theorem}
+This is the integrand in the expression for the contour integral.
+\begin{theorem}
+    Suppose that the function f(z) is continuous in a domain $D$ and has an anti-derivative $f(z)$ throughout $D$. Then for any contour $\Gamma$ contained in $D$ with initial point $z_I$ and an end point $z_E$ we have
+    \begin{equation}
+        \int_\Gamma f(z)\,dz = F(z_E)-f(z_I).
+    \end{equation}
+\end{theorem}
+
+
+\section{Week 10}
+\subsection{Loop integrals}
+\subsubsection{Closed loops and powers of $z$}
+Let $\Gamma$ denote a closed loop.\\
+Let $n\in\mathbb{Z}$ and $z_0\in\mathbb{C}$.\\
+When $n\neq -1$ the anti-derivative of $(z-z_0)^n$ is $(z-z_0)^{n+1}/(n+1)$ and as a consequence
+\begin{equation}
+    \oint_\Gamma (z-z_0)^n\, dz = 0.
+\end{equation}
+When $n=-1$ the function $1/(z-z_0)$ has an anti-derivative $\text{Log}(z-z_0)$ but this function is discontinuous on a branch cut starting from $z_0$. The value of the integral depends on whether $z_0$ is inside or outside the loop.
+
+\[
+    \oint_\Gamma\frac{dz}{z-z_0} = 
+    \begin{cases}
+        2\pi i, & \text{if }z_0\text{ is inside }\Gamma,\\
+        0, & \text{if }z_0\text{ is outside }\Gamma.
+    \end{cases}
+\]
+The integral does not exist in the usual sense when $z_0$ is on $Gamma$.
+
+\subsubsection{Path independence, loop integrals and anti-derivatives}
+The following are equivalent statements involving the integral of $f$:
+\begin{enumerate}
+    \item All loop integrals of $f$ are $0$.
+    \item The value of the integral of $f$ only depends on the end points.
+    \item There exists an anti-derivative $F$, i.e. $F^\prime = f$.
+\end{enumerate}
+
+\subsubsection{Loop integrals and rational functions}
+\begin{theorem}
+    If $z_1,\,\ldots,\,z_m$ are points inside $\Gamma$ at which $R(z)$ has poles then
+    \begin{align}
+        \oint_{\Gamma} R(z)\,dz &= \sum_{k=1}^m A_k\oint_{\Gamma}\frac{dz}{z-z_k}, \nonumber\\
+        &= 2\pi i\sum_{k=1}^m A_k.
+    \end{align}
+\end{theorem}
+
+\section{Week 11}
+
+\section{Week 17}
+
+\section{Week 18}
+
+\section{Week 19}
+
+\section{Week 20}
+
+\section{Week 21}
+
+\section{Week 22}
+
+\section{Week 23}
 
 \end{document}
