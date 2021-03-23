@@ -2,6 +2,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{url,amsmath,graphicx,amssymb,booktabs}
 \usepackage[top=1.5cm, bottom=1.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes.multipart}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
@@ -365,9 +367,279 @@ This says that the future ($S_{n+1}$) is conditionally independent of the past $
     $\lambda=1$ is an eigenvalue of any stochastic matrix $\mathbf{p}$.
 \end{theorem}
 
+
+
 \section{Week 17}
 
+
+\subsection{Markov chains}
+
+\subsubsection{Revisiting a position}
+In a random walk with only $\pm1$ steps allowed, even positions can be reached with an even number of steps and vice versa. Thus a position $i$ can be revisited only after an even number of steps:
+\begin{equation}
+    P_{ii}^{(2m)} = \frac{(2m)!}{(m!)^2}p^m q^m\quad\text{and}\quad P_{ii}^{(2m-1)}=0
+\end{equation}
+for any initial position.
+\begin{definition}
+    A state, return to which is only possible after $m,\,2m,\,3m,\ldots$ steps is called periodic if $m\geq2$. Any other state is called aperiodic.
+\end{definition}
+\begin{definition}
+    If the probability of return to a given state is equal to one, such a state is called recurrent. If this probability is less than one, the state is called transient.
+\end{definition}
+Note that this definition refers to the eventual probability of return, after an arbitrary number of steps.
+
+\subsubsection{Classification of states}
+These concepts apply to general discrete stochastic processes; in Markov chain applications $P_{ij}^{(m)}$ is $(p^{(m)})_{ij}$.
+\begin{definition}
+    A state $i$ is said to communicate with a state $j$ if it is possible eventually to reach $j$ starting from $i$, i.i., if $P_{ij}^{(m)}>0$ for some $m$.
+\end{definition}
+\begin{definition}
+    States $i$ and $j$ intercommunicate if, in addition, $\exists m^\prime:P_{ji}^{(m^\prime)}>0$.
+\end{definition}
+This property is denoted as $i \leftrightarrow j$, and it is transitive:
+\begin{equation}
+    \text{If }i\leftrightarrow j\text{ and }j\leftrightarrow k\text{, then }i\leftrightarrow k.
+\end{equation}
+
+\subsubsection{Recurrence time}
+Starting from a state $i$ the probability that the chain will next visit the same state after $m$ steps can be formally expressed ass
+\begin{equation}
+    f_{ii}^{(m)} = \Prob[(X_{n+m}=i\cap(X_{n+k}\neq i\forall k:1\leq k\leq m-1)\vert X_n=i)].
+\end{equation}
+The sum
+\begin{equation}
+    R_i = \sum_{m=1}^\infty f_{ii}^{(m)}
+\end{equation}
+is the probability of return, so $R_i = 1$ for a recurrent state $i$. This means that $f_{ii}^{(m)}$ has the meaning of a discrete probability distribution of recurrence ``times'' $T_i:f_{ii}^{(m)} = \Prob[T_i = m]$.\\
+Thus $\mu_i = \E[T_i] = \sum_{m=1}^\infty mf_{ii}^{(m)}$ is the expectation of the recurrence time - often known as the mean recurrence time for a state $i$.
+\begin{definition}
+    Depending on whether $\mu_i$ is finite or infinite, all recurrent states are classified as positive-recurrent, or null-recurrent, respectively.
+\end{definition}
+\begin{definition}
+    A positive-recurrent aperiodic state is ergodic.
+\end{definition}
+Two more special types of states are:
+\begin{itemize}
+    \item \textbf{Ephemeral} states: those states $i$ for which $p_{ki}=1$, for any $k$, and
+    \item \textbf{Absorbing} states: those states $i$ for which $p_{ii}=1$.
+\end{itemize}
+
+\subsubsection{States are ``contagious''}
+\begin{theorem}
+    Two intercommunicating states must be of the same type.
+\end{theorem}
+\begin{theorem}
+    Let $i$ be a recurrent state which communicates with $j$; then $i$ and $j$ intercommunicate, and $j$ is also a recurrent state of the same type and period as $i$.
+\end{theorem}
+\begin{corollary}
+    A pair of recurrent states of the same type either intercommunicate, or neither of them communicates with the other.
+\end{corollary}
+\begin{corollary}
+    A recurrent state of one type cannot communicate with a recurrent state of another type, nor with a transient state.
+\end{corollary}
+Note, a transient state can communicate with other transient states, as well as with both types of recurrent states.
+
+\subsubsection{Closed sets of states}
+\begin{definition}
+    A set $C$ of states is closed if no state in $C$ communicates with any state outside of $C$. A sufficient condition for this is
+    \begin{equation}
+        p_{ij} = 0 \forall i\in C \text{ and } \forall j\notin C.
+    \end{equation}
+\end{definition}
+\begin{definition}
+    A closed set $C$ of states is irreducible if every pair of states in $C$ intercommunicate.
+\end{definition}
+\begin{itemize}
+    \item Since a recurrent state cannot communicate with a transient state, the set of all recurrent states is closed, but not necessarily irreducible.
+    \item If a closed set contains only one state then that state is absorbing.
+    \item An irreducible closed set contains no smaller closed set.
+\end{itemize}
+
+\begin{theorem}
+    The state space $\mathbb{S}$ of a Markov chain can be uniquely partitioned as
+    \begin{equation}
+        \mathbb{S} = T\cup C_1\cup C_2\cup\ldots \nonumber
+    \end{equation}
+    where $T$ is the set of all transient states, and $C_1,\,C_2,\ldots$ are irreducible closed sets of recurrent states, each set containing states of the same type. 
+\end{theorem}
+\begin{theorem}
+    If the state space is finite, then at least one state is recurrent, and, assuming the chain is time-homogeneous, all recurrent states are positive recurrent.
+\end{theorem}
+
+\subsubsection{Corollaries of the decomposition theorem}
+\begin{corollary}
+    If the chain starts in, or eventually reaches one of the irreducible closed sets $C_r$, then it never leaves it. $C_r$ thus becomes the state space for the subsequent part of the realisation of the chain, and every state in $C_r$ is visited infinitely often. Thus the subset $C_r$, together with the corresponding transition probabilities, forms a Markov chain in it's own right.
+\end{corollary}
+\begin{corollary}
+    If the chain starts in the set $T$ of transient states, then it either moves between states within $T$ forever, visiting any one state only a finite number of times, or it eventually enters one of the closed sets $C_r$ of recurrent states, and it remains in $C_r$ forever after.
+\end{corollary}
+\begin{figure}[ht]
+    \begin{center}
+        \resizebox{\textwidth}{!}{
+            \begin{tikzpicture}[auto, sibling distance=120mm, text centered, 
+              every node/.style = {shape=rectangle, rounded corners,
+                draw,
+                top color=white, bottom color=blue!20,}]]
+              \node {\begin{tabular}{c} \textbf{States}\end{tabular}}
+                child { node {\begin{tabular}{c} \textbf{Recurrent} \\ Probability of return $=1$. \end{tabular}}
+                        child { node {\begin{tabular}{c}\textbf{Null-recurrent} \\ Expected time to return is infinite. \end{tabular}} }
+                        child { node {\begin{tabular}{c} \textbf{Positive-recurrent} \\ Expected time to return is finite. \end{tabular}}
+                            child { node {\begin{tabular}{c} \textbf{Periodic} \\ Return is possible only after a number \\ of steps proportional to some integer $\geq 2$ \end{tabular}} } 
+                            child { node {\begin{tabular}{c} \textbf{Aperiodic (ergodic)} \\ Possible number of steps to return \\ do not have a common divisor. \end{tabular}} 
+                                child { node {\begin{tabular}{c} \textbf{Absorbing} \\ Return is certain on each subsequent step. \end{tabular}} } } } } 
+                child { node {\begin{tabular}{c} \textbf{Transient} \\ Probability of return is $<1$. \end{tabular}}
+                    child { node {\begin{tabular}{c} \textbf{Ephemeral} \\ Probability of return $=0$. \end{tabular}} } };
+            \end{tikzpicture}
+        }
+    \end{center}
+\end{figure}
+
+\subsubsection{Block matrices}
+\begin{equation}
+    M = \left(\begin{array}{c c c|c c|c c}
+        1 & 2 & 3 & 4 & 5 & 6 & 7 \\
+        8 & 9 & 10 & 11 & 12 & 13 & 14 \\
+        \hline
+        15 & 16 & 17 & 18 & 19 & 20 & 21 \\
+        22 & 23 & 24 & 25 & 26 & 27 & 28 \\
+        29 & 30 & 31 & 32 & 33 & 34 & 35
+    \end{array}\right)
+    =
+    \left(\begin{array}{c c c}
+        A & B & C \\
+        D & E & F
+    \end{array}\right). \nonumber
+\end{equation}
+Each of the blocks is defined in the obvious way:
+\begin{equation}
+    A =
+    \begin{pmatrix}
+        1 & 2 & 3 \\ 8 & 9 & 10
+    \end{pmatrix},\quad
+    B =
+    \begin{pmatrix}
+        4 & 5 \\ 11 & 12
+    \end{pmatrix}\quad\text{etc.} \nonumber
+\end{equation}
+If we were to then have a matrix $N$ such that 
+\begin{equation}
+    N = 
+    \begin{pmatrix}
+        G & H \\ J & K \\ L & S
+    \end{pmatrix} \nonumber
+\end{equation}
+that is the correct size so $MN$ exists, then
+\begin{equation}
+    MN = 
+    \begin{pmatrix}
+        A & B & C \\ D & E & F
+    \end{pmatrix}
+    \begin{pmatrix}
+        G & H \\ J & K \\ L & S
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        AG + BJ + CL & AH + BK + CS \\ DG + EJ + FL & DH + EK + FS
+    \end{pmatrix}.
+\end{equation}
+
+\subsubsection{Permutations of rows and columns}
+Consider a $3\times 3$-transition matrix, corresponding to states $1,\,2$ and $3$:
+\begin{equation}
+    \mathbf{p} =
+    \begin{pmatrix}
+        .1 & .7 & .2 \\ .3 & .5 & .2 \\ .2 & .4 & .4
+    \end{pmatrix}. \nonumber
+\end{equation}
+If we now decide to list the states in the order $3,\,2,\,1$, then we need to swap the first and third row, \textbf{and} the first and third column, so that we get
+\begin{equation}
+    \begin{pmatrix}
+        .4 & .4 & .2 \\ .2 & .5 & .3 \\ .2 & .7 & .1
+    \end{pmatrix}. \nonumber
+\end{equation}
+
+\subsubsection{Reducibility}
+\begin{theorem}
+    If columns and rows of a square matrix $A$ can be permuted so that it acquires the form
+    \begin{equation}
+    A =
+        \begin{pmatrix}
+        B & 0 \\ C & D    
+        \end{pmatrix}
+    \end{equation}
+    where $B$ (and hence $D$) are square matrices, and $0$ is a matrix consisting of all zeros, then $A$ is called reducible.
+\end{theorem}
+\begin{theorem}
+    Transition matrix $\mathbf{p}$ of a decomposable (reducible) Markov chain is reducible.
+\end{theorem}
+Suppose $\Space = C\cup T$, with $k_C$ states in the closed set, and $k_T$ transient states. By definition of reducibility, the transition matrix $\mathbf{p}$ can be rearranged into the form
+\begin{equation}
+    \mathbf{p} = 
+    \begin{pmatrix}
+        P & 0 \\ R & Q    
+        \end{pmatrix}.
+\end{equation}
+Here, $P$ corresponds to transitions among recurrent states of the closed set $C$, elements of $Q$ are probabilities of transitions among transient states, and elements of $R$ give the probabilities of transitions from transient to recurrent states. This form is retained after an arbitrary number of steps.
+
 \section{Week 18}
+\subsection{Markov Chains}
+\subsubsection{Perron-Frobenius theorem}
+\begin{definition}
+    If all other eigenvalues $\lambda$ satisfy the strict inequality $\vert\lambda\vert<r$, then $A$ is called primitive.
+\end{definition}
+\begin{theorem}
+    Suppose a matrix $A$ is irreducible, and all elements of $A$ are non-negative. Then the following statements are true:
+    \begin{enumerate}
+        \item $A$ has at least one real positive eigenvalue.
+        \item The largest (if there is more than one) such real positive eigenvalue $r$ dominates all other eigenvalues: If $\alpha$ is any other eigenvalue of $A$, then $\vert\alpha\vert\leq r$.
+        \item $r$ is non-degenerate, i.i., it is a simple root of the characteristic equations
+        \begin{equation}
+            \det(A_\lambda\mathbb{I})=0.
+        \end{equation} \nonumber
+        \item Corresponding to $r$ are the right and left eigenvectors all of whose components are positive. Conversely, the only eigenvectors whose components are positive are those corresponding to $r$.
+        \item $r$ increases when any element of $A$ increases. Correspondingly, $r$ decreases when any element of $A$ decreases.
+        \item If $A$ is not primitive, i.e., there are $d>1$ eigenvalues, such that $\vert\lambda\vert=r$, then they are all simple and different, and are located symmetrically on the unit circle in the complex plane: if they are numbered from $0$ to $d-1$, they can be written as
+        \begin{equation}
+            \lambda_k = re^{2\pi ik/d},
+        \end{equation}
+        with $k = 0,\,1,\ldots,\,d-1$. If there are two such roots, they are equal to $r$ and $-r$.\\
+        Further, if $d>1$, the rows and columns of the matrix can be permuted to bring it to the block form
+        \begin{equation}
+            \begin{pmatrix}
+                0 & A_1 & 0 & \cdots & 0 \\
+                0 & 0 & A_2 & \cdots & 0 \\
+                \vdots & \vdots & \vdots & \ddots & \vdots \\
+                0 & 0 & 0 & \cdots & A_{d-1} \\
+                A_d & 0 & 0 & \cdots & 0
+            \end{pmatrix}. \nonumber
+        \end{equation}
+    \end{enumerate}
+\end{theorem}
+
+\subsubsection{Limiting behaviour}
+\begin{corollary}
+    If $A$ is irreducible and primitive, and $x$ and $y$ are the right (column) and left (row) eigenvectors of $A$ respectively, corresponding to the dominant eigenvalue $r$, and normalised so that $yx=1$, then
+    \begin{equation}
+        \lim_{n\to\infty}(1/r)^n A^n = x \otimes y,
+    \end{equation}
+    where $\otimes$ is used to denote the ``outer'' product of vectors: column times row.
+\end{corollary}
+Such products are known as dyadic products and the limits are uniform for all elements, so 
+\begin{equation}
+    \lim_{n\to\infty}(1/r)^n(A^n)_{ij} =x_i y_i. \nonumber
+\end{equation}
+\begin{theorem}
+    For irreducible and primitive $\mathbf{p}$,
+    \begin{equation}
+        \lim_{n\to\infty}\mathbf{p}^n = e\otimes \pi. 
+    \end{equation}
+\end{theorem}
+It follows that
+\begin{corollary}
+    If $\mathbf{p}$ is irreducible and primitive, there exists an equilibrium distribution.
+\end{corollary}
+LECTURE 22 SLIDE 13!
+
 
 \section{Week 19}
 
