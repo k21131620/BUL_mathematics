@@ -242,261 +242,196 @@ Use examples.
     Moreover, $\lambda_n\to\infty$ as $n\to\infty$.
 \end{theorem}
 
-
-
-\section{Week 3}
-
-
-\subsection{Linearly independent solutions}
-\subsubsection{The principle of superposition}
-\begin{theorem}
-    If $y_1$ and $y_2$ are two solutions of the differential equation
-    \begin{equation}
-        y^{\prime\prime}+\tilde{a}_1(x)y^\prime + \tilde{a}_0(x)y=0, \label{eq:linear_ODE}
-    \end{equation}
-    then the linear combination
-    \begin{equation}
-        y = Ay_1 + By_2
-    \end{equation}
-    is also a solution for any values of $A$ and $B$.
-\end{theorem}
+\section{PDEs}
+\subsection{Some definitions}
 \begin{definition}
-    Two solutions, $y_1$ and $y_2$, of ODE~(\ref{eq:linear_ODE}) form a fundamental set of solutions if every solution of equation~(\ref{eq:linear_ODE}) can be expressed as a linear combination of $y_1$ and $y_2$,
+    Consider a dependent variable $\phi$ which is a function of two (or more) independent variables, e.g. $\phi=\phi(x,y)$. A partial differential equation (PDE) relates partial derivatives of $\phi$ (with respect to $x$ and $y$) to $x,\,y$ and $\phi$.
+\end{definition}
+\begin{definition}
+    The order of a PDE is the order of its highest derivative. Thus,
     \begin{equation}
-        y = Ay_1 + By_2. \label{eq:lin_comb}
+        \frac{\partial \phi}{\partial x} + \gamma(x)\frac{\partial \phi}{\partial y} = f(x),
+    \end{equation}
+    where $\gamma$ and $f$ are functions of $x$, is a first order PDE, whereas
+    \begin{equation}
+        \frac{\partial \phi}{\partial x}+ x\frac{\partial^4 \phi}{\partial y^4} = x^3
+    \end{equation}
+    is a fourth order PDE.
+\end{definition}
+\begin{definition}
+    A PDE for $\phi=\phi(x,y)$ is called linear if it is linear in $\phi$. Thus,
+    \begin{equation}
+        \phi_x + y\phi_{xyy} = 0,\quad\text{is linear, but}\quad \phi_x + y\phi_{xyy} + \phi^2 = 0\quad\text{is not.}
     \end{equation}
 \end{definition}
 \begin{definition}
-    The Wronskain of $y_1,\,y_2$ at the point $x_0$ is expressed as
-    \begin{equation}
-        W(y_1,y_2;x_0) = \left\vert \begin{array}{cc}
-             y_1 (x_0) & y_2 (x_0) \\
-             y_1^\prime (x_0) & y_2^\prime (x_0)
-        \end{array} \right\vert.
-    \end{equation}
+    A PDE is quasi-linear if all the highest derivatives appear only to the power one. They can, however, be multiplied by functions containing $x$, $y$ or lower derivatives of $\phi$. \\
+    A PDE is fully non-linear if none of the above conditions apply.
 \end{definition}
-Provided a Wronskian is not zero, then for all inital values $\gamma$ and $\delta$ there exists a unique linear combination~\ref{eq:lin_comb} of solutions $y_1$ and $y_2$ satisfying the initial conditions 
+
+
+
+\section{First order quasi-linear PDEs}
+The most general $1$st order quasi-linear PDE has the form
 \begin{equation}
-    y(x_0) = \gamma,\quad y^\prime(x_0) = \delta.
+    a(x,y,\phi)\frac{\partial \phi}{\partial x}(x,y) + b(x,y,\phi)\frac{\partial \phi}{\partial y}(x,y) = c(x,y,\phi). \label{eq:quasi_case1}
+\end{equation}
+
+
+\subsection{$c(x,y,\phi)=0$}
+The characteristic curves of a PDE equivalent to eq.~(\ref{eq:quasi_case1}) are given by:
+\begin{equation}
+    \frac{dy}{dx} = \frac{-\xi_x(x,y)}{\xi_y(x,y)} = \frac{b(x,y)}{a(x,y)},
+\end{equation}
+or equivalently,
+\begin{equation}
+    \frac{dx}{a(x,y)} = \frac{dy}{b(x,y)},
+\end{equation}
+where $\xi$ is the tangent to the curves. You can then integrate to find the solution to the $PDE$, then re-express in terms of $x$ and $y$.
+
+\subsection{$c(x,y,\phi)\neq0$ and $a,\,b$ are independent of $\phi$}\label{sec:quasi_case2}
+This PDE has the form
+\begin{equation}
+    a(x,y)\phi_x + b(x,y)\phi_y = c(x,y,\phi),
+\end{equation}
+which can be written as
+\begin{equation}
+    (a(x,y),\,b(x,y))\cdot\nabla\phi = c(x,y,\phi).
+\end{equation}
+To solve, introduce a unit vector $\underline{\hat{s}}$ in the direction of $(a,\,b)$ so that
+\begin{equation}
+    \underline{\hat{s}} = \frac{(a,\,b)}{\sqrt{a^2+b^2}}.
+\end{equation}
+Express this as a directional derivative:
+\begin{equation}
+    \underline{\hat{s}}\cdot\nabla\phi = \frac{c}{\sqrt{a^2+b^2}}.
+\end{equation}
+Use the chain rule to express:
+\begin{equation}
+    \frac{\partial \phi}{\partial s} = \frac{\partial \phi}{\partial x}\frac{dx}{ds} + \frac{\partial \phi}{\partial y}\frac{dy}{ds}.
+\end{equation}
+We now find that
+\begin{equation}
+     \underline{\hat{s}}\cdot\nabla\phi =  \frac{\partial \phi}{\partial s} = \frac{c}{\sqrt{a^2+b^2}},
+\end{equation}
+giving us a first order PDE. We now integrate to find
+\begin{align}
+    \phi(s,\xi) &= \int \frac{c}{\sqrt{a^2+b^2}}\,ds + f(\xi), \\
+    &= P(s,\xi) + f(\xi) \nonumber
+\end{align}
+where $P(s,\xi)$ is a particular integral and $f(\xi)$ an arbitrary function which is chosen that the boundary conditions are satisfied.\\
+Finally, re-express this solution in terms of $x$ and $y$.
+\begin{theorem}
+    The general solution of the first order PDE 
+    \begin{equation}
+        a(x,y)\frac{\partial\phi}{\partial x} + b(x,y)\frac{\partial\phi}{\partial y} = c(x,y,\phi_)
+    \end{equation}
+    is $U(\xi,\eta) = 0$ where $\xi(x,y,\phi) = \alpha$, $\eta(x,y,\phi) = \beta$, $\alpha,\,\beta$ constant, are the solutions to the characteristic equation:
+    \begin{equation}
+        \frac{dx}{a(x,y)} = \frac{dy}{b(x,y)} = \frac{d\phi}{c(x,y)}
+    \end{equation}
+    and $U$ is an arbitrary differentiable function of $\xi$ and $\eta$.
+\end{theorem}
+This also works when $a = a(x,y,\phi$ and/or $b = b(x,y,\phi)$.
+
+\subsection{$c(x,y,\theta)\neq0$ and $a$ and/or $b$ depend on $\phi$}
+See above approach from~\ref{sec:quasi_case2} where 
+\begin{equation}
+    \frac{dx}{a(x,y)} = \frac{dy}{b(x,y)} = \frac{d\phi}{c(x,y)}.
+\end{equation}
+
+
+
+\section{Second Order Linear PDEs}
+In $2D$ a second order linear PDE has the general form
+\begin{equation}
+    A\phi_{xx} + B\phi_{xy} + C\phi_{yy} + D\phi_x + E\phi_y + F\phi = G,\label{eq:SecondOrderGeneral}
+\end{equation}
+where $A,\,B,\,C,\ldots,\,G$ are functions of $x$ and $y$ \textbf{only}.
+
+\subsection{Change of independent variables and reduction of the canonical form}
+Using the notation in eq.~(\ref{eq:SecondOrderGeneral}):
+\begin{equation}
+    \frac{\xi_x}{\xi_y} = \frac{dy}{dx} = \frac{B \pm \sqrt{\Delta}}{2A},
+\end{equation}
+where 
+\begin{equation}
+    \Delta = B^2 -4AC.
 \end{equation}
 \begin{definition}
-    Two functions, $y_1(x)$ and $y_2(x)$ are said to be linearly independent on an interval $(a,b)$ if the only solution to $Ay_1(x) + By_2(x) = 0$ on $(a,b)$ is $A=B=0$. 
+    The two equations
+    \begin{equation}
+        \frac{dy}{dx} = \frac{1}{2A} (B+\sqrt{\Delta}),\quad\text{and}\quad \frac{dy}{dx} = \frac{1}{2A}(B-\sqrt{\Delta})\label{eq:second_char}
+    \end{equation}
+    are called the characteristic equations of eq.~(\ref{eq:SecondOrderGeneral}), defining two families of characteristic curves.
 \end{definition}
-\begin{theorem}
-    Let the coefficients $\tilde{a}_1(x)$ and $\tilde{a}_0(x)$ be continuous on $(a,b)$ and let $y_1$ and $y_2$ be two solutions of the ODE
-    \begin{equation}
-        y^{\prime\prime}+\tilde{a}_1(x)y^\prime + \tilde{a}_0(x)y=0.
-    \end{equation}
-    Then the following three statements are equivalent:
-    \begin{enumerate}
-        \item $y_1$ and $y_2$ are a fundamental set;
-        \item $y_1$ and $y_2$ are linearly independent;
-        \item The Wronskian $ W(y_1,y_1;x_0) $ does not vanish at any interior point $x_0$ of $(a,b)$ (it could, however, vanish at $x_0\to a$ or $x_0\to b$).
-    \end{enumerate}
-\end{theorem}
-
-
-\subsection{Linearly independent solutions: Wronskian in Integral Form}
-\begin{theorem}
-    Let $\tilde{a}_1(x)$ and $\tilde{a}_0(x)$ be continuous on $(a,b)$, then Wronskian of the ODE
-    \begin{equation}
-        y^{\prime\prime}+\tilde{a}_1(x)y^\prime + \tilde{a}_0(x)y=0
-    \end{equation}
-    is given by
-    \begin{equation}
-        W = Ce^{-\int \tilde{a}_1(x)\, dx}.
-    \end{equation}
-\end{theorem}
-
-
-\subsection{Reduction of Order: Homogeneous case}
-See examples.
-
-
-\section{Week 4}
-\subsection{Reduction of order: Inhomogeneous case}
-See examples.
-
-
-\subsection{Normal form ODEs}
 \begin{definition}
-    A second order linear ODE is in normal form if it does not contain $y^\prime$.
+    The second order PDE (\ref{eq:SecondOrderGeneral}) is said to be hyperbolic if $\Delta>0$, parabolic if $\Delta = 0$, and elliptic if $\Delta<0$.
 \end{definition}
-$y^{\prime\prime}+6y=1$ is in normal form, but $y^{\prime\prime}+xy^\prime +6y=1$ is not.
-Consider the ODE
+
+
+\subsection{Hyperbolic PDEs ($\Delta > 0$)}
+We denote the solutions by
 \begin{equation}
-    y^{\prime\prime}+\tilde{a}_1(x)y^\prime + \tilde{a}_0(x)y=f(x).\label{eq:inhomo_ODE}
+    \xi(x,y) = \alpha,\quad\eta(x,y)=\beta,
 \end{equation}
-To reduce~\ref{eq:inhomo_ODE} to
+and use $\xi$ and $\eta$ as a new set of independent variables.\\
+Solve for the characteristic equations from~(\ref{eq:second_char}) and define $\xi$ and $\eta$. You then find, in terms of $x$ and $y$ that we have:
 \begin{equation}
-    u^{\prime\prime} +I(x)u = s(x),
+    \phi(x,y) = F(\xi(x,y)) + G(\eta(x,y)),
 \end{equation}
-represent $y(x) = t(x)u(x)$ and solve the coefficient of $u^\prime$ to be zero.
+where $F$ and $G$ are arbitrary functions. Apply boundary conditions to solve for $\phi$.
 
 
-\subsection{ODEs with Singular Points}
-The solution to general second order ODEs in an interval $(a,b)$ is closely linked to the behaviour of $a_2(x)$ in that interval.
-\begin{itemize}
-    \item A point $x_0\in(a,b)$ such that $a_2(x_0)\neq0$ is called an ordinary point.
-    \item A point $x_0\in(a,b)$ such that $a_2(x_0)=-$ but $a_1(x_0)\neq0$ and/or $a_0(x_0)\neq0$ is called a singular point.
-    \item $\tilde{a}_1(x) = a_1(x)/a_2(x)$ and $\tilde{a}_0(x) = a_0(x)/a_2(x)$ are continuous at an ordinary point.
-    \item $\tilde{a}_1(x)$ or $\tilde{a}_0(x)$ or both will become unbounded (and hence discontinuous) at any singular point.
-    \item A singular point is a regular singular point if
-    \begin{equation}
-        \lim_{x\to x_0}(x-x_0)\frac{a_1(x)}{a_2(x0}\quad\text{and}\quad\lim_{x\to x_0}(x-x_0)^2\frac{a_0(x)}{a_2(x)}
-    \end{equation}
-    both exist. A singular point not satisfying this is called an irregular singular point.
-\end{itemize}
+\subsection{Parabolic PDEs ($\Delta = 0$)}
+In this case, the characteristic equations~(\ref{eq:second_char}) reduce to a single equation
+\begin{equation}
+    \frac{dy}{dx} = \frac{B}{2A} \nonumber
+\end{equation}
+with solution given by:
+\begin{equation}
+    \xi(x,y) = \text{const.} \nonumber
+\end{equation}
+We are free to choose $\eta$.\\
+Solve for boundary conditions.
 
+\subsection{Elliptic PDEs ($\Delta<0$)}
+Two families of complex characteristics are given by
+\begin{equation}
+    \frac{dy}{dx} = \frac{1}{2A}\left\{ B\pm i\sqrt{4AC-B^2} \right\} \nonumber
+\end{equation}
+with solutions given by 
+\begin{equation}
+    \xi(x,y)=\alpha,\quad \eta(x,y) = \beta
+\end{equation}
+$\alpha,\,\beta$ constant. \\
+\textbf{Note:} $\xi(x,y)$ and $\eta(x,y)$ are complex conjugates of each other.\\
+Introduce two new real variables $\lambda$ and $\mu$ defined by
+\begin{align}
+    \lambda = \xi +\eta,\quad \mu = i(\xi - \eta), \nonumber \\
+    \xi = \frac{1}{2}(\lambda - i\mu),\quad \eta = \frac{1}{2}(\lambda + i\mu). \nonumber
+\end{align}
+Then
+\begin{align}
+    \frac{\partial}{\partial \xi} = \frac{\partial}{\partial \lambda}+i\frac{\partial}{\partial \mu},\quad \frac{\partial}{\partial \eta} = \frac{\partial}{\partial \lambda}+-\frac{\partial}{\partial \mu}, \nonumber \\
+    \frac{\partial^2}{\partial\xi\partial\eta} = \frac{\partial^2}{\partial \lambda^2}+ \frac{\partial^2}{\partial mu^2}. \nonumber
+\end{align}
 
-\section{Week 5}
-\subsection{Regular Perturbation}
+\section{The method of separation of variables}
+The main idea is to create a separable solution for, say y, such that:
+\begin{equation}
+    y(x,t) = X(x)T(t) \nonumber
+\end{equation}
+to then define
+\begin{equation}
+    y_{xx} = X^{\prime\prime} (x)T(t),quad y_{tt} = X(x)T^{\prime\prime}(t),
+\end{equation}
+to then make each side equal to a constant and solve as such.\\
 Use examples.
 
-\section{Week 7}
-\subsection{The WKD perturbation method}
-Use examples.
-
-
-\section{Week 9}
-\subsection{Introduction to BVP eigenvalues and eigenvectors}
-\begin{theorem}
-    Consider the IVP
-    \begin{align}
-         y^{\prime\prime}+p(x)y^\prime + q(x)y=0,\quad a<x<b, \\
-         y(x_0) = \alpha,\\
-         y^\prime(x_0) = \beta.
-    \end{align}
-    where functions $p$ and $q$ are continuous on an open interval $(a,b)$, containing $x_0$. Then there exists a solution $y$ on the interval $(a,b)$ and the solution is unique.
-\end{theorem}
-\begin{corollary}
-    All homogeneous BVPs have a trivial solution, $y=0.$
-\end{corollary}
-\begin{corollary}
-    Generally, the eigenvalues $\lambda_n$ of a BVP are those values $\lambda$ for which a non-trivial solution to the BVP exists.\\
-    The non-trivial solutions, corresponding to $\lambda_n$ are the eigenfunctions, $\{ \phi_n \}$, of the BVP.
-\end{corollary}
-\subsubsection{The General Case}
-Consider the BVP:
-\begin{align}
-    y^{\prime\prime}+P(x,\lambda)y^\prime + Q(x,\lambda)y=0,\quad 0\leq x\leq 1, \\
-    a_1y(0) + a_2y^\prime(0) = 0, \\
-    b_1y(1) + b_2y^\prime(1) = 0;
-\end{align}
-$a_1,\,a_2,\,b_1$ and $b_2$ are real constants. $P$ and $Q$ are given functions of their arguments, $\lambda$ is a parameter.\\
-Assume that the functions $P(x,\lambda)$ and $Q(x,\lambda)$ are continuous for $0\leq x\leq 1$ and for all values of $\lambda$.\\
-The general solution to the ODE is:
-\begin{equation}
-    y = Ay_1(x,\lambda) + By_2(x,\lambda),\nonumber    
-\end{equation}
-where $y_1$ and $y_2$ are a fundamental pair (every solution of the ODE can be expressed as a linear combination of $y_1$ and $y_2$.\\
-Boundary conditions give
-\begin{align}
-    \begin{pmatrix}
-    a_1y_1(0,\lambda) + a_2y^\prime_1(0,\lambda) & a_1y_2(0,\lambda) + a_2y^\prime_2(0,\lambda) \\
-    b_1y_1(1,\lambda) + b_2y^\prime_1(1,\lambda) & b_1y_2(0,\lambda) + b_2y^\prime_2(0,\lambda)
-    \end{pmatrix}
-    \begin{pmatrix}
-    A \\ B
-    \end{pmatrix}
-    =
-    \begin{pmatrix}
-    0 \\ 0
-    \end{pmatrix}.
-\end{align}
-Therefore,
-\begin{equation}
-    D(\lambda) = \left\lvert \begin{array}{cc}
-         a_1y_1(0,\lambda) + a_2y^\prime_1(0,\lambda) & a_1y_2(0,\lambda) + a_2y^\prime_2(0,\lambda) \\
-        b_1y_1(1,\lambda) + b_2y^\prime_1(1,\lambda) & b_1y_2(0,\lambda) + b_2y^\prime_2(0,\lambda)
-    \end{array} \right\rvert.
-\end{equation}
-For non-trivial solution, $D(\lambda)$ = 0; the $\lambda$ that satisfy $D(\lambda)=0$ are the eigenvalues of the BVP.
-
-\section{Week 10}
-\subsection{Sturm-Liouville eigenvalue problem}
-\subsubsection{The problem itself}
-Consider the BVP:
-\begin{align}
-    [p(x)y^\prime]^\prime - q(x)y + \lambda r(x)y = 0,\quad 0\leq x\leq 1, \\
-    a_1y(0)+a_2y^\prime(0) = 0,\quad b_1y(1)+b_2y^\prime(1) = 0.
-\end{align}
-Here, $p(x),\,p^\prime(x),\,q(x),\,r(x)$ are real and continuous and $p(x),\,r(x)>0$ on $0\leq x\leq 1$.
-
-\subsubsection{Properties of the S-L BVP}
-\begin{theorem}
-    All the eigenvalues of the S-L problem are real.
-\end{theorem}
-\begin{theorem}
-    If $\phi_1(x)$ and $\phi_2(x)$ are two eigenfunctions of the S-L problem corresponding to the eigenvalues $\lambda_1$ and $\lambda_2$, $\lambda_1\neq \lambda_2$, then
-    \begin{equation}
-        \int_0^1 r(x)\phi_1\phi_2\,dx=0.
-    \end{equation}
-\end{theorem}
-\begin{theorem}
-    The eigenvalues of the S-L problem are all simple. This means, to each eigenvalue there corresponds only one linearly independent eigenfunction. \\
-    The eigenvalues can be ordered into an increasing infinite sequence:
-    \begin{equation}
-        \lambda_1<\lambda_2<\lambda_3<\lambda_4<\cdots<\lambda_n<\cdots 
-    \end{equation}
-    Moreover, $\lambda_n\to\infty$ as $n\to\infty$.
-\end{theorem}
-
-\subsubsection{Normalisation of the eigenfunctions}
-Let $\phi_n(x)$ be an eigenfunction of the S-L problem. Then  so is $\varphi_n(x)=d_n\phi_n(x)$, for any constants $d_n$.\\
-Chose
-\begin{align}
-    d_n &= \frac{1}{\sqrt{\int_0^1 r(\xi)\phi_n^2(\xi)\,d\xi}},\\
-    \implies \varphi_n(x) = d_n\phi_n(x) &= \frac{\phi_n(x)}{\sqrt{\int_0^1 r(\xi)\phi_n^2(\xi)\,d\xi}},\\
-    \implies \int_0^1 r(x)\phi_n^2(x)\,dx &= 1,
-\end{align}
-where $\varphi_n(x),\,n=1,\,2,\,3,\ldots$ are normalised eigenfunctions. They form an orthonormal set with respect to the weight function $r(x)$.
-\begin{definition}
-    Kronecker delta-symbol:
-    \begin{equation}
-        \delta_{mn}:= \left\{ \begin{array}{cc}
-            1, & m=n \\
-            0, & m\neq n
-        \end{array} \right.
-    \end{equation}
-\end{definition}
-\begin{definition}
-    Orthogonality:
-    \begin{equation}
-        \int_0^1 r(x) \varphi_m(x) \varphi_n(x)\,dx = \delta_{mn}.
-    \end{equation}
-\end{definition}
-\subsubsection{Generalised Fourier series}
-\begin{theorem}
-    Let $\varphi_n,\,n=1,\,2,\ldots$ be the normalised eigenfunctions of the S-L BVP. Let $f$ be an arbitrary piece-wise continuous function with piece-wise continuous derivative $f^\prime$ on the closed interval $[0,1]$. Then $f$ can be expressed as a generalised Fourier series:
-    \begin{align}
-        f(x) &= C_1\varphi_1(x) + C_2\varphi_2(x) + C_3\varphi_3(x) +\ldots + C_n\varphi_n(x) + \ldots \nonumber \\
-        &= \sum_{n=1}^\infty C_n\varphi_n(x),
-    \end{align}
-    where
-    \begin{equation}
-        C_n = \int_0^1 f(x)r(x)\varphi(x)\,dx,\quad n=1,\,2,\,3,\ldots
-    \end{equation}
-\end{theorem}
-This converges to $[f(x^+) + f(x^-)]/2$ at each point $x$ of the open interval $(0,1)$.\\
-particularly series converges to $f(x)$ at any point $x\in (0,1)$, where the function $f$ is continuous.
-
-\begin{corollary}
-    The coefficients $C_m$ can be found by multiplying the series by $r(x)\varphi_m(x)$ and then integrating, that is,
-    \begin{align}
-        \int_0^1 f(x)r(x)\varphi_m(x)\,dx &= \sum_{n=1}^\infty C_n\int_0^1 r(x)\varphi_m(x)\varphi_n(x)\,dx,\nonumber,\\
-        &= \sum_{n=1}^\infty C_n\delta_{mn} = C_m,\quad m=1,\,2,\,3,\ldots
-    \end{align}
-\end{corollary}
 
 
 
-\section{Week 17}
 
-\section{Week 18}
-
-\section{Week 19}
-
-\section{Week 20}
 
 \end{document}
