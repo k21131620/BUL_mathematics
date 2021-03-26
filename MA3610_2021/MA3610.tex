@@ -201,7 +201,7 @@ Consider the general seconds order linear ODE
 \end{equation}
 The solution of such ODEs in an interval, say $(a,b)$, is closely linked to the behaviour of $a_2(x)$ in that interval.
 \begin{itemize}
-    \item A point $x_0\in(a,b)$ such that $a_2(x_0)/neq 0$ is called an ordinary point.
+    \item A point $x_0\in(a,b)$ such that $a_2(x_0)\neq 0$ is called an ordinary point.
     \item A point $x_0\in(a,b)$ such that $a_2(x_0) = 0$ but $a_1(x_0)\neq 0$ and/or $a_0(x_0)\neq 0$ is called a singular point.
 \end{itemize}
 A singular point is a regular singular point if
@@ -242,33 +242,196 @@ Use examples.
     Moreover, $\lambda_n\to\infty$ as $n\to\infty$.
 \end{theorem}
 
+\section{PDEs}
+\subsection{Some definitions}
+\begin{definition}
+    Consider a dependent variable $\phi$ which is a function of two (or more) independent variables, e.g. $\phi=\phi(x,y)$. A partial differential equation (PDE) relates partial derivatives of $\phi$ (with respect to $x$ and $y$) to $x,\,y$ and $\phi$.
+\end{definition}
+\begin{definition}
+    The order of a PDE is the order of its highest derivative. Thus,
+    \begin{equation}
+        \frac{\partial \phi}{\partial x} + \gamma(x)\frac{\partial \phi}{\partial y} = f(x),
+    \end{equation}
+    where $\gamma$ and $f$ are functions of $x$, is a first order PDE, whereas
+    \begin{equation}
+        \frac{\partial \phi}{\partial x}+ x\frac{\partial^4 \phi}{\partial y^4} = x^3
+    \end{equation}
+    is a fourth order PDE.
+\end{definition}
+\begin{definition}
+    A PDE for $\phi=\phi(x,y)$ is called linear if it is linear in $\phi$. Thus,
+    \begin{equation}
+        \phi_x + y\phi_{xyy} = 0,\quad\text{is linear, but}\quad \phi_x + y\phi_{xyy} + \phi^2 = 0\quad\text{is not.}
+    \end{equation}
+\end{definition}
+\begin{definition}
+    A PDE is quasi-linear if all the highest derivatives appear only to the power one. They can, however, be multiplied by functions containing $x$, $y$ or lower derivatives of $\phi$. \\
+    A PDE is fully non-linear if none of the above conditions apply.
+\end{definition}
 
-\section{Week 3}
 
-\section{Week 4}
 
-\section{Week 5}
+\section{First order quasi-linear PDEs}
+The most general $1$st order quasi-linear PDE has the form
+\begin{equation}
+    a(x,y,\phi)\frac{\partial \phi}{\partial x}(x,y) + b(x,y,\phi)\frac{\partial \phi}{\partial y}(x,y) = c(x,y,\phi). \label{eq:quasi_case1}
+\end{equation}
 
-\section{Week 6}
 
-\section{Week 7}
+\subsection{$c(x,y,\phi)=0$}
+The characteristic curves of a PDE equivalent to eq.~(\ref{eq:quasi_case1}) are given by:
+\begin{equation}
+    \frac{dy}{dx} = \frac{-\xi_x(x,y)}{\xi_y(x,y)} = \frac{b(x,y)}{a(x,y)},
+\end{equation}
+or equivalently,
+\begin{equation}
+    \frac{dx}{a(x,y)} = \frac{dy}{b(x,y)},
+\end{equation}
+where $\xi$ is the tangent to the curves. You can then integrate to find the solution to the $PDE$, then re-express in terms of $x$ and $y$.
 
-\section{Week 8}
+\subsection{$c(x,y,\phi)\neq0$ and $a,\,b$ are independent of $\phi$}\label{sec:quasi_case2}
+This PDE has the form
+\begin{equation}
+    a(x,y)\phi_x + b(x,y)\phi_y = c(x,y,\phi),
+\end{equation}
+which can be written as
+\begin{equation}
+    (a(x,y),\,b(x,y))\cdot\nabla\phi = c(x,y,\phi).
+\end{equation}
+To solve, introduce a unit vector $\underline{\hat{s}}$ in the direction of $(a,\,b)$ so that
+\begin{equation}
+    \underline{\hat{s}} = \frac{(a,\,b)}{\sqrt{a^2+b^2}}.
+\end{equation}
+Express this as a directional derivative:
+\begin{equation}
+    \underline{\hat{s}}\cdot\nabla\phi = \frac{c}{\sqrt{a^2+b^2}}.
+\end{equation}
+Use the chain rule to express:
+\begin{equation}
+    \frac{\partial \phi}{\partial s} = \frac{\partial \phi}{\partial x}\frac{dx}{ds} + \frac{\partial \phi}{\partial y}\frac{dy}{ds}.
+\end{equation}
+We now find that
+\begin{equation}
+     \underline{\hat{s}}\cdot\nabla\phi =  \frac{\partial \phi}{\partial s} = \frac{c}{\sqrt{a^2+b^2}},
+\end{equation}
+giving us a first order PDE. We now integrate to find
+\begin{align}
+    \phi(s,\xi) &= \int \frac{c}{\sqrt{a^2+b^2}}\,ds + f(\xi), \\
+    &= P(s,\xi) + f(\xi) \nonumber
+\end{align}
+where $P(s,\xi)$ is a particular integral and $f(\xi)$ an arbitrary function which is chosen that the boundary conditions are satisfied.\\
+Finally, re-express this solution in terms of $x$ and $y$.
+\begin{theorem}
+    The general solution of the first order PDE 
+    \begin{equation}
+        a(x,y)\frac{\partial\phi}{\partial x} + b(x,y)\frac{\partial\phi}{\partial y} = c(x,y,\phi_)
+    \end{equation}
+    is $U(\xi,\eta) = 0$ where $\xi(x,y,\phi) = \alpha$, $\eta(x,y,\phi) = \beta$, $\alpha,\,\beta$ constant, are the solutions to the characteristic equation:
+    \begin{equation}
+        \frac{dx}{a(x,y)} = \frac{dy}{b(x,y)} = \frac{d\phi}{c(x,y)}
+    \end{equation}
+    and $U$ is an arbitrary differentiable function of $\xi$ and $\eta$.
+\end{theorem}
+This also works when $a = a(x,y,\phi$ and/or $b = b(x,y,\phi)$.
 
-\section{Week 9}
+\subsection{$c(x,y,\theta)\neq0$ and $a$ and/or $b$ depend on $\phi$}
+See above approach from~\ref{sec:quasi_case2} where 
+\begin{equation}
+    \frac{dx}{a(x,y)} = \frac{dy}{b(x,y)} = \frac{d\phi}{c(x,y)}.
+\end{equation}
 
-\section{Week 10}
 
-\section{Week 11}
 
-\section{Week 12}
+\section{Second Order Linear PDEs}
+In $2D$ a second order linear PDE has the general form
+\begin{equation}
+    A\phi_{xx} + B\phi_{xy} + C\phi_{yy} + D\phi_x + E\phi_y + F\phi = G,\label{eq:SecondOrderGeneral}
+\end{equation}
+where $A,\,B,\,C,\ldots,\,G$ are functions of $x$ and $y$ \textbf{only}.
 
-\section{Week 17}
+\subsection{Change of independent variables and reduction of the canonical form}
+Using the notation in eq.~(\ref{eq:SecondOrderGeneral}):
+\begin{equation}
+    \frac{\xi_x}{\xi_y} = \frac{dy}{dx} = \frac{B \pm \sqrt{\Delta}}{2A},
+\end{equation}
+where 
+\begin{equation}
+    \Delta = B^2 -4AC.
+\end{equation}
+\begin{definition}
+    The two equations
+    \begin{equation}
+        \frac{dy}{dx} = \frac{1}{2A} (B+\sqrt{\Delta}),\quad\text{and}\quad \frac{dy}{dx} = \frac{1}{2A}(B-\sqrt{\Delta})\label{eq:second_char}
+    \end{equation}
+    are called the characteristic equations of eq.~(\ref{eq:SecondOrderGeneral}), defining two families of characteristic curves.
+\end{definition}
+\begin{definition}
+    The second order PDE (\ref{eq:SecondOrderGeneral}) is said to be hyperbolic if $\Delta>0$, parabolic if $\Delta = 0$, and elliptic if $\Delta<0$.
+\end{definition}
 
-\section{Week 18}
 
-\section{Week 19}
+\subsection{Hyperbolic PDEs ($\Delta > 0$)}
+We denote the solutions by
+\begin{equation}
+    \xi(x,y) = \alpha,\quad\eta(x,y)=\beta,
+\end{equation}
+and use $\xi$ and $\eta$ as a new set of independent variables.\\
+Solve for the characteristic equations from~(\ref{eq:second_char}) and define $\xi$ and $\eta$. You then find, in terms of $x$ and $y$ that we have:
+\begin{equation}
+    \phi(x,y) = F(\xi(x,y)) + G(\eta(x,y)),
+\end{equation}
+where $F$ and $G$ are arbitrary functions. Apply boundary conditions to solve for $\phi$.
 
-\section{Week 20}
+
+\subsection{Parabolic PDEs ($\Delta = 0$)}
+In this case, the characteristic equations~(\ref{eq:second_char}) reduce to a single equation
+\begin{equation}
+    \frac{dy}{dx} = \frac{B}{2A} \nonumber
+\end{equation}
+with solution given by:
+\begin{equation}
+    \xi(x,y) = \text{const.} \nonumber
+\end{equation}
+We are free to choose $\eta$.\\
+Solve for boundary conditions.
+
+\subsection{Elliptic PDEs ($\Delta<0$)}
+Two families of complex characteristics are given by
+\begin{equation}
+    \frac{dy}{dx} = \frac{1}{2A}\left\{ B\pm i\sqrt{4AC-B^2} \right\} \nonumber
+\end{equation}
+with solutions given by 
+\begin{equation}
+    \xi(x,y)=\alpha,\quad \eta(x,y) = \beta
+\end{equation}
+$\alpha,\,\beta$ constant. \\
+\textbf{Note:} $\xi(x,y)$ and $\eta(x,y)$ are complex conjugates of each other.\\
+Introduce two new real variables $\lambda$ and $\mu$ defined by
+\begin{align}
+    \lambda = \xi +\eta,\quad \mu = i(\xi - \eta), \nonumber \\
+    \xi = \frac{1}{2}(\lambda - i\mu),\quad \eta = \frac{1}{2}(\lambda + i\mu). \nonumber
+\end{align}
+Then
+\begin{align}
+    \frac{\partial}{\partial \xi} = \frac{\partial}{\partial \lambda}+i\frac{\partial}{\partial \mu},\quad \frac{\partial}{\partial \eta} = \frac{\partial}{\partial \lambda}+-\frac{\partial}{\partial \mu}, \nonumber \\
+    \frac{\partial^2}{\partial\xi\partial\eta} = \frac{\partial^2}{\partial \lambda^2}+ \frac{\partial^2}{\partial mu^2}. \nonumber
+\end{align}
+
+\section{The method of separation of variables}
+The main idea is to create a separable solution for, say y, such that:
+\begin{equation}
+    y(x,t) = X(x)T(t) \nonumber
+\end{equation}
+to then define
+\begin{equation}
+    y_{xx} = X^{\prime\prime} (x)T(t),quad y_{tt} = X(x)T^{\prime\prime}(t),
+\end{equation}
+to then make each side equal to a constant and solve as such.\\
+Use examples.
+
+
+
+
+
 
 \end{document}

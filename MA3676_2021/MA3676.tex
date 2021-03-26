@@ -1,7 +1,9 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
-\usepackage{url,amsmath,graphicx,amssymb,booktabs}
+\usepackage{url,amsmath,graphicx,amssymb,booktabs,adjustbox,subcaption}
 \usepackage[top=1.5cm, bottom=1.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes.multipart}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
@@ -365,16 +367,568 @@ This says that the future ($S_{n+1}$) is conditionally independent of the past $
     $\lambda=1$ is an eigenvalue of any stochastic matrix $\mathbf{p}$.
 \end{theorem}
 
+
+
 \section{Week 17}
 
+
+\subsection{Markov chains}
+
+\subsubsection{Revisiting a position}
+In a random walk with only $\pm1$ steps allowed, even positions can be reached with an even number of steps and vice versa. Thus a position $i$ can be revisited only after an even number of steps:
+\begin{equation}
+    P_{ii}^{(2m)} = \frac{(2m)!}{(m!)^2}p^m q^m\quad\text{and}\quad P_{ii}^{(2m-1)}=0
+\end{equation}
+for any initial position.
+\begin{definition}
+    A state, return to which is only possible after $m,\,2m,\,3m,\ldots$ steps is called periodic if $m\geq2$. Any other state is called aperiodic.
+\end{definition}
+\begin{definition}
+    If the probability of return to a given state is equal to one, such a state is called recurrent. If this probability is less than one, the state is called transient.
+\end{definition}
+Note that this definition refers to the eventual probability of return, after an arbitrary number of steps.
+
+\subsubsection{Classification of states}
+These concepts apply to general discrete stochastic processes; in Markov chain applications $P_{ij}^{(m)}$ is $(p^{(m)})_{ij}$.
+\begin{definition}
+    A state $i$ is said to communicate with a state $j$ if it is possible eventually to reach $j$ starting from $i$, i.i., if $P_{ij}^{(m)}>0$ for some $m$.
+\end{definition}
+\begin{definition}
+    States $i$ and $j$ intercommunicate if, in addition, $\exists m^\prime:P_{ji}^{(m^\prime)}>0$.
+\end{definition}
+This property is denoted as $i \leftrightarrow j$, and it is transitive:
+\begin{equation}
+    \text{If }i\leftrightarrow j\text{ and }j\leftrightarrow k\text{, then }i\leftrightarrow k.
+\end{equation}
+
+\subsubsection{Recurrence time}
+Starting from a state $i$ the probability that the chain will next visit the same state after $m$ steps can be formally expressed ass
+\begin{equation}
+    f_{ii}^{(m)} = \Prob[(X_{n+m}=i\cap(X_{n+k}\neq i\forall k:1\leq k\leq m-1)\vert X_n=i)].
+\end{equation}
+The sum
+\begin{equation}
+    R_i = \sum_{m=1}^\infty f_{ii}^{(m)}
+\end{equation}
+is the probability of return, so $R_i = 1$ for a recurrent state $i$. This means that $f_{ii}^{(m)}$ has the meaning of a discrete probability distribution of recurrence ``times'' $T_i:f_{ii}^{(m)} = \Prob[T_i = m]$.\\
+Thus $\mu_i = \E[T_i] = \sum_{m=1}^\infty mf_{ii}^{(m)}$ is the expectation of the recurrence time - often known as the mean recurrence time for a state $i$.
+\begin{definition}
+    Depending on whether $\mu_i$ is finite or infinite, all recurrent states are classified as positive-recurrent, or null-recurrent, respectively.
+\end{definition}
+\begin{definition}
+    A positive-recurrent aperiodic state is ergodic.
+\end{definition}
+Two more special types of states are:
+\begin{itemize}
+    \item \textbf{Ephemeral} states: those states $i$ for which $p_{ki}=1$, for any $k$, and
+    \item \textbf{Absorbing} states: those states $i$ for which $p_{ii}=1$.
+\end{itemize}
+
+\subsubsection{States are ``contagious''}
+\begin{theorem}
+    Two intercommunicating states must be of the same type.
+\end{theorem}
+\begin{theorem}
+    Let $i$ be a recurrent state which communicates with $j$; then $i$ and $j$ intercommunicate, and $j$ is also a recurrent state of the same type and period as $i$.
+\end{theorem}
+\begin{corollary}
+    A pair of recurrent states of the same type either intercommunicate, or neither of them communicates with the other.
+\end{corollary}
+\begin{corollary}
+    A recurrent state of one type cannot communicate with a recurrent state of another type, nor with a transient state.
+\end{corollary}
+Note, a transient state can communicate with other transient states, as well as with both types of recurrent states.
+
+\subsubsection{Closed sets of states}
+\begin{definition}
+    A set $C$ of states is closed if no state in $C$ communicates with any state outside of $C$. A sufficient condition for this is
+    \begin{equation}
+        p_{ij} = 0 \forall i\in C \text{ and } \forall j\notin C.
+    \end{equation}
+\end{definition}
+\begin{definition}
+    A closed set $C$ of states is irreducible if every pair of states in $C$ intercommunicate.
+\end{definition}
+\begin{itemize}
+    \item Since a recurrent state cannot communicate with a transient state, the set of all recurrent states is closed, but not necessarily irreducible.
+    \item If a closed set contains only one state then that state is absorbing.
+    \item An irreducible closed set contains no smaller closed set.
+\end{itemize}
+
+\begin{theorem}
+    The state space $\mathbb{S}$ of a Markov chain can be uniquely partitioned as
+    \begin{equation}
+        \mathbb{S} = T\cup C_1\cup C_2\cup\ldots \nonumber
+    \end{equation}
+    where $T$ is the set of all transient states, and $C_1,\,C_2,\ldots$ are irreducible closed sets of recurrent states, each set containing states of the same type. 
+\end{theorem}
+\begin{theorem}
+    If the state space is finite, then at least one state is recurrent, and, assuming the chain is time-homogeneous, all recurrent states are positive recurrent.
+\end{theorem}
+
+\subsubsection{Corollaries of the decomposition theorem}
+\begin{corollary}
+    If the chain starts in, or eventually reaches one of the irreducible closed sets $C_r$, then it never leaves it. $C_r$ thus becomes the state space for the subsequent part of the realisation of the chain, and every state in $C_r$ is visited infinitely often. Thus the subset $C_r$, together with the corresponding transition probabilities, forms a Markov chain in it's own right.
+\end{corollary}
+\begin{corollary}
+    If the chain starts in the set $T$ of transient states, then it either moves between states within $T$ forever, visiting any one state only a finite number of times, or it eventually enters one of the closed sets $C_r$ of recurrent states, and it remains in $C_r$ forever after.
+\end{corollary}
+\begin{figure}[ht]
+    \begin{center}
+        \resizebox{\textwidth}{!}{
+            \begin{tikzpicture}[auto, sibling distance=120mm, text centered, 
+              every node/.style = {shape=rectangle, rounded corners,
+                draw,
+                top color=white, bottom color=blue!20,}]]
+              \node {\begin{tabular}{c} \textbf{States}\end{tabular}}
+                child { node {\begin{tabular}{c} \textbf{Recurrent} \\ Probability of return $=1$. \end{tabular}}
+                        child { node {\begin{tabular}{c}\textbf{Null-recurrent} \\ Expected time to return is infinite. \end{tabular}} }
+                        child { node {\begin{tabular}{c} \textbf{Positive-recurrent} \\ Expected time to return is finite. \end{tabular}}
+                            child { node {\begin{tabular}{c} \textbf{Periodic} \\ Return is possible only after a number \\ of steps proportional to some integer $\geq 2$ \end{tabular}} } 
+                            child { node {\begin{tabular}{c} \textbf{Aperiodic (ergodic)} \\ Possible number of steps to return \\ do not have a common divisor. \end{tabular}} 
+                                child { node {\begin{tabular}{c} \textbf{Absorbing} \\ Return is certain on each subsequent step. \end{tabular}} } } } } 
+                child { node {\begin{tabular}{c} \textbf{Transient} \\ Probability of return is $<1$. \end{tabular}}
+                    child { node {\begin{tabular}{c} \textbf{Ephemeral} \\ Probability of return $=0$. \end{tabular}} } };
+            \end{tikzpicture}
+        }
+    \end{center}
+\end{figure}
+
+\subsubsection{Block matrices}
+\begin{equation}
+    M = \left(\begin{array}{c c c|c c|c c}
+        1 & 2 & 3 & 4 & 5 & 6 & 7 \\
+        8 & 9 & 10 & 11 & 12 & 13 & 14 \\
+        \hline
+        15 & 16 & 17 & 18 & 19 & 20 & 21 \\
+        22 & 23 & 24 & 25 & 26 & 27 & 28 \\
+        29 & 30 & 31 & 32 & 33 & 34 & 35
+    \end{array}\right)
+    =
+    \left(\begin{array}{c c c}
+        A & B & C \\
+        D & E & F
+    \end{array}\right). \nonumber
+\end{equation}
+Each of the blocks is defined in the obvious way:
+\begin{equation}
+    A =
+    \begin{pmatrix}
+        1 & 2 & 3 \\ 8 & 9 & 10
+    \end{pmatrix},\quad
+    B =
+    \begin{pmatrix}
+        4 & 5 \\ 11 & 12
+    \end{pmatrix}\quad\text{etc.} \nonumber
+\end{equation}
+If we were to then have a matrix $N$ such that 
+\begin{equation}
+    N = 
+    \begin{pmatrix}
+        G & H \\ J & K \\ L & S
+    \end{pmatrix} \nonumber
+\end{equation}
+that is the correct size so $MN$ exists, then
+\begin{equation}
+    MN = 
+    \begin{pmatrix}
+        A & B & C \\ D & E & F
+    \end{pmatrix}
+    \begin{pmatrix}
+        G & H \\ J & K \\ L & S
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        AG + BJ + CL & AH + BK + CS \\ DG + EJ + FL & DH + EK + FS
+    \end{pmatrix}.
+\end{equation}
+
+\subsubsection{Permutations of rows and columns}
+Consider a $3\times 3$-transition matrix, corresponding to states $1,\,2$ and $3$:
+\begin{equation}
+    \mathbf{p} =
+    \begin{pmatrix}
+        .1 & .7 & .2 \\ .3 & .5 & .2 \\ .2 & .4 & .4
+    \end{pmatrix}. \nonumber
+\end{equation}
+If we now decide to list the states in the order $3,\,2,\,1$, then we need to swap the first and third row, \textbf{and} the first and third column, so that we get
+\begin{equation}
+    \begin{pmatrix}
+        .4 & .4 & .2 \\ .2 & .5 & .3 \\ .2 & .7 & .1
+    \end{pmatrix}. \nonumber
+\end{equation}
+
+\subsubsection{Reducibility}
+\begin{theorem}
+    If columns and rows of a square matrix $A$ can be permuted so that it acquires the form
+    \begin{equation}
+    A =
+        \begin{pmatrix}
+        B & 0 \\ C & D    
+        \end{pmatrix}
+    \end{equation}
+    where $B$ (and hence $D$) are square matrices, and $0$ is a matrix consisting of all zeros, then $A$ is called reducible.
+\end{theorem}
+\begin{theorem}
+    Transition matrix $\mathbf{p}$ of a decomposable (reducible) Markov chain is reducible.
+\end{theorem}
+Suppose $\Space = C\cup T$, with $k_C$ states in the closed set, and $k_T$ transient states. By definition of reducibility, the transition matrix $\mathbf{p}$ can be rearranged into the form
+\begin{equation}
+    \mathbf{p} = 
+    \begin{pmatrix}
+        P & 0 \\ R & Q    
+        \end{pmatrix}.
+\end{equation}
+Here, $P$ corresponds to transitions among recurrent states of the closed set $C$, elements of $Q$ are probabilities of transitions among transient states, and elements of $R$ give the probabilities of transitions from transient to recurrent states. This form is retained after an arbitrary number of steps.
+
 \section{Week 18}
+\subsection{Markov Chains}
+\subsubsection{Perron-Frobenius theorem}
+\begin{definition}
+    If all other eigenvalues $\lambda$ satisfy the strict inequality $\vert\lambda\vert<r$, then $A$ is called primitive.
+\end{definition}
+\begin{theorem}
+    Suppose a matrix $A$ is irreducible, and all elements of $A$ are non-negative. Then the following statements are true:
+    \begin{enumerate}
+        \item $A$ has at least one real positive eigenvalue.
+        \item The largest (if there is more than one) such real positive eigenvalue $r$ dominates all other eigenvalues: If $\alpha$ is any other eigenvalue of $A$, then $\vert\alpha\vert\leq r$.
+        \item $r$ is non-degenerate, i.i., it is a simple root of the characteristic equations
+        \begin{equation}
+            \det(A_\lambda\mathbb{I})=0.
+        \end{equation} \nonumber
+        \item Corresponding to $r$ are the right and left eigenvectors all of whose components are positive. Conversely, the only eigenvectors whose components are positive are those corresponding to $r$.
+        \item $r$ increases when any element of $A$ increases. Correspondingly, $r$ decreases when any element of $A$ decreases.
+        \item If $A$ is not primitive, i.e., there are $d>1$ eigenvalues, such that $\vert\lambda\vert=r$, then they are all simple and different, and are located symmetrically on the unit circle in the complex plane: if they are numbered from $0$ to $d-1$, they can be written as
+        \begin{equation}
+            \lambda_k = re^{2\pi ik/d},
+        \end{equation}
+        with $k = 0,\,1,\ldots,\,d-1$. If there are two such roots, they are equal to $r$ and $-r$.\\
+        Further, if $d>1$, the rows and columns of the matrix can be permuted to bring it to the block form
+        \begin{equation}
+            \begin{pmatrix}
+                0 & A_1 & 0 & \cdots & 0 \\
+                0 & 0 & A_2 & \cdots & 0 \\
+                \vdots & \vdots & \vdots & \ddots & \vdots \\
+                0 & 0 & 0 & \cdots & A_{d-1} \\
+                A_d & 0 & 0 & \cdots & 0
+            \end{pmatrix}. \nonumber
+        \end{equation}
+    \end{enumerate}
+\end{theorem}
+
+\subsubsection{Limiting behaviour}
+\begin{corollary}
+    If $A$ is irreducible and primitive, and $x$ and $y$ are the right (column) and left (row) eigenvectors of $A$ respectively, corresponding to the dominant eigenvalue $r$, and normalised so that $yx=1$, then
+    \begin{equation}
+        \lim_{n\to\infty}(1/r)^n A^n = x \otimes y,
+    \end{equation}
+    where $\otimes$ is used to denote the ``outer'' product of vectors: column times row.
+\end{corollary}
+Such products are known as dyadic products and the limits are uniform for all elements, so 
+\begin{equation}
+    \lim_{n\to\infty}(1/r)^n(A^n)_{ij} =x_i y_i. \nonumber
+\end{equation}
+\begin{theorem}
+    For irreducible and primitive $\mathbf{p}$,
+    \begin{equation}
+        \lim_{n\to\infty}\mathbf{p}^n = e\otimes \pi. 
+    \end{equation}
+\end{theorem}
+It follows that
+\begin{corollary}
+    If $\mathbf{p}$ is irreducible and primitive, there exists an equilibrium distribution.
+\end{corollary}
+
+\subsubsection{Reducible matrices}
+Given a reducible matrix $A$, its rows and columns can be permuted to the canonical form:
+\begin{equation}
+    \begin{pmatrix}
+        B & 0 \\ C & D
+    \end{pmatrix}. \nonumber
+\end{equation}
+If $B$ is reducible in its turn, its rows and columns can be permuted further to exhibit the structure:
+\begin{equation}
+    \begin{pmatrix}
+        B_{11} & 0 & 0 \\ B_{21} & B_{22} & 0 \\ C_1 & C_2 & D
+    \end{pmatrix},
+\end{equation}
+where $\begin{pmatrix}
+    C_1 & C_2
+\end{pmatrix} = C$.\\
+For the application to Markov chains, only the following special case of the canonical form is relevant:
+\begin{equation}
+p = 
+    \begin{pmatrix}
+        P_1 & 0 & \cdots & 0 & 0 \\
+        0 & P_2 & \cdots & 0 & \vdots \\
+        \vdots & \vdots & \ddots & \vdots & \vdots \\
+        0 & 0 & \cdots & P_n & 0 \\
+         &  & R &  & Q
+    \end{pmatrix}.
+\end{equation}
+Each block $P_k$ contains probabilities of transitions inside $k$-th closed set, the $Q$ block describes transitions among transient states, and the $R$ block describes transitions from transient to recurrent states.
+\begin{theorem}
+    If the chain has transient states and/or more than one closed set of recurrent states, then $p$ is reducible, and vice versa.The number of closed sets of recurrent states is equal to the multiplicity of the dominant eigenvalue $r=1$.
+\end{theorem}
+
+\subsubsection{Classification of chains}
+Considering only chains with a finite overall number of states:
+\begin{itemize}
+    \item \textbf{Reducible:} \begin{itemize}
+        \item One closed set of recurrent states:\\ Single eigenvalue equal to 1. \\ Equilibrium distribution exists.
+        \item Two or more closed sets of recurrent states:\\ Two or more eigenvalues equal to 1. \\ Equilibrium distribution does not exist.
+    \end{itemize}
+    \item \textbf{Irreducible:} \begin{itemize}
+        \item \textbf{Periodic:}\\ Single eigenvalue equal to 1. Two or more eigenvalues with absolute value equal to 1. Period equal to the number of such eigenvalues. \\ Equilibrium distribution does not exist.
+        \item \textbf{Ergodic:}\\ Single eigenvalue equal to 1. No other eigenvalues with absolute value equal to 1. \\ Equilibrium distribution exists.
+    \end{itemize}
+\end{itemize}
+\subsubsection{Algebraic test of reducibility}
+\begin{definition}
+    A matrix $M$ is said to be greater than $0$ ($M>0$) if each element of $M$ is greater than $0$ ($ M_{ij}>0\forall i,\,j $).
+\end{definition}
+\begin{theorem}
+    An $n\times n$-matrix $p$ is reducible iff $(\mathbb{I}_n + p)^{n-1}>0$.
+\end{theorem}
+
+\subsubsection{Long-time limit}
+\begin{equation}
+    p^n = \begin{pmatrix}
+        P^n & 0 \\ V_n & Q^n
+    \end{pmatrix},
+\end{equation}
+where $V_n = RP^{n-1} + QRP^{n-2} + Q^2RP^{n-3} + \ldots + Q^{n-2}RP + Q^{n-1}R$. This sum can be written in compact notation as:
+\begin{equation}
+    V_n = \sum_{j=0}^{n-1}Q^jRP^{n-1-j}.
+\end{equation}
+$V_n$ satisfies a recursion:
+\begin{equation}
+    V_n = QV_{n-1} + RP^{n-1}.
+\end{equation}
+
+\subsubsection{Evaluating the limits}
+\begin{itemize}
+    \item $\lim_{n\to\infty} P^n = \begin{pmatrix}
+        \Pi & 0 \\ V & 0
+    \end{pmatrix}$,\quad
+    where $V = \lim_{n\to\infty} V_n$
+    \item $\lim_{n\to\infty} Q_n = 0$.
+\end{itemize}
+\begin{theorem}
+    \begin{align}
+        R\Pi + QV &= V \\
+        V &= (\mathbb{I}-Q)^{-1} R\Pi, \label{eq:V_Matrix}
+    \end{align}
+\end{theorem}
+ where $\mathbb{I}$ is the unit matrix of the same dimension as $Q$.
+ \subsubsection{Special case}
+ \begin{theorem}
+     When the chain has a single closed set of recurrent states:
+     \begin{equation}
+         \lim_{n\to\infty}p^n = e_{r+t}\otimes(\pi,\,0_t).
+     \end{equation}
+     Here, $t$ is the number of transient states and $r$ is the number of columns in $R$.
+ \end{theorem}
+ 
+ \subsubsection{Absorption problems in reducible chains}
+ \begin{theorem}
+     A Markov chain with a single ergodic closed set possesses an equilibrium distribution.
+ \end{theorem}
+ 
 
 \section{Week 19}
+\subsection{Markov chains}
+\subsubsection{Absorption probabilities}
+Let the transition matrix $p$ be of the form
+\begin{equation}
+    p = \begin{pmatrix} P & 0 \\ R & Q \end{pmatrix},\nonumber
+\end{equation}
+where $P$ has a block-diagonal structure with each square block containing elements encoding transitions among the states of the $n$-th closed set. \\
+The structure of $R$ is
+\begin{equation}
+    R = 
+    \begin{pmatrix}
+        R_{11} & R_{12} & \cdots & R_{1r} \\
+        R_{21} & R_{22} & \cdots & R_{2r} \\
+        \vdots & \vdots & \ddots & \vdots \\
+        R_{t1} & R_{t2} & \cdots & R_{tr} 
+    \end{pmatrix}. \nonumber
+\end{equation}
+Each $R_{\alpha n}$ is a row of $k_n$ elements $R_{\alpha j}$ describing the transitions between the $\alpha$-th transient state and the $j$-th state in the closed set $C_n$. \\
+If we are interested onlny in the properties of the chain up to the time of absorption, the subsequent transitions among the states of a closed set are irrelevant. Thus, we can replace our original chain with an equivalent one which: 
+\begin{equation}
+    \text{Each of the closed sets is replaced by a single compound absorbing state.}
+\end{equation}
+Correspondingly, each row $R_{\alpha j}$ is replaced with the number
+\begin{equation}
+    \tilde{R}_{\alpha n} = \sum_{j\in C_n} R_{\alpha j}.
+\end{equation}
+The probabilities of absorption are given by the elements of the matrix
+\begin{equation}
+    \tilde{V} = (\mathbb{I}-Q)^{-1}\tilde{R}.
+\end{equation}
+\subsubsection{First-step decomposition in absorption problems}
+Let $V_{\alpha j}$ be the eventual probability to be in the $j$-th recurrent state starting from the transient state $\alpha$. Then:
+\begin{theorem}
+    \begin{equation}
+        V_{\alpha j} = \sum_{r\in C_{j}}\Pi_{rj}R_{\alpha r} + \sum_\beta V_{\beta j}Q_{\alpha \beta}.
+    \end{equation}
+\end{theorem}
+In matrix form, this is the same as eq.(~\ref{eq:V_Matrix}).
+
+\subsubsection{Recurrence time}
+\begin{theorem}
+    The mean recurrence time for an ergodic state $j$ is equal to the inverse of the equilibrium probability in the state $j$.
+\end{theorem}
+\begin{theorem}
+    The mean recurrence time $\mu$ for a state $j$ is given by:
+    \begin{equation}
+        \mu_j = \sum_{m=1}^\infty mf_{jj}^{(m)} = \frac{1}{\pi_j}.
+    \end{equation}
+\end{theorem}
+
 
 \section{Week 20}
+\subsection{Markov chains}
+\subsubsection{Mean time to absorption}
+\begin{theorem}
+    \begin{equation}
+        \mu = (\mathbb{I}-Q)^(-1)e^{(t)},
+    \end{equation}
+    where $\mu$ is the column of mean absorption times and $ (\mathbb{I}-Q)^(-1) $ is the mean number of visits.
+\end{theorem}
+
 
 \section{Week 21}
+\subsection{Branching Processes}
+\subsubsection{Population dynamics}
+\begin{itemize}
+    \item \textbf{Deterministic}: In deterministic models the rules of the evolution of a population size from one generation to the next are fixed, and complexity arises, e.g., from non-linear interaction between different subspecies of the population (e.g., predators eat prey).
+    \item \textbf{Stochastic}: In stochastic models one takes into account the fact that each member of the population may have a varying number of immediate descendants, so that this number is modeled as a random variable subject to a certain probability law.
+\end{itemize}
+A deterministic model often arises as the average behaviour of a stochastic model when the number of individuals is large.
+
+\subsubsection{Galton-Watson branching process}
+\begin{theorem}
+    The total population size of the $n+1$-st generation is
+    \begin{equation}
+        Z_{n+1} = \sum_{i=1}^{Z_n} X_i.
+    \end{equation}
+\end{theorem}
+The $X_i$ are taken to be i.i.d. random variables. \\
+Define two types of generating functions. $\mathbb{G}_n(s) = \E[s^{Z_n}]$ for the population in the $n$-th generation. and $G(s) = \E[s^X]$ for family size.
+\begin{theorem}
+    \begin{equation}
+        \mathbb{G}_{n+1}(s) = \mathbb{G}_n[G(s)]
+    \end{equation}
+    and
+    \begin{equation}
+        \mathbb{G}_{n}(s) = G(\mathbb{G}_{n-1}(s)).
+    \end{equation}
+\end{theorem}
+\begin{theorem}
+    The probability of eventual extinction $\xi$ is given by
+    \begin{equation}
+        \xi = \lim_{n\to\infty} \mathbb{G}_n(0).
+    \end{equation}
+    This also means
+    \begin{equation}
+        \xi = G(\xi).
+    \end{equation}
+\end{theorem}
+\begin{corollary}
+    The extinction probability $\xi$ of the branching process is given by the smallest of the two non-negative roots of the equation
+    \begin{equation}
+        \xi = G(\xi), \nonumber    
+    \end{equation}
+    where $G(s)$ is the generating function for the distribution of the number of descendants of a single individual.
+\end{corollary}
+\begin{corollary}
+    Extinction is certain iff mean ``family'' size is less than or equal to one.
+\end{corollary}
+
+
 
 \section{Week 23}
+\subsection{Introduction to Martingales}
+\subsubsection{Martingales}
+\begin{definition}
+    A martingale is a stochastic process which possesses the property of being a ``fair game'', and does not allow for infinite expectations.\\
+    Formally: $Z_n$ is a martingale with respect to itself if:
+    \begin{enumerate}
+        \item $\E[Z_{n+1}\vert \{ Z_i \}_{i=1}^n] = Z_n$ and
+        \item $\E[\vert Z_n\vert]<\infty$.
+    \end{enumerate}
+\end{definition}
+A simple unbiased random walk without boundaries is a martingale.
+
+\subsubsection{Biased random walk}
+\begin{enumerate}
+    \item A more general definition of martingale with respect to another process (as opposed to with respect to itself) could be $Y_n$ is a martingale with respect to $S_n$.
+    \item Since martingales have many very useful properties, constructing a martingale on the basis of the process one wants to study is a powerful mathematical tool.
+\end{enumerate}
+
+\subsubsection{Properties of martingales}
+\begin{theorem}
+    If $Z_n$ is a martingale, then
+    \begin{equation}
+        \E[Z_n] = \E[Z_0].
+    \end{equation}
+\end{theorem}
+
+\subsubsection{De Moivre's martingale}
+\begin{definition}
+    De Moivre's martingale is defined as
+    \begin{equation}
+        Y_n = (q/p)^{S_n},
+    \end{equation}
+    where $p\neq q$.
+\end{definition}
+
+\subsubsection{Stopping times}
+\begin{definition}
+    A random variable $T$ is a stopping time with respect to a stochastic process $Y_n$ if $\{ T=n \}\in \mathcal{F}$ where $\mathcal{F}_n$ is the powerset associated with the sample space of all possible realisations of the sequence
+    \begin{equation}
+        Y_0,\,Y_1,\,Y_2,\ldots,\,Y_{n-1},\,Y_n. \nonumber
+    \end{equation}
+\end{definition}
+$\mathcal{F}_n$ is known as a filtration. Martingales are properly defined with respect to filtrations, rather than the underlying stochastic processes:
+\begin{equation}
+    \E[Y_{n+1}\vert \mathcal{F}_n] = Y_n
+\end{equation}
+defines a martingale. 
+
+\section{Week 24}
+\subsection{Introduction to martingales}
+\subsubsection{Optional stopping theorem}
+\begin{theorem}
+    Let $Y_n$ be a martingale with respect to a filtration $\mathcal{F}_n$ and let $T$ be a stopping time. Then, $\E[Y_T] = \E[Y_0]$ if the following conditions are satisfied:
+    \begin{enumerate}
+        \item $\Prob[T<\infty] = 1$,
+        \item $\E[T]<\infty$,
+        \item $\exists$ a constant $\mathcal{c}$ such that for all $n<T$ the following condition is satisfied:
+        \begin{equation}
+            \E\left[\vert Y_{n+1}-Y_n \vert \biggr\rvert \mathcal{F}_n \right]\leq c.
+        \end{equation}
+    \end{enumerate}
+\end{theorem}
+
+\subsubsection{Gambling strategies}
+Consider a martingale $W_n = \sum_{k=1}^n Z_k$. Suppose now the gambler attempts to execute a strategy by varying the amount of individual bets depending on the outcome(s) preceding game(s). Let us denote these bets as $\alpha_n$, so that the capital of the gambler after $n$ games is
+\begin{equation}
+    C_n = \sum_{k=1}^n \alpha_k Z_k.
+\end{equation}
+\begin{theorem}
+    If each bet $\alpha_k$ depends only on the outcomes of the preceding $k-1$ games, then $C_n$ is a martingale.
+\end{theorem}
+
+\subsubsection{Wald's identity}
+Assuming the validity of the optional stopping theorem, we have for a suitable stopping time $T$,
+\begin{equation}
+    \E[s^{S_T}G(S)^{-T}] = 1.
+\end{equation}
+
+
+
 
 \end{document}

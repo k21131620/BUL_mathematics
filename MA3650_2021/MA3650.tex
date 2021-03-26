@@ -10,7 +10,7 @@
 \newtheorem{proposition}{Proposition}
 
 \title{MA3650 - Numerical Methods for Differential Equations}
-\author{1720996}
+\author{Luke Dando}
 \date{\today}
 
 \begin{document}
@@ -409,32 +409,260 @@ This can be extended for larger polynomials trivially.
 
 \section{Interpolation, splines}
 \subsection{Lecture 23}
+\subsubsection{Linear Splines}
+The rule of $S_n$ on the interval $[x_i,\,x_{i+1}]$ is
+\begin{equation}
+    S_n(x) = y_i + \frac{x-x_i}{x_{i+1}-x_i}(y_{i+1}-y_i) = \left(\frac{x-x_i}{x_{i+1}-x_i}\right)y_{i+1} + \left(\frac{x_{i+1}-x}{x_{i+1}-x_i}\right)y_i. \nonumber
+\end{equation}
+We can also re-cast $S_n$ as
+\begin{equation}
+    S_n(x) = \left(\frac{x_{i+1}y_i - x_ky_{i+1}}{x_{i+1}-x_i}\right) + x\left(\frac{y_{i+1}-y_i}{x_{i+1}-x_i}\right),\quad x\in [x_i,\,x_{i+1}]
+\end{equation}
+to identify the gradient easily.
+
 \subsection{Lecture 24}
+Assume we have splines on $n$ intervals. The global regularity of the spline and the degree of the local polynomials satisfy the following relations. The notation $f\in C^k[a,\,b]$ means that $f$ is $k$-times continuously differentiable. Recall that this means that the function and its first $k$ derivatives are continuous at any $z\in[]a,\,b]$, that is,
+\begin{equation}
+    \lim_{x\to z^-}f^{(j)}(x) = \lim_{x\to z^+}f^{(j)}(x),\quad 0\leq j \leq k. \nonumber
+\end{equation}
+\begin{table}[h!]
+\centering
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+        \hline
+        polynomial & coefficients & $C^0$ & $C^1$ & $C^2$ & equations & free coefficients \\
+        \hline
+        linear & $2n$ & $2(n-1)+2$ &  &  & $2n$ & 0 \\
+        \hline
+        quadratic & $3n$ & $2(n-1)+2$ & $n-1$ &  & $3n-1$ & 1 \\
+        \hline
+        cubic & $4n$ & $2(n-1)+2$ & $n-1$ & $n-1$ & $4n-2$ & 2 \\
+        \hline
+    \end{tabular}
+    \caption{Number of variables (coefficients) and equations for splines.}
+    \label{table:splines}
+\end{table}
+
+\subsubsection{Natural Cubic Splines}
+Given a function $f$ defined on $[a,b]$ and a set of points $a=x_0<x_1<\ldots<x_n=b$, a function $S$ is called a natural cubic spline if there exists $n$ cubic polynomials $S_i$ such that:
+\begin{enumerate}
+    \item $ S(x) = S_i(x) $ for $x$ in $[x_i,\,x_{i+1}]$ and $0\leq i\leq n-1$;
+    \item $S_i(x) = f(x_i)$ and $S_i(x_{i+1}) = f(x_{i+1})$, $0\leq i\leq n-1$;
+    \item $S_{i+1}^\prime(x_{i+1}) = S_i^\prime(x_{i+1})$ for $0\leq i\leq n-1$;
+    \item $S_{i+1}^{\prime\prime}(x_{i+1}) = S_i^{\prime\prime}(x_{i+1})$ for $0\leq i\leq n-1$;
+    \item $S^{\prime\prime}(x_0) = S^{\prime\prime}(x_n) = 0$.
+\end{enumerate}
+Denote $c_i = S^{\prime\prime}(x_i),\,0\leq i\leq n$. Then $c_n=c_0=0$. Then
+\begin{equation}
+    S^{\prime\prime}_i = c_i\frac{x_{i+1} - x}{x_{i+1} - x_i} + c_{i+1}\frac{x-x_i}{x_{i+1} - x_i}.
+\end{equation}
+Integrate twice using boundary conditions to fix the integration constants.
 
 
 \section{Different schemes for the heat equation, consistency}
 \subsection{Lecture 25}
+\subsubsection{Consistency}
+A scheme is said to be consistent if it solves the PDE problem.
+
+\subsubsection{Stability}
+A numerical algorithm is said to be stable provided small errors in arithmetic remain bounded independently of the number of numerical steps used to reach the same value estimates.
+
+\subsubsection{Convergence}
+A scheme converges if it is both consistent and stable as the temporal and spatial time-steps are reduced.
+
+\subsubsection{Four Finite Difference Schemes for the Heat Equation}
+The performance of the four schemes is summarised as follows:
+\begin{enumerate}
+    \item The Euler explicit scheme converges if $\delta t$ is sufficiently small with respect to $(\delta x)^2$ but otherwise will blow-up.
+    \item The Richardson scheme seems to be unstable for all choices of the Courant number $r$, so it will not converge.
+    \item The Dufort-Frankel scheme converges but not necessarily to the correct solution as it is not consistent with the heat equation.
+    \item The Crank-Nicolson scheme seems to exhibit stable behaviour for all choices of the Courant number and converges to the correct solution as spatial resolution is improved.
+\end{enumerate}
 
 
 \section{Consistency}
 \subsection{Lecture 26}
+Refer to lecture notes.
 
 
 \section{Convergence}
 \subsection{Lecture 27}
+\subsubsection{Local Error}
+denote $u$ the exact solution and $v$ the solution of the explicit Euler scheme to the equation
+\begin{equation}
+    u_t = u_{xx},\quad u(0,t) = u(1,t) = 0,\quad u(x,0) = u_0(x).
+\end{equation}
+\begin{proposition}
+    Let
+    \begin{equation}
+        e_{i,j} = v_{i,j} - u(x_i,\,t_j)\nonumber
+    \end{equation}
+    be the local error at each grid point for the current set-up. Recall that $(\delta t) = r(\delta x)^2$, where $r$ is a constant.\\
+    Then, the local error satisfies the following approximate iterative process:
+    \begin{align}
+        e_{i,j+1} &= (1-2r)e_{i,j} + re_{i+1,j} + re_{i-1,j} \nonumber\\
+        &+ \underbrace{\frac{(\delta t)(\delta x)^2}{12}(1-6r)(u_{tt})_{i,j}}_{\text{leading approximation term}} + O((\delta t)^3,(\delta t)(\delta x)^4). \nonumber
+    \end{align}
+\end{proposition}
+We can see that choosing $r=1/6$ improves the accuracy by removing the leading error term. Proof in lecture notes.
+
 \subsection{Lecture 28}
+\subsubsection{Error Along Time Layers for the Explicit Euler Scheme for the Heat Equation}
+Define $E_j$ to be the spatial discretion error at a time $t_j$, that is,
+\begin{equation}
+    E_j = \max\{ \vert e_{i,j}\vert : 0\leq i \leq M \} = \Vert e_{i,j}\Vert_\infty \nonumber
+\end{equation}
+and let $\Vert u_{tt}\Vert_\infty$ be the maximum value of $u_{tt}$ across space and time on the rectangle $[0,\,1]\times[0,\,T]$:
+\begin{equation}
+    \Vert u_{tt}\Vert = \{ \vert u_{tt}(x,t):(x,t)\in[a,b]\times[0,T] \}.
+\end{equation}    
+Our main result is as follows:
+\begin{proposition}
+    With the previous notation, when $r\leq 1/2$, the error of the time-layer at time $T$ is
+    \begin{equation}
+        E_N\leq T\left( \frac{(\delta x)^2 \vert 1-6r\vert\cdot\Vert u_{tt}\Vert_\infty }{12} + O((\delta t)^2,(\delta x)^4) \right). \nonumber
+    \end{equation}
+\end{proposition}
+
+\subsubsection{Consequences for Convergence}
+\begin{corollary}
+    Provided that $r\leq 1/2$:
+    \begin{enumerate}
+        \item The maximum spatial discretisation error in the Euler scheme grows in direct proportion to $T$, but
+        \item For a fixed $T$, the error tends to $0$ as $\delta x$ tends to $0$.
+        \item Remark that the explicit Euler scheme is more accurate than might otherwise have been anticipated when $r=1/6$ because the first part of the error vanishes.
+    \end{enumerate}
+\end{corollary}
 
 
 \section{Stability Fourier method}
 \subsection{Lecture 29}
+Use lecture notes.
 \subsection{Lecture 30}
+Use lecture notes.
 \subsection{Lecture 31}
+Use lecture notes.
 
 
 \section{Stability matrix method}
 \subsection{Lecture 32}
+\subsubsection{Eigenvalues of Banded Matrices}
+A matrix is said to be banded (or Toeplitz) if the values along each diagonal are constant. 
+
+\subsubsection{Circulant Matrices}
+An $m\times m$-banded matrix is circulant if $a_i = a_{i-m},\,\forall 1\leq i \leq m$. The rows of a circulant $n \times n$-matrix are obtained by shifting a sequence of $n$ numbers by $m$ places.
+
+\begin{proposition}
+    The tri-diagonal circulant matrix $(m+1)\times(m+1)$-matrix
+    \begin{equation}
+        A =
+        \begin{pmatrix}
+            a_0 & a_1 & & & a_{-1} \\
+            a_{-1} & a_0 & a_1 & & \\
+            & a_{-1} & a_0 & a_1 & \\
+            & & \vdots & \vdots & a_1 \\
+            a_1 & & & a_{-1} & a_0 
+        \end{pmatrix} \nonumber
+    \end{equation}
+    has eigenvalues
+    \begin{equation}
+        \lambda_p = a_{-1}e^{-\frac{2\pi p}{m+1}i} + a_0 + a_1 e^{\frac{2\pi p}{m+1}i},\quad 1\leq p\leq m+1,
+    \end{equation}
+    corresponding to the eigenvector $\underline{v}_p$ having its $j$-th component equal to $e^{\frac{2\pi jp}{m+1}i},\,1\leq j\leq m+1$. 
+\end{proposition}
+\begin{corollary}
+    The tri-diagonal circulant $(m+1)\times(m+1)$-matrix 
+    \begin{equation}
+        A =
+        \begin{pmatrix}
+            a & b & & & b \\
+            b & a & b & & \\
+            & b & a & b & \\
+            & & \ddots & \ddots & b \\
+            b & & & b & a 
+        \end{pmatrix}, \nonumber
+    \end{equation}
+    has eigenvalues
+    \begin{equation}
+        \lambda_p = a+2b\cos{\left( \frac{2\pi p}{m+1} \right)},\quad 1\leq p\leq m+1.
+    \end{equation}
+\end{corollary}
+
+\subsubsection{Tri-diagonal Matrices}
+\begin{proposition}
+    Let $bc>0$. The tri-diagonal $(m+1)\times(m+1)$-matrix
+    \begin{equation}
+        \begin{pmatrix}
+            a & b & 0 & 0 & \cdots & 0 \\
+            c & a & b & 0 & \cdots & 0 \\
+            0 & c & a & b & \cdots & 0 \\
+            \vdots & \vdots & \ddots & \ddots & \ddots & 0 \\
+            0 & \cdots & 0 & c & a & b \\
+            0 & \cdots & 0 & 0 & c & a 
+        \end{pmatrix} \nonumber
+    \end{equation}
+    has eigenvalues
+    \begin{equation}
+        \lambda_k = a + 2\sqrt{bc}\cos{\theta_k},\quad k = 1,\ldots,\,n, \nonumber
+    \end{equation}
+    where $\lambda_k = k\pi/(n+1)$, with corresponding eigenvector
+    \begin{equation}
+        \underline{v}_k = ( \sqrt{c/b}\sin{\theta_k},\,(c/b)\sin{(2\theta_k)},\ldots,\,(c/b)^{j/2}\sin{(j\theta_k)},\ldots,\,(c/b)^{n/2}\sin{(n\theta_k)} ). \nonumber
+    \end{equation}
+\end{proposition}
+\begin{corollary}
+    The tri-diagonal symmetric $(m+1)\times(m+1)$-matrix 
+    \begin{equation}
+        A =
+        \begin{pmatrix}
+            a & b & & &  \\
+            b & a & b & & \\
+            & b & a & b & \\
+            & & \ddots & \ddots & b \\
+            & & & b & a 
+        \end{pmatrix}, \nonumber
+    \end{equation}
+    has eigenvalues
+    \begin{equation}
+        \lambda_p = a+2b\cos{\left( \frac{p\pi}{m+1} \right)},\quad 1\leq p\leq m,
+    \end{equation}
+    corresponding to the eigenvector having its $j$-th component equal to $\sin{\left( \frac{jp\pi}{m+1} \right)},\, 1\leq j\leq m+1$.
+\end{corollary}
+
 \subsection{Lecture 33}
+\subsubsection{Statement of Gershgorin's Circle Theorem}
+\begin{theorem}
+    Let $A$ be an $n\times n$-matrix and the disks
+    \begin{equation}
+        D_k = \{ z\in \mathbb{C} : \vert z-A_{kk}\vert \leq \sum_{j=1\neq k} \vert A_{kj}\vert \}. \nonumber
+    \end{equation}
+    Then, all eigenvalues of $A$ are contained within the region $D = \bigcup_{k=1}^n D_k$. The disk $D_k$ is called a Gershgorin's disk. Its boundary is a Gershgorin's circle, denoted by $C_k$.\\
+    In particular, if $m\leq n$ of these disks form a subset of $D$ which does not intersect the remaining $(n-m)$ disks, then precisely $m$ eigenvalues are contained within such a subset.
+\end{theorem}
+
+\subsubsection{Gershgorin's Circle Theorem and Transpose Matrix}
+\begin{lemma}
+    Given an $n\times n$-real matrix $A$, then $\sigma (A) = \sigma (A^T)$. \nonumber 
+\end{lemma}
+
 \subsection{Lecture 34}
+\subsubsection{Diagonally Dominant Matrices}
+\begin{definition}
+    A matrix such that $\vert A_{kk}\vert > \sum_{j=1\neq k}^n \vert A_{kj} \vert$ for all $1\leq k \leq n$, is said to be strictly diagonally dominant.
+\end{definition}
+\begin{proposition}
+    Strictly dominant diagonal matrices are invertible.
+\end{proposition}
+
+\subsubsection{Lax Theorem}
+A boundary value problem is properly posed if:
+\begin{enumerate}
+    \item The solution is unique when it exists (it has at most one solution);
+    \item The solution depends continuously on the initial data;
+    \item When a solution does not exist for some initial data, there exists arbitrarily close initial data for which a solution does exist.
+\end{enumerate}
+\begin{theorem}
+    Given a properly posed linear boundary value problem and a linear finite difference approximation scheme that is consistent with the BVP and stable, then the scheme is convergent.
+\end{theorem}
 
 
 

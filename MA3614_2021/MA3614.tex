@@ -240,233 +240,6 @@ The Cauchy-Riemann equations are
 
 \section{Week 6}
 \subsection{Elementary functions of $z$}
-
-\section{Week 7}
-\subsection{Elementary functions of $z$}
-
-\section{Week 8}
-
-\section{Week 9}
-
-\section{Week 10}
-=======
-\begin{equation}
-    z = x+iy=re^{i\theta},
-\end{equation}
-where $x=r\cos\theta$ and $y=r\sin\theta$. Here, $r$ is the modulus and $\theta$ is the argument. 
-\begin{definition}
-The principal argument of $z$ is
-    \begin{equation}
-        \arg z\in(-\pi,\pi],
-    \end{equation}
-    where $\arg z$ is multi-valued.
-\end{definition}
-Note, $\vert z\vert^2 = z\overline{z}$. $\vert z\vert=$ absolute value of $z$.
-
-\subsubsection{Multiplication, powers and roots of unity}
-Suppose $z=re^{i\theta},\,z_1 = r_1e^{i\theta_1},\,r_2e^{i\theta_2}$.
-\begin{itemize}
-    \item \textbf{Multiplication:} $z_1 z_2 = r_1 r_2 e^{i(\theta_1\theta_2)}$.
-    \item \textbf{Powers:} $z^n=r^n e^{in\theta},\,n=0,\,\pm1,\,\pm2,\,\ldots$.
-    \item Observe that $e^{2\pi i}=\exp(2\pi i) = 1$.
-    \item \textbf{Roots of unity:} Let $\omega = \exp(2\pi i/n)$. $1,\,\omega,\,\omega^2,\,\ldots,\,\omega^{n-1}$ all satisfy $z^n-1=0$ and are uniformly spaced on the unit circle.
-\end{itemize}
-\subsubsection{Triangle inequality in $\mathbb{C}$}
-\begin{definition}
-    \begin{equation}
-        \vert \vert z_1\vert - \vert z_2 \vert \vert \leq  \vert z_1 +z_2 \vert \leq \vert z_1\vert + \vert z_2 \vert
-    \end{equation}
-\end{definition}
-
-\subsubsection{Convergence of a sequence in $\mathbb{C}$}
-\begin{definition}
-    A sequence $z_0,\,z_1,\,z_2,\,\ldots$ converges to $z$ if for every $\epsilon>0$ there exists an $N=N(\epsilon)$ such that
-    \begin{equation}
-        \vert z_n-z\vert<\epsilon,\quad \forall n\geq N.
-    \end{equation}
-\end{definition}
-From here on, $\vert \ \vert$ now means the absolute value of a complex number.
-
-\section{Week 2}
-\subsection{Foundations of complex numbers}
-\begin{theorem}
-    A polynomial of degree $n$ can always be factorised in the form
-    \begin{align}
-        p_n(z)&=a_nz^n+a_{n-1}z^{n-1}+\cdots+a_1z+a_0 \\
-        &= a_n(z-\alpha_1)(z-\alpha_2)\cdots(z-\alpha_n).
-    \end{align}
-    where $a_0,\,\ldots,\,a_n,\,\alpha_1,\,\ldots,\,\alpha_n\in\mathbb{C}$ and $a_n\neq0$.
-\end{theorem}
-
-\subsubsection{Roots of the unity polynomial}
-Let $\omega=\exp(2\pi i/n)$. Let $\xi=\rho\exp(i\alpha)$ and let $z_0=\sqrt[n]{\rho}\exp(i\alpha/n)$ be one solution. The $n$ roots of $\xi$ are $z_0,\,z_0\omega,\,\ldots,\,z_0\omega^{n-1}$.
-\subsubsection{Some definitions}
-Let $A\subset\mathbb{C}$. We write
-\begin{equation}
-    f:A\to\mathbb{C} \nonumber
-\end{equation}
-with $A$ denoting the domain of definition of $f$.
-\begin{itemize}
-    \item \textbf{Open disk}: A set of the form
-    \begin{equation}
-        \{ z\in\mathbb{C}:\vert z-z_0\vert<\rho \},\quad \rho>0.
-    \end{equation}
-    The boundary is the unit circle $\vert z-z_0\vert=\rho$ which is \textit{not} part of the set.
-    \item \textbf{Unit disk}: This is the set
-    \begin{equation}
-        \{ z\in\mathbb{C}:\vert z\vert<1 \}.
-    \end{equation}
-    \item \textbf{Neighbourhood}: A neighbourhood of a point $z_0$ means a disk of the form $ \{ z\in\mathbb{C}:\vert z-z_0\vert<\rho \} $ for some $\rho>0$.
-    \item \textbf{Interior point}: The interior point of $A$ is a point $z_0\in A$ such that a neighbourhood of $z_0$ is also in $A$.
-    \item \textbf{Open set}: A set such that every point is an interior point.
-    \item \textbf{Boundary point}: A boundary point of $A$ is a point $z_0$ such that every neighbourhood of $z_0$ contains points which are in $A$ and also contain points which are not in $A$.
-    \item \textbf{Boundary}: The boundary of $A$ is the set of all it's boundary points.
-    \item \textbf{Polygonal path}: Let $w_1,\,w_2,\,\ldots,\,w_{n+1}$ be points in $\mathbb{C}$ and let $l_k$ be the straight line segment joining $w_k$ to $w_{k+1}$. The successive line segments $l_1,\,l_2,\,\ldots,\,l_{n+1}$ is a polygonal path joining $w_1$ to $w_{n+1}$.
-    \item \textbf{Connected}: A set $A$ is connected if every pair of points $z_1$ and $z_2$ in $A$ can be joined by a polygonal path which is contained in $A$.
-    \item \textbf{Domain}: An open connected set.
-    \item \textbf{Region}: A domain or a domain together with some or all of the boundary points.
-    \item \textbf{Bounded}: A set $A$ is bounded if there exists $R>0$ such that the set is contained in the disk $\{ z:\vert z\vert<R \}$.
-    \item \textbf{Unbounded}: A set is unbounded if it's not bounded.
-    \item A domain (which is thus connected) and does not have holes.
-\end{itemize}
-
-\subsubsection{Limits}
-\begin{definition}
-    Let $f$ be defined in a neighbourhood of $z_0$ and let $f_0\in\mathbb{C}$. If for every $\epsilon>0$ there exists a real number $\delta>0$ such that
-    \begin{equation}
-        \vert f(z)\vert <\epsilon\,\text{for all }z\text{ satisfying }0<\vert z-z_0\vert<\delta, \nonumber
-    \end{equation}
-    then we say that
-    \begin{equation}
-        \lim_{z\to z_0}f(z)=f_0.
-    \end{equation}
-\end{definition}
-
-\subsubsection{Continuity}
-\begin{definition}
-    A function $w=f(z)$ is continuous at $z=z_0$ provided $f(z_0)$ is defined and
-    \begin{equation}
-        \lim_{z\to z_0}f(z)=f(0).
-    \end{equation}
-\end{definition}
-Suppose that $f(z)$ and $g(z)$ are continuous at $z_0$.
-\begin{itemize}
-    \item $f(z)\pm g(z)$ and $f(z)g(z)$ are continuous at $z_0$.
-    \item $f(z)/g(z)$ is continuous at $z_0$ provided $g(z)\neq 0$.
-\end{itemize}
-Suppose that $f(z)$ is continuous at $z_0$ and $g(z)$ is continuous at $f(z_0)$ then $g(f(z))$ is continuous at $z_0$.
-\linebreak
-Let $f(z)=u(x,y)+iv(x,y).$ If $f$ is continuous at $z_0=x_0+i y_0$ then $u$ and $v$ are both continuous as functions on $\mathbb{R}^2$ at $(x_0,y_0)$. Conversely, if $u$ and $v$ are both continuous at $(x_0,y_0)$ then $f$ is continuous at $z_0=x_0+i y_0$.
-
-\section{Week 3}
-\subsection{Functions and the Cauchy-Riemann equations}
-\subsubsection{Analytic functions}
-\begin{theorem}
-    Let $f$ be a complex valued function defined in a neighbourhood of $z_0$. The derivative of $f$ at $z_0$ is given by
-    \begin{equation}
-        \frac{df}{dz}(z_0)\equiv f^\prime(z_0):=\lim_{h\to 0}\frac{f(z_0+h)-f(z_0)}{h}
-    \end{equation}
-    provided the limit exists. Note that here $h\in\mathbb{C}$. 
-\end{theorem}
-\begin{itemize}
-    \item A function $f$ is analytic at $z_0$ if $f$ is differentiable at all points in some neighbourhood of $z_0$.
-    \item A function $f$ is analytic in a domain if $f$ is analytic at all points in the domain.
-    \item A function $f:\mathbb{C}\to\mathbb{C}$ is an entire function if it is analytic on the whole complex plane $\mathbb{C}$.
-\end{itemize}
-
-\subsubsection{Combining differentiable functions}
-Let $f$ and $g$ be differentiable at $z_0$. We have the following:
-\begin{enumerate}
-    \item 
-    \begin{equation}
-        (f\pm g)^\prime (z_0) = f^\prime(z_0)\pm g^\prime(z_0). \nonumber
-    \end{equation}
-    \item
-    \begin{equation}
-        (cf)^\prime(z_0)=cf^\prime(z_0) \nonumber
-    \end{equation}
-    for all constants $c\in\mathbb{C}$.
-    \item
-    \begin{equation}
-        (fg)^\prime(z_0)=f(z_0)g^\prime(z_0)+f^\prime(z_0)g(z_0).
-    \end{equation}
-    This is the product rule.
-    \item
-    \begin{equation}
-        (\frac{f}{g})^\prime (z_0) = \frac{g(z_0)g^\prime(z_0)-f(z_0)g^\prime(z_0)}{g(z_0)^2},\quad \text{if }g(z_0)\neq 0.
-    \end{equation}
-    This is the quotient rule.
-    \item Let now $f$ be a function which is differentiable at $g(z_0)$. Then
-    \begin{equation}
-        \left.\frac{d}{dz}f(g(z))\right\rvert_{z=z_0} = f^\prime(g(z_0))g^\prime(z_0).
-    \end{equation}
-    This is the chain rule.
-\end{enumerate}
-
-\subsubsection{The Cauchy-Riemann equations}
-Let $f(z)=u(x,y)+iv(x,y)$. When $f$ is analytic at $z_0$ the following limit exists:
-\begin{equation}
-    \frac{df}{dz}(z_0)\equiv f^\prime(z_0):=\lim_{h\to 0}\frac{f(z_0+h)-f(z_0)}{h}.
-\end{equation}
-By considering the case when $h$ is real and then purely imaginary we get
-\begin{align}
-    f^\prime(z) &= \frac{\partial u}{\partial x}+i\frac{\partial v}{\partial x}, \\
-    &= \frac{1}{i}\left( \frac{\partial u}{\partial y}+i\frac{\partial v}{\partial y} \right) = \frac{\partial v}{\partial y} -i\frac{\partial u}{\partial y}.
-\end{align}
-Equating the real and imaginary parts gives the Cauchy-Riemann equations.
-\begin{theorem}
-The Cauchy-Riemann equations are
-    \begin{equation}
-        \frac{\partial u}{\partial x} = \frac{\partial v}{\partial y},\quad\frac{\partial u}{\partial y}=-\frac{\partial v}{\partial x}.
-    \end{equation}
-    The Cauchy-Riemann equations in polar coordinates are
-    \begin{equation}
-        \frac{\partial \tilde{u}}{\partial r} = \frac{1}{r}\frac{\partial \tilde{v}}{\partial \theta},\quad \frac{1}{r}\frac{\partial \tilde{u}}{\partial \theta} = -\frac{\partial \tilde{v}}{\partial r}.
-    \end{equation}
-\end{theorem}
-
-\section{Week 4}
-\subsection{Analytic functions}
-\subsubsection{Gradient}
-\begin{theorem}
-    Te gradient of $\phi$ is
-    \begin{equation}
-        \nabla\phi = \frac{\partial \phi}{\partial x}\underline{i} + \frac{\partial \phi}{\partial y}\underline{j} + \frac{\partial \phi}{\partial z}\underline{k}.
-    \end{equation}
-\end{theorem}
-\subsubsection{Directional derivative}
-\begin{theorem}
-    The directional derivative of $\phi$ in the direction of a unit vector $\underline{n}$ is
-    \begin{align}
-        \frac{\partial \phi}{\partial n}(\underline{r}) &= \left.\frac{\partial}{\partial s}\phi(\underline{r}+s\underline{n})\right\vert_{s=0} \\
-        &= \left( n_1\frac{\partial \phi}{\partial x_1} + n_2\frac{\partial \phi}{\partial x_2} + n_3\frac{\partial \phi}{\partial x_3} \right)(\underline{r})=\underline{n}\cdot\nabla\phi(\underline{r}).
-    \end{align}
-    When $s$ is small
-    \begin{equation}
-        \phi(\underline{r}+s\underline{n})-\phi(\underline{r})\approx s\frac{\partial \phi}{\partial n}(\underline{r}) = (s\underline{n})\cdot\nabla\phi(\underline{r}).
-    \end{equation}
-\end{theorem}
-\subsubsection{Analytic function definition}
-\begin{definition}
-    A function that is analytic holds the Cauchy-Riemann equations true.
-\end{definition}
-
-\section{Week 5}
-\subsection{Analytic functions}
-\subsubsection{Harmonic functions}
-\begin{theorem}
-    $\phi(x,y)$ is harmonic if
-    \begin{equation}
-        \nabla^2\phi = \frac{\partial \phi}{\partial x^2} + \frac{\partial^2 \phi}{\partial y^2} = 0.
-    \end{equation}
-\end{theorem}
-\subsubsection{Harmonic Conjugate}
-\begin{theorem}
-    If $f=u+iv$ is analytic then $u$ and $v$ are harmonic functions. $v$ is said to be the harmonic conjugate of $u$.
-\end{theorem}
-
-\section{Week 6}
-\subsection{Elementary functions of $z$}
 \subsubsection{Representation of polynomials and zeros}
 Polynomials are entire functions and can be represented in several ways.
 \begin{align}
@@ -795,21 +568,440 @@ The following are equivalent statements involving the integral of $f$:
     \end{align}
 \end{theorem}
 
-
-\section{Week 11}
-
 \section{Week 17}
+\subsection{Harmonic functions - further results}
+Suppose that $f(z)=u(x,y) + iv(x,y)$ is analytic in a domain $D$ with $u,\,v\in \mathbb{R}$. We have the following:
+\begin{itemize}
+    \item As all derivatives of $f$ exist and are analytic it follows that all partial derivatives of $u$ and $v$ exist and are continuous.
+    \item Both $u$ and $v$ are harmonic, i.e. $\nabla^2u = 0$ and $\nabla^2 v=0$, with $v$ being the harmonic conjugate of $u$.
+    \item \begin{equation}
+        f^\prime(z) = \frac{\partial u}{\partial x} + i\frac{\partial v}{\partial x} = \frac{\partial v}{\partial y} - i\frac{\partial u}{\partial y}.
+    \end{equation}
+    As $f^\prime$ is analytic the first partial derivatives of $u$ and $v$ are harmonic functions. All the partial derivatives of $u$ and $v$ are harmonic.
+\end{itemize}
+
+\subsubsection{Creating an analytic function from a harmonic function}
+Suppose we have a function $\phi$ which is harmonic in a domain $D$. Let
+\begin{equation}
+    g(z) = \frac{\partial \phi}{\partial x} -i\frac{\partial \phi}{\partial y}.\nonumber
+\end{equation}
+Define
+\begin{equation}
+    u_1 = \frac{\partial \phi}{\partial x}\quad and \quad v_1 = -\frac{\partial \phi}{\partial y}.
+\end{equation}
+Check that the Cauchy-Riemann equations are satisfied.\\
+If we now restrict $D$ to be a simply connected domain then the property that $g$ is analytic in $D$ implies that all loop integrals of $g$ are $0$ and this in turn implies that $g$ has an anti-derivative $G$ in $D$, i.e. $G^\prime = g$. If we represent $G$ as $G=u+iv$, $u,v,\in\mathbb{R}$ then as $G$ is analytic we now have
+\begin{equation}
+    g = G^\prime = \frac{\partial u}{\partial x}-i\frac{\partial u}{\partial y} = \frac{\partial \phi}{\partial x} - i\frac{\partial \phi}{\partial y}.
+\end{equation}
+This implies that $\phi = u+C$, where $C$ is a constant, and we know that a function $v$ exists which is a harmonic conjugate of $\phi$.
+\begin{theorem}
+    When a domain $D$ is simply connected and $u$ is a harmonic in $D$ there exists a harmonic conjugate $v$ such that $u+iv$ is analytic in $D$.    
+\end{theorem}
+This result is \textbf{not} true when $D$ is an annulus.
+
+
 
 \section{Week 18}
+\subsection{Functions defined by loop integrals}
+Let $\Gamma$ denote a closed loop traversed once in the anti-clockwise direction and let $g(\zeta)$ denote any continuous function defined on $\Gamma$. If we define
+\begin{equation}
+    G(z) = \oint_{\Gamma} \frac{g(\zeta)}{\zeta - z}\,d\zeta
+\end{equation}
+then this defines an analytic function for $z$ inside $\Gamma$ and it also defines an analytic function for $z$ outside $\Gamma$. As an example:
+\begin{equation}
+    g(\zeta) = \frac{1}{2\pi i}\left( \frac{f(\zeta)}{\zeta-z_0} \right)\quad\text{gives }G(z) = \left\{ \begin{array}{lc}
+        f^\prime(z_0), & \text{if } z=z_0, \\
+        \frac{f(z) - f(z_0)}{z-z_0}, & \text{if } z\neq z_0. 
+    \end{array} \right.
+\end{equation}
+In this case $g(\zeta)$ is defined inside the loop and has a singularity at $\zeta = z_0$.
+
+
+\subsection{Loop integrals of $f(z)/q(z)$ where $q=$polynomial}
+Suppose $f(z)$ is analytic inside a loop and
+\begin{equation}
+    q(z) = (z-z_1)^{r_1}(z-z_2)^{r_2}\ldots(z-z_n)^{r_n},\nonumber
+\end{equation}
+with $r_k\geq1$ for $k = 1,\ldots,\,n$. Using partial fractions we get
+\begin{equation}
+    \frac{f(z)}{q(z)} = f(z)\left( \cdots + \frac{A_{1,k}}{z-z_k} + \cdots + \frac{A_{r_k,k}}{(z-z_k)^{r_k}} + \cdots \right).
+\end{equation}
+By using the generalised Cauchy integral formula on each term for each point $z_k$ inside $\Gamma$ we can determine
+\begin{equation}
+    \oint_\Gamma \frac{f(z)}{q(z)}\, dz.
+\end{equation}
+
+
+\subsection{Other versions of the formulae and entire functions}
+The Cauchy integral formula when $\Gamma=$ circle of radius $R$:
+\begin{equation}
+    f^{(n)}(z_0) = \frac{n!}{2\pi R^n}\in_0^{2\pi} f(\_0 + Re^{it})e^{-int}\,dt. 
+\end{equation}
+This is used to show that a bounded entire function is a constant (Liouville's theorem) by considering what happens when $n=1$ and $R\to\infty$.
+
+\subsubsection{The fundamental theorem of algebra}
+\begin{theorem}
+    Every non-constant polynomial with complex coefficients as at least one zero.
+\end{theorem}
+
+\subsubsection{Further Results}
+\begin{lemma}
+    If $f(z)$ is analytic in a domain $D$ and $\vert f(z)\vert$ is constant in $D$ then f(z) is a constant.
+\end{lemma}
+\subsubsection{The mean value property}
+\begin{equation}
+    f(z_0) = \frac{1}{2\pi} \int_0^{2\pi} f(z_0+Re^{it})\,dt,\quad \vert f(z_0)\vert \leq \frac{1}{2\pi} \int_0^{2\pi} \vert f(z_0+Re^{it})\vert\,dt.
+\end{equation}
+\begin{lemma}
+    Suppose $f(z)$ is analytic in a disk centered at $z_0$. If the maximum value of $\vert f(z)\vert$ over the disk is the value at the centre, i.e. the value $\vert f(z_0)\vert$, then $f(z)$ is constant on the disk. 
+\end{lemma}
+
+\subsubsection{The maximum modulus theorem}
+\begin{theorem}
+    If $f$ is analytic in a domain $D$ and $\vert f(z)\vert$ achieves its maximum value at a point $z_0\in D$ then $f$ is a constant in $D$.
+\end{theorem}
+
+
+\subsection{Definitions: sequences in $\mathbb{C}$}
+\begin{itemize}
+    \item A sequence $z_0,\,z_1,\,z_2,\ldots$ converges to $z$ if for every $\epsilon>0$ there exists an $N = N(\epsilon)$ such that
+    \begin{equation}
+        \vert z_n-z\vert <\epsilon\quad\text{for all } n\geq N.
+    \end{equation}
+    \item A sequence $z_0,\,z_1,\,z_2,\,\ldots$ is a Cauchy sequence if for every $\epsilon>0$ there exists an $N=N(\epsilon)$ such that
+    \begin{equation}
+        \vert z_n-z_m\vert <\epsilon\quad\text{for all } n\geq N\text{ and } m\geq M.
+    \end{equation}
+\end{itemize}
+\subsubsection{Result about convergence}
+A sequence in $\mathbb{C}$ converges if and only if it is a Cauchy sequence.
+
+
+\subsection{Definitions: series in $\mathbb{C}$}
+\begin{itemize}
+    \item Let $c_0,\,c_1,\,c_2,\ldots$ denote a sequence. A series is an expression of the form
+    \begin{equation}
+        c_0 + c_1 + c_2 + \cdots\quad \text{and we write as}\quad \sum_{k=0}^\infty c_k.
+    \end{equation}
+    The sequence of partial sums are given by
+    \begin{equation}
+        s_n = \sum_{k=0}^n c_k,\quad n = 0,\,1,\,2,\ldots
+    \end{equation}
+    \item The series converges if the sequence of partial sums converges and it diverges if the sequence of partial sums diverges. When we have convergence we say that
+    \begin{equation}
+        s = \sum_{k=0}^\infty c_k
+    \end{equation}
+    is the sum of the series.
+    \item If $\sum \vert c_k\vert$ converges then $\sum c_k$ is absolutely convergent.
+\end{itemize}
+
+\subsubsection{Results about series in $\mathbb{C}$}
+\begin{itemize}
+    \item If a series $\sum c_k$ converges then $c_n\to 0$ as $n\to \infty$.
+    \item If the series $\sum\vert c_k\vert$ converges then $\sum c_k$ converges.
+    \item \textbf{Comparison test}: If there exists $K$ such that $\vert c_k\vert\leq M_k$ for all $k\geq K$ and $\sum M_k$ converges then $\sum c_k$converges.
+    \item From the identity
+    \begin{equation}
+        (1-c)(1+c+c^2+\cdots+c^n) = 1-c^{n+1}
+    \end{equation}
+    we have that the geometric series
+    \begin{equation}
+        \sum_{k=0}^\infty c^k = \frac{1}{1-c},\quad \text{when} \vert c\vert<1.
+    \end{equation}
+    \item \textbf{Ratio test}: If $\vert c_{k+1}/c_k\vert\to L$ as $k\to\infty$ then the series converges if $L<1$ and it diverges if $L>1$.
+    \item \textbf{Root test}: If $\vert c_k\vert ^{1/k}\to L$ as $k\to\infty$ then the series converges if $L<1$ and it diverges if $L>1$. 
+\end{itemize}
+
+
+\subsection{Series of functions}
+Suppose that $f_0(z),\,f_1(z),\ldots$ are all defined on $D$ and let 
+\begin{equation}
+    F_n(z) = \sum_{k=0}^n f_k(z),\quad n=0,\,1,\,2,\ldots
+\end{equation}
+$\sum f_k(z)$ converges pointwise on $D$ if $(F_n(z))$ converges $\forall z\in D$. The sequence converges uniformly to $F(z)$ on $D$ if
+\begin{equation}
+    \sup_{z\in D}\vert F_n(z) - F(z)\vert \to 0\quad\text{as }n\to\infty.
+\end{equation}
+A sufficient condition for a series to converges uniformly is the Weierstrass M-test: If $\vert f_k(z)\vert\leq M_k$ for all $z\in D$ and $\sum M_k$ converges then the series converges uniformly in $D$.\\
+Uniform convergence preserves continuity: If $F_n(z)$, $n = 0,\,1,\,2,\ldots$ are continuous in $D$ and $F_n\to F$ uniformly on $D$ then the limit function $F(z)$ is also continuous in $D$.
+
+\subsection{Uniform convergence and analytic functions}
+\begin{theorem}
+    Let $F_n(z)$ be a sequence of analytic functions in a simply connected domain $D$ and converging uniformly to $F(z)$ in $D$. Then $F(z)$ is analytic in $D$.
+\end{theorem}
+
 
 \section{Week 19}
+\subsection{Taylor series for analytic functions}
+If $f(z)$ is analytic at $z_0$ then the series
+\begin{equation}
+    f(z_0) + f^\prime(z_0)(z-z_0) + \frac{f^{\prime\prime}(z_0)}{2!}(z-z_0)^2 + \cdots = \sum_{k=0}^\infty \frac{f^{(k)}(z_0)}{k!}(z-z_0)^k
+\end{equation}
+is called the Taylor series for $f(z)$ around $z_0$.
+\begin{theorem}
+    If $f(z)$ is analytic in the disk $\vert z-z_0\vert<R$ then the Taylor series converges to $f(z)$ for all $z$ in this disk and in any closed disk $\vert z-z_0\vert\leq R^\prime<R$ the convergence is uniform.
+\end{theorem}
+\subsubsection{Key formula in the proof of the Taylor series}
+\begin{equation}
+    f(z) = \sum_{k=0}^n \frac{f^{(k)}(z_0)}{k!}(z-z_0)^k + T_n(z)
+\end{equation}
+where
+\begin{equation}
+    T_n(z) = \frac{(z-z_0)^{n+1}}{2\pi i}\oint_C \frac{f(\zeta)}{(\zeta-z_0)^{n+1}(\zeta - z)}\,d\zeta.
+\end{equation}
+It can be shown that $\max\{ \vert T_n(z)\vert: \vert z-z_0\vert \leq R^\prime \}\to 0$ as $n\to\infty$.
+
+\subsubsection{Taylor's series, comments about $R$}
+If $f(z)$ is analytic at $z_0$ then the Taylor series is
+\begin{equation}
+    f(z) = \sum_{k=0}^\infty \frac{f^{(k)}(z_0)}{k!}(z-z_0)^k.
+\end{equation}\\
+If $f(z)$ is analytic in $\vert z-z_0\vert<R$ then the series converges to $f(z)$ in this disk with uniform convergence in $\vert z-z_0\vert \leq R^\prime < R$ for all $R^\prime<R$.\\
+If $f(z)$ is not an entire function then the largest $R$ is such that $f(z)$ has a non-analytic point on $\vert z-z_0\vert = R$.
+
+\subsection{Maclaurin series case}
+Maclaurin series is the case of Taylor series when $z_0 = 0$.
+\begin{equation}
+    f(z) = \sum_{k=0}^\infty \frac{f^{(k)}(0)}{k!}z^k.
+\end{equation}
+If $f(z)$ is analytic in $\vert z\vert<R$ then the series converges to $f(z)$ in this disk with uniform convergence in $\vert z\vert\leq R^\prime<R$ for all $R^\prime<R$.
+
+\subsection{Real coefficients, even functions, odd functions, etc.}
+If $f(z) = u(x,y) + iv(x,y)$ is real when $z$ is real then
+\begin{equation}
+    v(x,0) = 0\quad\text{and}\quad f^{(n)}(0) = \left. \frac{\partial^n u(x,0)}{\partial x^n}\right\vert_{x=0}\text{ is real}.
+\end{equation}
+If $R =$ radius of convergence and $0<r<R$ then we have
+\begin{align}
+    \frac{f^{(n)}(0)}{n!} &= \frac{1}{2\pi r^n}\int_{-\pi}^{\pi}f(re^{it})e^{-int}\, dt \\
+    &= \frac{1}{2\pi r^n}\int_{0}^{\pi}(f(re^{it}) + (-1)^n f(-re^{it}))e^{-int}\, dt.
+\end{align}
+If $f(-z)=f(z)$ then the Maclaurin series only has even powers.\\
+If $f(-z) = -f(z)$ then the Maclaurin series only has odd powers.
+
+
+\subsection{Series you are expected to know}
+\begin{align}
+    \frac{1}{1-z} &= 1 + z + z^2 + \cdots + z^n + \cdots, \quad\text{valid for }\vert z\vert<1 \\
+    e^z &= 1 + z + \frac{z^2}{2!} + \cdots + \frac{z^n}{n!} + \cdots \\
+    e ^{-z} &= 1 - z + \frac{z^2}{2!} + \cdots + \frac{-z^n}{n!} + \cdots \\
+    \cos{(z)} &= 1 - \frac{z^2}{2!} + \frac{z^4}{4!} + \cdots \\
+    \sin{(z)} &= z - \frac{z^3}{3!} + \frac{z^5}{5!} + \cdots \\
+    \cosh{(z)} &= 1 + \frac{z^2}{2!} + \frac{z^4}{4!} + \cdots \\
+    \sinh{(z)} &= z + \frac{z^3}{3!} + \frac{z^5}{5!} + \cdots \\
+\end{align}
+
+
 
 \section{Week 20}
+\subsection{The Koebe function, de Branges' theorem and a conjecture}
+The Koebe function says
+\begin{equation}
+    f(z) = \frac{z}{(1-z)^2} = z + 2z^2 + 3z^3 + \cdots + nz^n + \cdots .
+\end{equation}
+Suppose that you consider all functions $g(z)$ which are analytic in the unit disk, are one-to-one and satisfy $g(0) = 0$ and $g^\prime(0)=1$. Such functions have Maclaurin series of the form
+\begin{equation}
+    g(z) = z + a_2z^2 + a_3z^3 + \cdots + a_nz^n + \cdots
+\end{equation}
+de Branges proved that $\vert a_n\vert\leq n$. \\
+Bierberbach proved that $\vert a_2\vert\leq 2$.
+
+
+\subsection{Multiplying series - the Cauchy product}
+If $f(z)$ and $g(z)$ are both analytic in $\vert z-z_0\vert<R$ then $h(z)=f(z)g(z)$ is also analytic in $\vert z-z_0\vert<R$.\\
+Let $z_0=0$.
+\begin{align}
+    f(z) &= a_0 + a_1z + a_2z^2 + \cdots, \\
+    g(z) &= b_0 + b_1z + b_2z^2 + \cdots, \\
+    h(z) &= c_0 + c_1z + c_2z^2 + \cdots.
+\end{align}
+We get
+\begin{align}
+    c_n = a_0b_n + a_1b_{n-1} + \cdots + a_nb_0.
+\end{align}
+This expression for $c_n$ is known as the Cauchy product.
+
+\subsection{Leibnitz's formula for the $n$th derivative of a product}
+Repeatedly using the product rule gets
+\begin{equation}
+    h^{(n)} = \sum_{k=0}^n\begin{pmatrix} n \\ k \end{pmatrix}f^{(k)}f^{(n-k)}.
+\end{equation}
+This is known as Leibnitz's rule for the $n$th derivative of a product.
+
+
+\subsection{The generalised L'Hopital's rule}
+If
+\begin{equation}
+    g(z_0) = g^\prime(z_0) = \cdots = g^{(m-1)}(z_0) = 0\quad \text{and}\quad g^{(m)}(z_0)\neq 0
+\end{equation}
+and if
+\begin{equation}
+    f(z_0) = f^\prime(z_0) = \cdots = f^{(m-1)}(z_0) = 0
+\end{equation}
+then for $z$ near $z_0$ we have
+\begin{align}
+    f(z) &= a_m(z-z_0)^m + a_{m+1}(z-z_0)^{m+1} + \cdots, \\
+    g(z) &= b_m(z-z_0)^m + b_{m+1}(z-z_0)^{m+1} + \cdots,
+\end{align}
+\begin{equation}
+    \frac{f(z)}{g(z)}\to\frac{a_m}{b_m} = \frac{f^{(m)}(z_0)}{g^{(m)}(z_0)}\quad\text{as }z\to z_0.
+\end{equation}
+If the multiplicity of the zero of $g(z)$ at $z_0$ is greater than the multiplicity of the zero of $f(z)$ then there is no limit and $f(z)/g(z)$ has a singularity at $z_0$.
+
+
+\subsection{Power series}
+A series of the form
+\begin{equation}
+    \sum_{n=0}^\infty a_n(z-z_0)^n.
+\end{equation}
+The series always converges at $z=z_0$. When it converges at other points the region where it converges is a disk $\{ z:\vert z-z_0\vert<R \}$ and it is analytic in the disk.\\
+The largest $R$ is the radius of convergence. When $R<\infty$, $\{ z:\vert z-z_0\vert = R \}$ is the circle of convergence. In all cases
+\begin{equation}
+    R = \frac{1}{\lim \sup \vert a_n\vert^{1/n}}.
+\end{equation}
+$R = 0$when we only have convergence at $z=z_0$. \\
+$R = \infty$ when we have convergence for all $z$.
+
 
 \section{Week 21}
+\subsection{Cauchy-Hadamard theorem}
+\begin{theorem}
+    \begin{equation}
+        \sum_{n=0}^\infty a_n(z-z_0)^n
+    \end{equation}
+    has radius of convergence $R=\frac{1}{\alpha}$, where $\alpha$ is the limit of
+    \begin{equation}
+        b_n = \sup \{ \vert a_m\vert^{1/m} : m\geq n \}\geq 0
+    \end{equation}
+    for the sequence $\vert a_n\vert^{1/n}$.
+\end{theorem}
+
+\subsection{Properties of a function defined by a power series}
+Let
+\begin{equation}
+    f(z) = \sum_{n=0}^\infty a_n(z-z_0)^n,\quad R=\frac{1}{\limsup \vert a_n\vert^{1/n}}.
+\end{equation}
+When $R>0$ this defines an analytic function in $\vert z-z_0\vert<R$. \\
+One way to relate the coefficients $a_n$ to the derivatives of $f(z)$ is to use the generalized Cauchy integral formula. We take a loop $\Gamma$ in the disk with $z_0$ inside the loop.
+\begin{align}
+    \frac{f^{(m)}(z_0)}{m!} &= \frac{1}{2\pi i}\oint_\Gamma \frac{f(z)}{(z-z_0)^{m+1}}\,dz \\
+    &= \frac{1}{2\pi i} \sum_{n=0}^\infty \oint_\Gamma \frac{f(z)}{(z-z_0)^{n-(m+1)}}\,dz.
+\end{align}
+The only integral in the last line which is non-zero is when $n-(m+1) = -1$, i.e when $n=m$ we get
+\begin{equation}
+    \frac{f^{(m)}(z_0)}{m!} = a_m.
+\end{equation}
+
+\subsection{Laurent series}
+A Laurent series is of the form 
+\begin{equation}
+    \sum_{-\infty}^\infty a_n(z-z_0)^n.    
+\end{equation}
+When it converges the region is an annulus $\{ z:r<\vert z - z_0\vert <R \}$.
+\begin{align}
+    &\sum_{n=-\infty}^{-1} a_n(z-z_0)^n,\quad \text{converges in }\vert z-z_0\vert >r. \\
+    &\sum_{n=0}^{\infty} a_n(z-z_0)^n,\quad \text{converges in }\vert z-z_0\vert <R.
+\end{align}
+To have a function defined at some points we need the coefficients $a_n$ to be such that $r<R$.
+
+\subsubsection{Classifying zeros and poles}
+When $f(z)$ has a zero of multiplicity $m\geq 1$ at $z_0$ we have
+\begin{equation}
+    f(z) = a_m(z-z_0)^m + a_{m+1}(z-z_0)^{m+1} + \cdots = (z-z_0)^m g(z)
+\end{equation}
+with $g(z)$ being analytic at $z_0$ and $g(z) = a_m \neq 0$.\\
+If $f(z)$ has a removable singularity at $z_0$ then it has a Laurent series with no negative powers valid in $0<\vert z-z_0 \vert<R$, i.e. 
+\begin{equation}
+    f(z) = \sum_{n=0}^\infty a_n(z-z_0)^n \quad\text{and}\quad \lim_{z\to z_0}f(z) = a_0.
+\end{equation}
+If $f(z)$ has a pole of order $m$ then in $0<\vert z-z_0\vert<R$ we have
+\begin{equation}
+    f(z) = \sum_{n=-m}^\infty a_n(z-z_0)^n = \frac{\phi(z)}{(z-z_0)^m}
+\end{equation}
+with $\phi(z)$ being analytic at $z_0$ and $\phi(z_0) = a_{-m}\neq 0$. \\
+An essential singularity at $z_0$ has infinitely many negative powers 
+\begin{equation}
+    f(z) = \sum_{n=-\infty}^\infty a_n(z-z_0)^n,\quad 0<\vert z-z_0\vert<R.
+\end{equation}
+
+
+
+
 
 \section{Week 22}
+\subsection{Integrating a Laurent series - the residue}
+If we have the Laurent series valid for $0<\vert z-z_0\vert<r$ of the form
+\begin{equation}
+    f(z) = \sum_{n=-\infty}^\infty a_n(z-z_0)^n
+\end{equation}
+and $\Gamma$ is any loop in this region with $z_0$ as an interior point then
+\begin{equation}
+    \oint_\Gamma f(z)\,dz = \sum_{n=-\infty}^\infty a_n\oint_\Gamma (z-z_0)^n\,dz = 2\pi ia_{-1},
+\end{equation}
+\begin{equation}
+    \text{Res}(f,\,z_0) = a_{-1} = \text{Residue of }f(z)\text{ at } z=z_0.
+\end{equation}
+
+\subsection{The Residue theorem}
+If $z_1,\,z_2,\ldots,\,z_n$ are isolated singularities inside $\Gamma$ and $C_1,\,C_2,\ldots,\,C_n$ are non-intersecting circles traversed once in the anti-clockwise direction then $\Gamma\cup(-C_1)\cup\cdots\cup(-C_n)$ is the boundary of a region in which $f(z)$ is analytic and
+\begin{align}
+    \oint_\Gamma f(z)\,dz &= \sum_{k=1}^n \oint_{C_k}f(z)\,dz \\
+    &= 2\pi i\sum_{k=1}^n \text{Res}(f,\,z_k).
+\end{align}
+
+\subsubsection{Techniques to calculate the residue}
+In the case of a simple pole pf $f(z)$ at $z_0$ most examples for calculating the residue have involved calculating the limit 
+\begin{equation}
+    \text{Res}(f,\,z_0) = \lim_{z\to z_0} (z-z_0)f(z).
+\end{equation}
+More generally, when we have a pole of order $m\geq 1$ we can calculate the residue by using
+\begin{equation}
+    \text{Res}(f,\,z_0) = \frac{1}{(m-1)!}\lim_{z\to z_0}\frac{d^{m-1}}{dz^{m-1}}((z-z_0)^m f(z)).
+\end{equation}
+
 
 \section{Week 23}
+\subsection{The integrals on $C_R^+$ when we have a $a^{imz} term$}
+With $z = x+iy$, $miz = -my + imx$, $e^{imz} = e^{-my}e^{imx}$. When $m>0$, $\vert e^{imz}\vert = e^{-my}<\leq 1$ when $y\geq 0$.\\
+When $\deg(Q)\geq\deg(P)+2$ we have
+\begin{equation}
+    \int_{C_R^+} \frac{P(z)}{Q(z)}\,dz\to 0\quad\text{and}\quad \int_{C_R^+} \frac{P(z)}{Q(z)}e^{imz}\,dz\to 0
+\end{equation}
+as $R\to\infty$ by using the $ML$ inequality. \\
+When $\deg(Q) = \deg(P) + 1$ Jordan's lemme also gives
+\begin{equation}
+    \int_{C_R^+} \frac{P(z)}{Q(z)}e^{imz}\,dz\to 0
+\end{equation}
+as $R\to \infty$.\\
+When $\deg(Q)=\deg(P)+1$ there is also a constant $A\geq0$ such that 
+\begin{equation}
+    \left\vert \frac{Q(Re^{i\theta})iRe^{i\theta}}{Q(Re^{i\theta})} \right\vert\leq A,\quad\text{for sufficiently large }R.
+\end{equation}
+
+
+\subsection{Counting zeros and poles}
+Suppose that $f(z)$ is analytic in a domain except for a finite number of poles. Let
+\begin{equation}
+    G(z) = \frac{f^\prime(z)}{f(z)}.
+\end{equation}
+Let $z_0$ be a zero of multiplicity $m$ and let $z_p$ be a pole of $f(z)$ of order $n$.
+\begin{equation}
+    \text{Res}(G,\,z_0) = m,\quad\text{and}\quad\text{Res}(G,\,z_p) = -n.
+\end{equation}
+Let $f(z)$ be analytic inside a simple loop $C$ and let $N_0(f)$ be the number of zeros of $f(z)$ inside $C$.
+\begin{equation}
+    N_0(f) = \frac{1}{2\pi i}\oint_C\frac{f^\prime(z)}{f(z)}\,dz.
+\end{equation}
+If $g(z)$ is also analytic inside $C$ and $\vert g(z)\vert<\vert f(z)\vert$ on $C$ then
+\begin{equation}
+    N_0(f+g) = N_0(f).
+\end{equation}
+This is Rouche's called theorem.
+
+
+
+
+
 
 \end{document}
