@@ -1,0 +1,437 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{url,amsmath,graphicx,amssymb,booktabs,adjustbox,subcaption}
+\usepackage[top=1.5cm, bottom=1.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes.multipart}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{Proposition}{Proposition}
+
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Space}{\mathbb{S}}
+\newcommand{\Var}{\text{Var}}
+\newcommand{\MR}{\mathcal{R}}
+\newcommand{\MT}{\mathcal{T}}
+
+\title{MA3676 -  2017 Past Paper}
+\author{1720996}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\pagebreak
+
+\section{Safe Answers}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        Question & & & Marks & Total Question Marks\\
+        \hline
+        1 & a & & $[1]$ &  \\
+         & b & & $[3]$ & \\
+         & d & & $[4]$ & \\
+         & e & & $[1]$ & \\
+         & f & & $[1]$ & \\
+         & g & & $[3]$ & $12/20$ \\
+         \hline
+        2 & a & & $[16]$ & $16/20$ \\
+        \hline
+        3 & a & & $[2]$ & \\
+         & b & & $[5]$ & \\
+         & c & & $[4]$ & \\
+         & d & & $[5]$ & \\
+         & f & & $[3]$ & $19/20$ \\
+         \hline
+        4 & a & i & $[2]$ & \\
+        & & ii & $[3]$ & \\
+        & & iv & $[3]$ & \\
+        & b & & $[3]$ & $11/20$ \\
+        \hline
+        Best Score & & & & $47/60=$ A\\
+        \hline
+    \end{tabular}
+    \label{tab:safe}
+\end{table}
+
+\section{1}
+\subsection{a}
+All rows must sum to one.
+\begin{equation}
+    \mathbf{p} = \begin{pmatrix}
+    \frac{1}{4} & 0 & 0 & 0 & \frac{3}{4} & 0 & 0 \\
+    0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+    \frac{1}{6} & \frac{1}{6} & \frac{1}{3} & 0 & 0 & \frac{1}{3} & 0 \\
+    0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+    \frac{1}{2} & 0 & 0 & 0 & \frac{1}{2}& 0 & 0 \\
+    0 & 0 & \frac{1}{3} & \frac{1}{3} & \frac{1}{3} & 0 & 0 \\
+    0 & 1 & 0 & 0 & 0 & 0 & 0
+    \end{pmatrix}. \label{1_p}
+\end{equation}
+
+\subsection{b}
+Label rows and columns of (\ref{1_p}) from $1-7$ as $a-g$ respectively. The sets ${b,d,g}$ and ${a,e}$ form two closed sets, wheres $a$ and $f$ are two transient states. Rewrite $p$ in the row order ${a,e,b,d,g,c,f}$, or ${1,5,2,4,7,3,6}$, giving
+\begin{equation}
+    \mathbf{p} = \begin{pmatrix}
+    \frac{1}{4} & \frac{3}{4} & 0 & 0 & 0 & 0 & 0 \\
+    \frac{1}{2} & \frac{1}{2} & 0 & 0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+    0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+    \frac{1}{6} & 0 & \frac{1}{6} & 0 & 0 & \frac{1}{3} & \frac{1}{3} \\
+    0 & \frac{1}{3} & 0 & \frac{1}{3} & 0 & \frac{1}{3} & 0
+    \end{pmatrix}. \label{1_p_1}
+\end{equation}
+
+\subsection{c}
+There are two closed sets, so two eigenvalues will have the value of one. The other five will hold a value with a magnitude less than or equal to one, but not one itself.
+
+\subsection{d}
+As states $1$ and $5$ (or $a$ and $e$) are in the same closed set, the long-time transition probability is the same as the long-time probability to make the transition from $1$ to $5$, therefore
+\begin{equation}
+    \begin{pmatrix}
+        \pi_1 & \pi_5
+    \end{pmatrix} = 
+    \begin{pmatrix}
+        \pi_1 & \pi_5
+    \end{pmatrix}
+    \begin{pmatrix}
+        \frac{1}{4} & \frac{3}{4} \\
+        \frac{1}{2} & \frac{1}{2}
+    \end{pmatrix}.
+\end{equation}
+Using the fact that $\pi_1 + \pi_5 = 1$, we conclude that $\pi_1 = \frac{4}{19}$ and $\pi_5 = \frac{15}{19}$. Hence, our answer is $\frac{4}{19}$.
+
+\subsection{e}
+As state $2$ is within a closed set of ${2,4,8}$, our probability is $0$.
+
+\subsection{f}
+As both states $6$ and $3$ are transient states, the probability of being in either as $n\to\infty$ is $0$.
+
+\subsection{g}
+Using (\ref{1_p_1}), we can define a matrix
+\begin{equation}
+    \begin{pmatrix}
+        \mathbf{P} & \mathbf{0}\\
+        \mathbf{R} & \mathbf{Q}
+    \end{pmatrix},
+\end{equation}
+such that
+\begin{align}
+    \mathbf{R} &= 
+    \left(\begin{array}{c c | c c c}
+        \frac{1}{6} & 0 & \frac{1}{6} & 0 & 0 \\
+        0 & \frac{1}{3} & 0 & \frac{1}{3} & 0
+    \end{array}\right), \\
+    \mathbf{\tilde{R}} &= 
+    \left(\begin{array}{c c}
+        \frac{1}{6} & \frac{1}{6} \\
+        \frac{1}{3} & \frac{1}{3}
+    \end{array}\right), \\    
+    \mathbf{Q} &= \begin{pmatrix}
+        \frac{1}{3} & \frac{1}{3} \\
+        \frac{1}{3} & 0
+    \end{pmatrix}.
+\end{align}
+The solve $\mathbf{\tilde{V}} = (\mathbb{I} - \mathbf{Q})^{-1}\mathbf{\tilde{R}}$ using the above substitutions.
+
+\subsection{h}
+
+
+\section{2}
+\subsection{a}
+Our maximum capacity is $N=10$, with probabilities $\mathbb{P}[+1]=\frac{1}{2}=\mathbb{P}[-1]$. Therefore, our expected time to absorption from position $n$ is defined using first step decomposition as
+\begin{equation}
+    g_n = \mathbb{E}[\mathbf{E}_n\vert +1]\cdot\frac{1}{2}+\mathbb{E}[\mathbf{E}_n\vert -1]\cdot\frac{1}{2}.\label{2a_1}
+\end{equation}
+We then define the following:
+\begin{align}
+    \mathbb{E}[\mathbf{E}_n\vert +1] = 1+g_{n+1},\\
+    \mathbb{E}[\mathbf{E}_n\vert -1] = 1+g_{n-1},
+\end{align}
+so that we can simplify (\ref{2a_1}) to
+\begin{equation}
+    g_n = 1+\frac{1}{2}(g_{n+1} + g_{n-1}).\label{2a_1st}
+\end{equation}
+We must now define boundary conditions. If $n=0$, the expected number of steps to `absorption' is zero:
+\begin{equation}
+    g_0=0. \label{2a_bounday0}
+\end{equation}
+We then observe what happens at $N=10$. We use a general value $N$ to help with future revision, then sub in $N=10$ for our final answer here. The interaction at our boundary $N$ that is of note is:
+\begin{equation}
+     \mathbb{E}[\mathbf{E}_N\vert +1] = 1+g_n.\label{2a_boundary}
+\end{equation}
+We then use this to derive our first step decomposition at $N$, where
+\begin{equation}
+    g_N = \mathbb{E}[\mathbf{E}_N\vert +1]\cdot\frac{1}{2}+\mathbb{E}[\mathbf{E}_N\vert -1]\cdot\frac{1}{2}.
+\end{equation}
+We then use our initial definitions plus (\ref{2a_boundary}) to evaluate the following:
+\begin{align}
+    g_N &= 1 + \frac{1}{2}(g_N + g_{N-1}),\\
+    g_N - g_{N-1} &= 2. \label{2a_boundaryN}
+\end{align}
+Now that we have boundary conditions, we must solve (\ref{2a_1st}) as a difference equation. First, rewrite it as
+\begin{equation}
+    \frac{1}{2}g_{n+1} - g_n + \frac{1}{2}g_{n-1} = -1 
+\end{equation}
+and obtain the general solution of the corresponding homogeneous equation, followed by the particular integral (solved systematically after). The homogeneous equation is as follows
+\begin{equation}
+    \frac{1}{2}\lambda^2 - \lambda + \frac{1}{2} = 0.
+\end{equation}
+The solutions to this are $\lambda = 1$ which is repeated, giving us the solution
+\begin{equation}
+    g_n^{\text{(general)}} = A+Bn.
+\end{equation}
+Note, if $p\neq q$, we obtain the solution
+\begin{equation}
+    g_n^{\text{(general)}} = A+B(q/p)^n.    
+\end{equation}
+For the particular solution, we substitute a `guess' of $g_n = \alpha n^2$ into (\ref{2a_1st}) (we use $n^a$ where $a$ is the number of repeated roots - two in our case). Remembering this is a \textbf{function}, we obtain
+\begin{equation}
+    \alpha n^2 = 1+\frac{1}{2}( \alpha(n+1)^2 + \alpha(n-1)^2 ).
+\end{equation}
+As this must hold for all values of $n$, we can a value for it and solve for the unknown priory $\alpha$. The simplest way to do this is let $n = 0$. Thus
+\begin{align}
+    0 &= 1+\frac{1}{2}( \alpha + \alpha ),\\
+    \alpha &= -1.
+\end{align}
+Therefore,
+\begin{align}
+    g_n &= g_n^{(\text{general})} + \alpha n^2,\\
+    &= A+Bn -n^2.
+\end{align}
+We now solve for $A$ and $B$ using our boundary conditions. Using (\ref{2a_bounday0}), we find
+\begin{equation}
+    g_0 = 0 = A.
+\end{equation}
+Using (\ref{2a_boundaryN}), we find
+\begin{align}
+    \left[ A+BN-N^2 \right] - \left[ A+B(N-1)-(N-1)^2 \right] &= 2,\\
+    BN-N^2 - [BN-B-(N^2-2n+1)] &= 2,\\
+    BN-N^2-BN+B+N^2-2N+1 &=2,\\
+    B-2N+1 &=2,\\
+    B &= 2N+1.
+\end{align}
+Substituting $A$ and $B$ back in, we obtain
+\begin{equation}
+    g_n = (2N+1)n-n^2.
+\end{equation}
+We are told in the question our value $N=10$, giving us
+\begin{equation}
+    g_n = 21n-n^2.
+\end{equation}
+Finally, we wish to find the expected number of days until it's empty, starting from full. Therefore, we require
+\begin{align}
+    g_{10} &= 21(10)-(10)^2,\\
+    &= 210 - 100,\\
+    &= 110.
+\end{align}
+We expect it to take $110$ days until the water reservoir empties for the first time.
+
+\subsection{b}
+
+\section{3}
+\subsection{a}
+\begin{align}
+    \mathbb{E}[X] &= \mathbb{P}[X=1]\cdot(1) + \mathbb{P}[X=-2]\cdot(-2),\\
+    &= \frac{2}{3}\cdot (1) + \frac{1}{3}\cdot(-2),\\
+    &= 0.
+\end{align}
+Therefore,
+\begin{align}
+    \mathbb{E}[S_n] &= S_0 + n\mathbb{E}[X],\\
+    &= S_0, \\
+    &= 0.
+\end{align}
+
+\subsection{b}
+The generating function for the random variable $X$ is $G_X(s) = ps^1 + qs^{-2}$, where $1$ and $2$ correspond to the values associated to $X_1$ and $X_2$.  We know $p$ and $q$, but shall substitute them in at the end to make this better to refer to in the exam if needed. We have defined $G_X(s)$, therefore
+\begin{align}
+    G_{S_n}(s) &= (ps+qs^{-2})^n,\\
+    &= \sum_{m=0}^n\begin{pmatrix}
+        n\\m
+    \end{pmatrix}p^mq^{n-m}s^{m-2(n-m)}.
+\end{align}
+This is our generating function (if you plug in $p$ and $q$).\\
+Setting $3m - 2n = k$, we find $m=(k+2n)/3$, and therefore for all $k$ in the range $-2n\leq k\leq n$, such that  $(k+2n)/3$ is an integer, 
+\begin{equation}
+    \mathbb{P}[S_n=k] = \begin{pmatrix}
+        n\\(k+2n)/3
+    \end{pmatrix}p^{(k+2n)/3}q^{(n-k)/3}.
+\end{equation}
+Therefore, when $p$ and $q$ are $\frac{2}{3}$ and $\frac{1}{3}$ respectively,
+\begin{equation}
+    \mathbb{P}[S_n=k] = \begin{pmatrix}
+        n\\(k+2n)/3
+    \end{pmatrix}\left(\frac{2}{3}\right)^{(k+2n)/3}\left(\frac{1}{3}\right)^{(n-k)/3}.
+\end{equation}
+Now we can solve $\mathbb{P}[S_3=0]$ and $\mathbb{P}[S_3=1]$.
+\begin{align}
+    \mathbb{P}[S_3=0] &= \begin{pmatrix}
+        3\\2
+    \end{pmatrix}\left(\frac{2}{3}\right)^{2}\left(\frac{1}{3}\right),\\
+    &= 3\cdot \frac{4}{9}\cdot \frac{1}{3},\\
+    &= \frac{4}{9}\approx 0.444\ldots
+\end{align}
+\begin{equation}
+    \mathbb{P}[S_3=1] = \begin{pmatrix}
+        3\\7/3
+    \end{pmatrix}\left(\frac{2}{3}\right)^{7/3}\left(\frac{1}{3}\right)^{2/3}.
+\end{equation}
+Not possible as $(k+2n)/3$ is not an integer when $k=1,\,n=3$.
+
+\subsection{c}
+For this process to be a martingale, we must solve
+\begin{equation}
+    \mathbb{E}[Y_{n+1}\vert\{S_i\}_{i=0}^n] = Y_n, \label{2c_1}
+\end{equation}
+where
+\begin{equation}
+    Y_n = S_n^2+\beta n.
+\end{equation}
+Note that $S_{n+1} = S_n + X_{n+1}$.\\
+As $X$ is made up if i.i.d.'s, we can evaluate the following:
+\begin{align}
+    \mathbb{E}[X_{n+1}] = \mathbb{E}[X] = \frac{2}{3}\cdot (1) + \frac{1}{3}\cdot(-2) = 0, \\
+    \mathbb{E}[X_{n+1}^2] = \mathbb{E}[X^2] = \frac{2}{3}\cdot (1)^2 + \frac{1}{3}\cdot(-2)^2 = 2.
+\end{align}
+All we now do is expand the left side of (\ref{2c_1}) and then solve, as shown in the following
+\begin{align}
+    \mathbb{E}[Y_{n+1}\vert\{S_i\}_{i=0}^n] &= \mathbb{E}[(S_n+X_{n+1})^2 + \beta(n+1)\vert\{S_i\}_{i=0}^n],\\
+    &= \mathbb{E}[S_n^2 + 2S_nX_{n+1} + X_{n+1}^2 + \beta n + \beta \vert\{S_i\}_{i=0}^n],\\
+    &= S_n^2 + 2S_n\mathbb{E}[X_{n+1}] + \mathbb{E}[X_{n+1}^2] + \beta n + \beta,\\
+    &= S_n^2 + 0 + 2 + \beta n + \beta,\\
+    &= S_n^2 + \beta_n + 2 + \beta.
+\end{align}
+Therefore,
+\begin{align}
+    2+\beta &=0,\\
+    \beta &= -2.
+\end{align}
+
+\subsection{d}
+In order for $Z_n$ to be a martingale, it has to satisfy the martingale condition
+\begin{equation}
+    \mathbb{E}[Y_{n+1}\vert \mathcal{F}_n] = Z_n
+\end{equation}
+where $\mathcal{F}_n$ is the corresponding filtration. Evaluating the expectation explicitly, we find 
+\begin{align}
+    \mathbb{E}[Y_{n+1}\vert \mathcal{F}_n] &= \mathbb{E}[\lambda^{S_n+X_{n+1}}\vert \mathcal{F}_n],\\
+    &= \lambda^{S_n}\mathbb{E}[\lambda^X],\\
+    &= Z_n\mathbb{E}[\lambda^X].
+\end{align}
+Hence, $\lambda$ must satisfy the condition $\mathbb{E}[\lambda^X] = 1$, i.e.
+\begin{equation}
+    \frac{2}{3}\lambda^1 + \frac{1}{3}\lambda^{-2} = 1.
+\end{equation}
+This gives us the following
+\begin{equation}
+   \frac{2}{3}\lambda^1 + \frac{1}{3}\lambda^{-2} = 2\lambda^3 - 3\lambda^2 + 1
+\end{equation}
+which holds repeated roots $\lambda=1$, and another $\lambda=-\frac{1}{2}$. Therefore, the only value $\lambda\neq 1$ which makes $Z_n$ a martingale is $\lambda = -\frac{1}{2}$.
+
+\subsection{e}
+$T$ is the time at which the random walk $S_n$ reaches one of it's boundaries for the first time.
+
+\subsection{f}
+If $a$ is large, the distinction between $a$ and $a+1$ can be ignored, so that the walk ends either at the left boundary at $-a$ (with probability $P$ to be determined) or at the right boundary at near $a$, with equal probability (1-P). Since $S_n$ is a martingale, and assuming applicability of the optional stopping theorem we have
+\begin{equation}
+    S_0 = m = \mathbb{E}[S_T] = P\cdot (-a) + (1-P)\cdot (a).
+\end{equation}
+Therefore, 
+\begin{equation}
+    P = \frac{a-m}{2a} = 
+\end{equation}
+
+\section{4}
+\subsection{a}
+\subsubsection{i}
+We are given that $\mathbb{P}[X=k]=C\left( \frac{3}{4} \right)^k$. This summed to infinity is $1$, therefore we calculate
+\begin{align}
+    1 &= \sum_{k=0}^\infty \mathbb{P}[X=k]\\
+    &= C\sum_{k=0}^\infty \left( \frac{3}{4} \right)^k\\
+    &= C\cdot\frac{1}{1-\frac{3}{4}}\\
+    &= 4C.
+\end{align}
+Therefore,
+\begin{equation}
+    C = \frac{1}{4}.
+\end{equation}
+
+\subsubsection{ii}
+We now know that $\mathbb{P}[X=k]=\frac{1}{4}\left( \frac{3}{4} \right)^k = \frac{3^k}{4^{k+1}}$. The generating function $G(s)$ of the family size is given by
+\begin{align}
+    G(s) &= \sum_{k=0}^\infty s^k\cdot \mathbb{P}[X=k]\\
+    &= \sum_{k=0}^\infty \frac{(3s)^k}{4^{k+1}}\\
+    &= \frac{1}{4}\sum_{k=0}^\infty \left( \frac{3s}{4} \right)\\
+    &= \frac{1}{4}\cdot \frac{1}{1-\frac{3s}{4}}\\
+    &= \frac{1}{4-3s}.
+\end{align}
+
+\subsubsection{iii}
+
+\subsubsection{iv}
+The probability of extinction is the smallest non-negative root of the following:
+\begin{align}
+    \xi &= G(\xi)\\
+    &= \frac{1}{4-3\xi}\\
+    \xi(4-3\xi) &= 1\\
+    3\xi^2-4\xi+1 &= 0 \\
+    (3\xi-1)(\xi-1) = 0.
+\end{align}
+The smallest root, and therefore the probability of extinction is $\xi=\frac{1}{3}$.
+\subsection{b}
+We need to create a one-step transition matrix using the information we have given, with state one relating to wet days, and state two to dry.. We have an equilibrium solution as well as one one-step transition, which gives us the following
+\begin{equation}
+    \begin{pmatrix}
+        ? & \frac{2}{3}
+    \end{pmatrix}\begin{pmatrix}
+        ? & ? \\ \frac{1}{5} & ? 
+    \end{pmatrix} = 
+    \begin{pmatrix}
+        ? & \frac{2}{3},
+    \end{pmatrix}
+\end{equation}
+where $?$ refers to value not given to us directly. For this to be a markov chain (as stated in the question), all rows must add to $1$. Therefore:
+\begin{equation}
+    \begin{pmatrix}
+        \frac{1}{3} & \frac{2}{3}
+    \end{pmatrix}\begin{pmatrix}
+        a & 1-a \\ \frac{1}{5} & \frac{4}{5} 
+    \end{pmatrix} = 
+    \begin{pmatrix}
+        \frac{1}{3} & \frac{2}{3},
+    \end{pmatrix},    
+\end{equation}
+where $a$ is to be determined. We can now expand this to solve for $a$:
+\begin{equation}
+    \begin{pmatrix}
+        \frac{a}{3} + \frac{2}{15} & \frac{1-a}{3} + \frac{8}{15} \end{pmatrix} = \begin{pmatrix}
+            \frac{1}{3} & \frac{2}{3}
+        \end{pmatrix}.
+\end{equation}
+We can now easily solve for $a$:
+\begin{align}
+    \frac{1}{3} &= \frac{a}{3} + \frac{2}{15}\\
+    5 &= 5a+2\\
+    a &= \frac{3}{5}.
+\end{align}
+We can now complete our one-step transition matrix (now labelled $p$) as
+\begin{equation}
+    p = \begin{pmatrix}
+        \frac{3}{5} & \frac{2}{5} \\ \frac{1}{5} & \frac{4}{5} 
+    \end{pmatrix}.
+\end{equation}
+The question asks for the probability that a dry day follows a wet day, which is from wet to dry, i.e. state 1 to state 2. We then find the value of $p_{12}$ to see the probability we want is $p_{12} = \frac{2}{5}$.
+
+
+
+
+\end{document}
