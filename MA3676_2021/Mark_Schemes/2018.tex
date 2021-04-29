@@ -75,7 +75,7 @@
     \includegraphics[scale=0.2]{diagram2018_1.png}
     \label{fig:1b}
 \end{figure}
-States $\{2,6\},\,\{3,5\},\,\{7\}$ are all closed recurrent sets of recurrent states, $1,4$ are transient.
+States $\{2,6\}$ and $\{3,5\}$ are ergodic closed recurrent sets, $\{7\}$ is absorbing and $1,4$ are transient. PQR decomposition can be done trivially.
 \begin{equation}
     \mathbf{p} = \begin{pmatrix}
         0 & 1 & 0 & 0 & 0 & 0 & 0 \\
@@ -89,7 +89,7 @@ States $\{2,6\},\,\{3,5\},\,\{7\}$ are all closed recurrent sets of recurrent st
 \end{equation}
 
 \subsubsection{iii}
-There are three closed sets of recurrent states, so three of the seven eigenvalues will be equal to one. The other four will have a magnitude less than one, with one of these being exactly equal to negative 1.
+There are three closed sets of recurrent states, so three of the seven eigenvalues will be equal to one. There are no periodic states so the other eigenvalues are all less than one in magnitude.
 
 \subsubsection{iv}
 Find the equilibrium state of the closed set by solving
@@ -112,27 +112,8 @@ Therefore, our answer is $\pi_2 = \frac{1}{3}$.
 States $1,4$ are transient, so the answer is $0$.
 
 \subsubsection{vi}
-Using the matrix in (\ref{p_ii}), we derive
-\begin{align}
-    \mathbf{R} &= \left(\begin{array}{cc|cc|c}
-         \frac{1}{2} & 0 & 0 & 0 & 0  \\
-         0 & 0 & \frac{1}{4} & 0 & \frac{1}{4} 
-    \end{array}\right),\\
-    \mathbf{\tilde{R}} &= \begin{pmatrix}
-    \frac{1}{2} & 0 & 0 \\
-    0 & \frac{1}{4} & \frac{1}{4},\end{pmatrix}, \\
-    \mathbf{Q} &= \begin{pmatrix}
-    0 & \frac{1}{2} \\
-    \frac{1}{4} & \frac{1}{4},
-    \end{pmatrix}
-\end{align}
-and solve $\mathbf{\tilde{V}} = (\mathbb{I}-\mathbf{Q})^{-1}\mathbf{\tilde{R}}$ to find
-\begin{equation}
-    \mathbf{\tilde{V}} = \begin{pmatrix}
-    \frac{3}{5} & \frac{1}{5} & \frac{1}{5} \\
-    \frac{1}{5} & \frac{2}{5} & \frac{2}{5}
-    \end{pmatrix}.
-\end{equation}
+
+
 \subsection{b}
 The transition matrix can be written as
 \begin{equation}
@@ -268,59 +249,52 @@ where our new distributions are found using the same method as that in question 
 \section{3}
 \subsection{a}
 \subsubsection{i}
-Our first step decomposition is 
 \begin{equation}
-    g_n = \mathbb{E}[E_n\vert+1]\cdot \frac{2}{3} +  \mathbb{E}[E_n\vert+2]\cdot \frac{1}{3}.\label{3a_1}
+    \Prob[S_j] = \Prob[S_j\vert+1]\Prob[+1] + \Prob[S_j\vert+2]\Prob[+2].
 \end{equation}
-We then define the following:
+This can be rewritten and substituted to
+\begin{equation}
+    P_j = P_{j+1}\cdot\frac{2}{3} + P_{j+2}\cdot\frac{1}{3}.
+\end{equation}
+This then corresponds to the characteristic equation
 \begin{align}
-     \mathbb{E}[E_n\vert +1] = 1+g_{n+1},\\
-      \mathbb{E}[E_n\vert+2] = 1+g_{n+2},
+    1 &= \frac{2}{3}\lambda + \frac{1}{3}\lambda^2 \\
+    0 &= \frac{1}{3}\lambda^2 + \frac{2}{3}\lambda - 1 \\
+    &=(\lambda+3)(\lambda-1)
 \end{align}
-allowing us to rewrite (\ref{3a_1}) as
+giving us the solutions $\lambda=-3,\,1$. The general solution is therefore given as
 \begin{equation}
-    g_n = 1 + \frac{2}{3}g_{n+1} + \frac{1}{3}g_{n+2}. \label{3a_2}
+    P_j = A + B(-3)^j.
 \end{equation}
-As this walk terminates at both $k$ and $k+1$, the steps until termination at these positions is zero, hence
+The boundary conditions are when you are at position $k$, so $P_k=1$, and when you are about to go to $k$ from $k-1$, so $P_{k-1} = \frac{2}{3}$. This gives us two equations:
 \begin{align}
-    g_k = 0,\label{3a_b1}\\
-    g_{k+1} = 0.\label{3a_b2}
+    P_k &= A+B(-3)^k = 1,\\
+    P_{k-1} &= A+B(-3)^{k-1} = \frac{2}{3}.
 \end{align}
-These are our boundary conditions.\\
-Lets get the solutions to the characteristic equation of (\ref{3a_2}):
+We can solve for $A$ and $B$ as follows:
 \begin{align}
-    1 &= \frac{2}{3}\lambda + \frac{1}{3}\lambda^2,\\
-    3 &= 2\lambda+\lambda^2,\\
-    0 &= \lambda^2+2\lambda-3,\\
-    0 &= (\lambda-1)(\lambda+3),
+    P_k-P_{k-1} = B(-3)^k-B(-3)^{k-1} &= \frac{1}{3} \\
+    -3B(-3)^{k-1} - B(-3)^{k-1} &= \frac{1}{3} \\
+    -4B(-3)^{k-1} &= \frac{1}{3} \\
+    4(-3)B(-3)^{k-1} &= 1 \\
+    4B(-3)^k &= 1 \\
+    B &= \frac{1}{4}(-3)^{-k}.
 \end{align}
-Giving us roots of $\lambda=1,\,-3$. This means the solution to our inhomogeneous equation is given by
-\begin{equation}
-    g_n^{(general)} = A+B(-3)^n,
-\end{equation}
-where $-3$ is our $\lambda\neq 1$.\\
-For the particular solution, we use a guess of $\alpha n^a$, where $a$ is the number of repeated roots ($1$, in our case) and substitute this into (\ref{3a_2}) is a \textit{function} of $n$.
-\begin{equation}
-    \alpha n = 1 + \frac{2}{3}\alpha(n+1) + \frac{1}{3}\alpha(n+2),
-\end{equation}
-solves to $\alpha = -\frac{3}{4}$ after making $n=0$ and simplifying. Therefore, the general solution is
-\begin{equation}
-    g_n = A + B(-3)^n - \frac{3}{4}n.
-\end{equation}
-We then use our boundaries from (\ref{3a_b1}) \& (\ref{3a_b2}) to set the following:
+Substituting this back in gives us
 \begin{align}
-    g_k &= A+B(-3)^k - \frac{3}{4}k = 0,\\
-    g_{k+1} &= A+B(-3)^{k+1} - \frac{3}{4}(k+1) = 0.
+    P_k = A + \left(\frac{1}{4}(-3)^{-k}\right)(-3)^k &= 1 \\
+    A + \frac{1}{4} = 1 \\
+    A = \frac{3}{4}.
 \end{align}
-Solving these simultaneously provides us with
-\begin{align}
-    A &= \frac{3}{4}k + 3,\\
-    B &= \frac{3}{8}\left(-\frac{1}{3}\right)^{k}. 
-\end{align}
-Therefore, starting from $n=0$, the probability of termination is given by
+Therefore, our general equation is now
 \begin{equation}
-    g_0 = A+B = \frac{3}{4}k+3+\frac{3}{8}\left( -\frac{1}{3} \right)^k.
+    P_j = \frac{3}{4} + \frac{1}{4}(-3)^{j-k}.
 \end{equation}
+As $P_j$ denotes the probability of stepping on $k$ from position $j$, we just need to calculate
+\begin{equation}
+    P_0 = \frac{3}{4}+\frac{1}{4}(-3)^{-k}.
+\end{equation}
+This is the answer.
 
 \subsubsection{ii}
 $Y_n$ is martingale defined as $Y_n = S_n +\beta n$. For this to be true, the following equation must hold (and is subsequently solved)
@@ -336,20 +310,95 @@ Note, $ \mathbb{E}[X] = \frac{4}{3}$ is shown true through
      &= \frac{2}{3}\cdot 1 + \frac{1}{3}\cdot 2 = \frac{4}{3}.
 \end{align}
 \subsubsection{iii}
-
+To find the expected time to stop, we use the optional stopping theorem, giving us $\E[Y_T] = Y_0$. Using the result from $P_0$, we can see 
+\begin{align}
+    \E[Y_T] &= \E[S_t+\beta T] \\
+    &= \E[S_T] - \frac{4}{3}\E[T]] \\
+    &= P_0k + (1-P_0)(k+1) - \frac{4}{3}\E[T] \\
+    &=Y_0.
+\end{align}
+Note here that $Y_0 = S_0 - \frac{4}{3}(0) = 0$ by using $Y_n$ from the previous question. It then follows that
+\begin{align}
+    Y_0 &= P_0k + (1-P_0)(k+1) - \frac{4}{3}\E[T] \\
+    0 &= P_0k + (1-P_0)(k+1) - \frac{4}{3}\E[T] \\
+    \E[T] &= \frac{3}{4}(k+1-P_0) \\
+    &= \frac{3}{4}\left(k + \frac{1}{4} - \frac{1}{4}(-3)^{-k}\right).
+\end{align}
 
 \subsection{b}
 \subsubsection{i}
+
+
 \subsubsection{ii}
 
 \section{4}
 \subsection{a}
+As half the population have no offspring, we only want to be calculating results for the other half, note the first two lines and the change of starting point of the series. Therefore, we have the equation
+\begin{align}
+    1 &= \sum_{k=0}^\infty \Prob[X=k]\\
+    &= \frac{1}{2} + \sum_{k=1}^\infty \Prob[X=k] \\
+    \frac{1}{2} &= \left( \sum_{k=0}^\infty \Prob[X=k] - \sum_{k=0}^0 \Prob[X=k]\right) \\
+    &= C\left( \sum_{k=0}^\infty \left(\frac{2}{3}\right)^k - \sum_{k=0}^0 \left(\frac{2}{3}\right)^k \right) \\
+    &= C\left( \frac{1}{1-\frac{2}{3}} - 1 \right) \\
+    \frac{1}{2}&= 2C \\
+    C &= \frac{1}{4}.
+\end{align}
+This change in scheme is present throughout the question, so be aware.
+
 \subsection{b}
+\begin{align}
+    G(s) &= \frac{1}{2} + \frac{1}{4}\sum_{k=1}^\infty \left( \frac{2s}{3} \right)^k \\
+    &= \frac{1}{2} + \frac{1}{4}\left( \sum_{k=0}^\infty \left( \frac{2s}{3} \right)^k - \sum_{k=0}^0 \left( \frac{2s}{3} \right)^k\right) \\
+    &= \frac{1}{2} + \frac{1}{4}\left( \frac{1}{1-\frac{2s}{3}} - 1 \right) \\
+    &= \frac{1}{2} + \frac{1}{4}\left( \frac{3}{3-2s} - \frac{3-2s}{3-2s} \right) \\
+    &= \frac{1}{2} + \frac{1}{4}\left( \frac{3-(3-2s)}{3-2s}  \right) \\
+    &= \frac{1}{2} + \frac{1}{4}\left( \frac{2s}{3-2s}  \right) \\
+    &= \frac{1}{4}\left( 2 + \frac{2s}{3-2s} \right) \\
+    &= \frac{1}{4}\left(\frac{6-2s}{3-2s} \right) \\
+    &= \frac{3-s}{2(3-2s)}.
+\end{align}
+
 \subsection{c}
+Make use of the fact $\E[X] = G^\prime(1) = G^\prime(s)\vert_{s=1}$. Use the quotient rule to solve.
+\begin{align}
+    E[X] &= \frac{1}{2}\cdot\frac{d}{ds}\left.\left( \frac{3-s}{3-2s} \right)\right\vert_{s=1} \\
+    &= \frac{1}{2}\left.\left( \frac{-(3-2s)+2(3-s)}{(3-2s)^2} \right)\right\vert_{s=1} \\
+    &= \frac{1}{2}\left( \frac{-1+4}{1^2} \right) \\
+    &= \frac{3}{2}.
+\end{align}
+
 \subsection{d}
+As $\E[X]>1$, the probability of extinction is equal to the smallest root of $G(\xi)=\xi$, which is strictly less than $1$.  
+
 \subsection{e}
+Using what was just stated:
+\begin{align}
+    \frac{3-\xi}{6-4\xi} &= \xi \\
+    3-\xi &= 6\xi - 4\xi^2 \\
+    4\xi^2 - 7\xi + 3 &= 0 \\
+    (4\xi-3)(\xi-1) = 0
+\end{align}
+giving us roots $\xi=1,\,\frac{3}{4}$. The smallest root is the solution, begin $\xi = \frac{3}{4}$.
+
 \subsection{f}
+We have $Z_{n+1} = \sum_{i=1}^{Z_n}X_i$, where $X_i$ is the number of offspring of the $i$-th insect in the $n$-the generation. Therefore
+\begin{align}
+    \mathcal{G}_{n+1}(s) &= \E[s^{Z_{n+1}}] \\
+    &= \E[s^{\sum_{i=1}^{Z_n}X_i}] \\
+    &= \E[\prod_{i=1}^{Z_n}\E[s^{X_i}]].
+\end{align}
+Here, we make use of the fact $\E[s^X] = G(s)$ in order to then simplify to
+\begin{align}
+    \mathcal{G}_{n+1}(s) &= \E[\prod_{i=1}^{Z_n}G(s)]\\
+    &= \E[G(s)^{Z_n}] \\
+    &= \mathcal{G}_n(g(s)).
+\end{align}
+
 \subsection{g}
+\begin{align}
+    \xi &= \sum_{k+1}^\infty \Prob[X=k]\xi^k \\
+    &= G(\xi).
+\end{align}
 
 
 
