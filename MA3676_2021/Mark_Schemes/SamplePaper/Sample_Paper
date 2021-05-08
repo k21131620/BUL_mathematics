@@ -43,7 +43,8 @@ Assigning parameters: $a=0$, $b =2$, $c = 1$. Therefore, $\Prob[X=-1]=\frac{1}{2
 
 \subsection{b}
 Assigning parameters: $f=6$, $g=9$, $h=9$, $u=2$, $v=3$.
-
+\subsubsection{i}
+\subsubsection{ii}
 \pagebreak
 \section{Question 2}
 \subsection{a}
@@ -106,7 +107,7 @@ Allowing us the find the probability of our walk being on $0$ for an arbitrary v
 
 
 
-
+\pagebreak
 \section{Question 3}
 Assigning parameters: $a = 2$, $b=0$, $c=9$, $d=9$, $f=6$. Therefore
 \begin{align}
@@ -229,10 +230,93 @@ With this, we now know that the probability of being at states $X_n=i$as $n\to\i
 
 \subsection{b}
 
-
+\pagebreak
 \section{Question 4}
+Assigning parameters: $a=0$, $b=2$, $c=6$, $d=9$, $f=9$. Therefore:
+\begin{align}
+    u &= \frac{1}{2},\\
+    v &= \frac{1}{4},\\
+    w &= \frac{1}{7}, \\
+    x &= \frac{1}{10}, \\
+    y &= \frac{1}{9}.
+\end{align}
+\subsection{a}
+There are a couple of things to take note from the question. One is that anybody fired or leaves can just go straight into employment level $1$ as they would be instantly replaced anyway. Also, the probability given for firing or leaving from level $1$ can be disregarded for now, as both current and new employees at this level are indistinguishable from one another.
+\subsubsection{i}
+With this knowledge, we obtain the following one-step transition matrix:
+\begin{equation}
+    \mathbf{p} = \begin{pmatrix}
+        \frac{1}{2} & \frac{1}{2} & 0 & 0 & 0 \\
+        \frac{1}{8} & \frac{5}{8} & \frac{1}{4} & 0 & 0 \\
+        \frac{1}{7} & 0 & \frac{5}{7} & \frac{1}{7} & 0 \\
+        \frac{1}{5} & 0 & 0 & \frac{7}{10} & \frac{1}{10} \\
+        \frac{1}{9} & 0 & 0 & \frac{1}{9} & \frac{7}{9} 
+    \end{pmatrix}.
+\end{equation}
+
+\subsubsection{ii}
+Here we find the equilibrial state of the matrix using the following:
+\begin{equation}
+    \begin{pmatrix}
+        \pi_1 & \pi_2 & \pi_3 & \pi_4 & \pi_5
+    \end{pmatrix}\begin{pmatrix}
+        \frac{1}{2} & \frac{1}{2} & 0 & 0 & 0 \\
+        \frac{1}{8} & \frac{5}{8} & \frac{1}{4} & 0 & 0 \\
+        \frac{1}{7} & 0 & \frac{5}{7} & \frac{1}{7} & 0 \\
+        \frac{1}{5} & 0 & 0 & \frac{7}{10} & \frac{1}{10} \\
+        \frac{1}{9} & 0 & 0 & \frac{1}{9} & \frac{7}{9} 
+    \end{pmatrix} = \begin{pmatrix}
+        \pi_1 & \pi_2 & \pi_3 & \pi_4 & \pi_5
+    \end{pmatrix}
+\end{equation}
+From this, we get the following system of equations
+\begin{align}
+    \pi_1 &= \frac{1}{2}\pi_1 + \frac{1}{8}\pi_2 + \frac{1}{7}\pi_3 + \frac{1}{5}\pi_4 + \frac{1}{9}\pi_5,\\
+    \pi_2 &= \frac{1}{2}\pi_1 + \frac{5}{8}\pi_2,\label{eq:4aii2}\\
+    \pi_3 &= \frac{1}{4}\pi_2 + \frac{5}{7}\pi_3,\\
+    \pi_4 &= \frac{1}{7}\pi_3 + \frac{7}{10}\pi_4 + \frac{1}{9}\pi_5,\\
+    \pi_5 &= \frac{1}{10}\pi_4 + \frac{7}{9}\pi_5.\label{eq:4aii5}
+\end{align}
+We can then use eq.~(\ref{eq:4aii2})-(\ref{eq:4aii5}) to obtain
+\begin{equation}
+    \pi_5\begin{pmatrix}
+        \frac{10}{3} & \frac{40}{9} & \frac{35}{9} & \frac{20}{0} & 1
+    \end{pmatrix} = 1
+\end{equation}
+to then solve for $\pi_5=\frac{9}{134}$. We then sub this back in to find our stable state of
+\begin{equation}
+    \begin{pmatrix}
+        \pi_1 & \pi_2 & \pi_3 & \pi_4 & \pi_5
+    \end{pmatrix} =     \begin{pmatrix}
+        \frac{15}{76} & \frac{20}{67} & \frac{35}{134} & \frac{10}{67} & \frac{9}{134}
+    \end{pmatrix}.
+\end{equation}
+This gives us the proportion of employees in each class after many years.
 
 
+\subsubsection{iii}
+Assigning parameters: let $u=$ £$10,000$. Class $1=u$, class $2=4u$, class $3=6u$, class $4=10u$ and class $5=9u$. We multiply each salary by the probability of a worker being of that class after a long time (our stable state). This is expressed as
+\begin{equation}
+    \begin{pmatrix}
+        u & 4u & 6u & 10u & 9u
+    \end{pmatrix}\begin{pmatrix}
+        \frac{15}{76} \\ \frac{20}{67} \\ \frac{35}{134} \\ \frac{10}{67} \\ \frac{9}{134}
+    \end{pmatrix} = \frac{681}{134}u \approx \pounds 50,821.
+\end{equation}
+Now we have the average salary, we then multiply it by an the population $N=10,000$ to obtain a total yearly salary bill of $\pounds 508,210,000$
+
+\subsubsection{iv}
+This is where we make use of the value given to us of the number of fired employees from the first class. We have to be aware that the new number of employees is equal to the ones fired and left. For the classes $2-4$, this is just the first column, but for class $1$  we must make note that only $(1-u)/2$ have been replaced and the remaining are still class one and have already done the training. With this being the case, we multiply our stable state vector by our modified first column:
+\begin{equation}
+    \begin{pmatrix}
+        \frac{15}{76} & \frac{20}{67} & \frac{35}{134} & \frac{10}{67} & \frac{9}{134}
+    \end{pmatrix}\begin{pmatrix}
+        \frac{1}{4} \\ \frac{1}{8} \\ \frac{1}{7} \\ \frac{1}{5} \\ \frac{1}{9}
+    \end{pmatrix} = \frac{45}{268}.
+\end{equation}
+This is the portion of employees that undergo the training. Therefore, the average amount expended per employee is $\frac{45}{268}N\approx\pounds3,358$. Assuming the total number of employees is the same as the previous question, this is a total of $\approx \pounds33,582,089$. 
+
+\subsection{b}
 
 
 
