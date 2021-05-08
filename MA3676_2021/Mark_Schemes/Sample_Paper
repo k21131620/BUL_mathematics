@@ -1,0 +1,239 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{url,amsmath,graphicx,amssymb,booktabs,adjustbox,subcaption,hyperref,float}
+\usepackage[top=1.5cm, bottom=1.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes.multipart}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{Proposition}{Proposition}
+
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Space}{\mathbb{S}}
+\newcommand{\Var}{\text{Var}}
+\newcommand{\MR}{\mathcal{R}}
+\newcommand{\MT}{\mathcal{T}}
+
+\title{MA3676 -  2018 Past Paper}
+\author{1720996}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\pagebreak
+
+\section{Question 1}
+\subsection{a}
+Assigning parameters: $a=0$, $b =2$, $c = 1$. Therefore, $\Prob[X=-1]=\frac{1}{2}$ and $\Prob[X=0]=\frac{1}{2}$.
+
+\subsubsection{i}
+\begin{equation}
+    \E[S_n] = -1\cdot n\cdot \frac{1}{2} + 0\cdot n\cdot \frac{1}{2} = -\frac{1}{2}n.
+\end{equation}
+
+\subsubsection{ii}
+\subsubsection{iii}
+\subsubsection{iv}
+\subsubsection{v}
+\subsubsection{vi}
+
+\subsection{b}
+Assigning parameters: $f=6$, $g=9$, $h=9$, $u=2$, $v=3$.
+
+\pagebreak
+\section{Question 2}
+\subsection{a}
+Assigning parameters: $u=0$, $v=9$, $w=6$. Therefore,
+\begin{align}
+    \Prob[X=0] &= \frac{1}{18}, \\
+    \Prob[X=1] &= \frac{5}{9}, \\
+    \Prob[X=2] &= \frac{7}{18}.
+\end{align}
+The probability of extinction is given by $G(\xi)=\xi$, so we must first define our generating function. Our generating function $G_{Z_n}(s)$ can be evaluated as
+\begin{equation}
+    G(s) = \sum_{n}g_n s^n,
+\end{equation}
+where $g_n=\Prob[X=n]$. Therefore, we have
+\begin{equation}
+    G(s) = \frac{1}{18} + \frac{5}{9}s + \frac{7}{18}s^2.
+\end{equation}
+We then use the fact $G(\xi)=\xi$ where $\xi$ is our probability of extinction to solve:
+\begin{align}
+    G(\xi) = \xi &= \frac{1}{18} + \frac{5}{9}\xi + \frac{7}{18}\xi^2\\
+    0 &= 7\xi^2 - 8\xi + 1 \\
+    &= (\xi - 1)(7\xi -1) \\
+    \xi &= 1,\,\frac{1}{7}.
+\end{align}
+We take our smallest value of $\xi=\frac{1}{7}$ to represent our probability of extinction.
+
+\subsection{b}
+Assigning parameters: $a = 2$, $b = 9$, $c=1$, $d = -3$. Therefore:
+\begin{align}
+    \Prob[X=+1] &= p, \\
+    \Prob[X=-3] &= q = 1-p.
+\end{align}
+
+\subsubsection{i}
+Our generating function $G_{S_n}(s)$ is obtained by evaluating $\E[s^{S_n}]$. This is the probability of each $X$ occurring, multiplied by $s$ raised to the power of the respective step taken. This is then all raised to the power $n$ for each of the steps taken. This is numerically done through the following:
+\begin{equation}
+    G_{S_n}(s) = \E[s^{S_n}] = (ps+qs^{-3})^n.
+\end{equation}
+We use the binomial theorem 
+\begin{equation}
+    (a+b)^n = \sum_{m=0}^n \begin{pmatrix} n \\ m \end{pmatrix} a^{m} b^{n-m},
+\end{equation}
+where $a$ and $b$ are $ps$ and $qs^{-3}$ respectively in order to get
+\begin{align}
+    G_{S_n}(s) &= \sum_{m=0}^n \begin{pmatrix} n \\ m \end{pmatrix} (ps)^m (qs^{-3})^{n-m} \\
+    &= \sum_{m=0}^n \begin{pmatrix} n \\ m \end{pmatrix} p^m q^{n-m} s^{m-3(n-m)} \\
+    &= \sum_{m=0}^n \begin{pmatrix} n \\ m \end{pmatrix} p^m q^{n-m} s^{4m-3n}.
+\end{align}
+\subsubsection{ii}
+Firstly, we know that $s$ can only be raised to a power of an integer, as our steps always take an integer value. Lets set introduce this varying integer to $k$. Therefore, we make $k=4m-3n$ and rearrange to $m=\frac{k+3n}{4}$. This tells us what values for $m$ we can take, and adjusts the formula accordingly.\\
+It's important to know here the the probability of $S_n$ being a value $k$ can be given by the following formula after using our substitution for $k$.
+\begin{equation}
+    \Prob[S_n=k]= \begin{pmatrix} n \\ \frac{k+3n}{4} \end{pmatrix} p^{\frac{k+3n}{4}} q^{\frac{n-k}{4}}.
+\end{equation}
+Plugging in our value of $k$ as 0 (as required in the question), we get the following:
+\begin{equation}
+    \Prob[S_n=0]= \begin{pmatrix} n \\ \frac{3n}{4} \end{pmatrix} p^{\frac{3n}{4}} q^{\frac{n}{4}},
+\end{equation}
+Allowing us the find the probability of our walk being on $0$ for an arbitrary value of $n$.
+
+
+
+
+\section{Question 3}
+Assigning parameters: $a = 2$, $b=0$, $c=9$, $d=9$, $f=6$. Therefore
+\begin{align}
+    u &= \frac{1}{5}, \\
+    v &= \frac{1}{3}, \\
+    w &= \frac{1}{10}, \\
+    x &= \frac{1}{11}, \\
+    y &= \frac{1}{7}.
+\end{align}
+
+\subsection{a}
+\subsubsection{i}
+With our state space being $\{1,\,2,\,3,\,4,\,5\}$, our one-step transition matrix is
+\begin{equation}
+    \mathbf{p} = 
+    \begin{pmatrix}
+        \frac{2}{5} & \frac{1}{5} & 0 & \frac{2}{5} & 0 \\
+        \frac{1}{10} & 0 & 0 & \frac{9}{10} & 0 \\
+        \frac{1}{3} & \frac{1}{3} & \frac{1}{3} & 0 & 0 \\
+        \frac{9}{11} & \frac{1}{11} & 0 & \frac{1}{11} & 0 \\
+        0 & 0 & \frac{6}{7} & \frac{1}{7} & 0
+    \end{pmatrix}.
+\end{equation}
+\subsubsection{ii}
+After $8$ steps ($X_8$), we are in state $4$. We then want to find the probability of being in each state after two steps ($X_10$). We pass through the certainty of being in state $4$ through the one-step transition matrix twice with the following:
+\begin{equation}
+    \begin{pmatrix}
+        0 & 0 & 0 & 1 & 0
+    \end{pmatrix}\begin{pmatrix}
+        \frac{2}{5} & \frac{1}{5} & 0 & \frac{2}{5} & 0 \\
+        \frac{1}{10} & 0 & 0 & \frac{9}{10} & 0 \\
+        \frac{1}{3} & \frac{1}{3} & \frac{1}{3} & 0 & 0 \\
+        \frac{9}{11} & \frac{1}{11} & 0 & \frac{1}{11} & 0 \\
+        0 & 0 & \frac{6}{7} & \frac{1}{7} & 0
+    \end{pmatrix}^2 = \begin{pmatrix}
+        \frac{9}{11} & \frac{1}{11} & 0 & \frac{1}{11} & 0
+    \end{pmatrix}.
+\end{equation}
+From this we can establish the fact that $\Prob[X_{10}=3]=0$.
+
+\subsubsection{iii}
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.3]{Q3aiii.png}
+    \label{fig:3aiii}
+\end{figure}
+The states $\{1,\,2,\,4\}$ form a closed set of ergodic recurrent states, whereas $3$ and $5$ are transient. We can rearrange these states to give the state space $\{1,\,2,\,4,\,3,\,5\}$ and therefore the new transition matrix
+\begin{equation}
+    \mathbf{p} = \begin{pmatrix}
+        \frac{2}{5} & \frac{1}{5} & \frac{2}{5} & 0 & 0 \\
+        \frac{1}{10} & 0 & \frac{9}{10} & 0 & 0 \\
+        \frac{9}{11} & \frac{1}{11} & \frac{1}{11} & 0 & 0 \\
+        \frac{1}{3} & \frac{1}{3} & 0 & \frac{1}{3} & 0 \\
+        0 & 0 & \frac{1}{7} & \frac{6}{7} & 0
+    \end{pmatrix}.
+\end{equation}
+We can the break this up into the form of
+\begin{equation}
+    \mathbf{p} = \begin{pmatrix}
+        \mathbf{P} & \mathbf{0} \\ \mathbf{R} & \mathbf{Q} 
+    \end{pmatrix}
+\end{equation}
+to give us
+\begin{equation}
+    \mathbf{P} = \begin{pmatrix}
+        \frac{2}{5} & \frac{1}{5} & \frac{2}{5} \\
+        \frac{1}{10} & 0 & \frac{9}{10} \\
+        \frac{9}{11} & \frac{1}{11} & \frac{1}{11}
+    \end{pmatrix},
+\end{equation}
+\begin{equation}
+    \mathbf{Q} = \begin{pmatrix}
+        \frac{1}{3} & 0 \\ \frac{6}{7} & 0
+    \end{pmatrix},
+\end{equation}
+\begin{equation}
+    \mathbf{R} = \begin{pmatrix}
+        \frac{1}{3} & \frac{1}{3} & 0 \\
+        0 & 0 & \frac{1}{7}
+    \end{pmatrix}.
+\end{equation}
+
+\subsubsection{iv}
+We know that the probability we are in a transient state as we tend to infinity must be $0$, so therefore for any $j$, $\Prob[X_n=i]$ as $n\to\infty$ is $0$ for $i=3,\,5$. \\
+As there is only $1$ closed set of states, it doesn't matter which transient state we start at. We just need to find the stable state of $\mathbf{P}$ to find the appropriate probabilities of our $1$ closed set. We establish this stable state through the following:
+\begin{equation}
+    \begin{pmatrix}
+        \pi_1 & \pi_2 & \pi_4
+    \end{pmatrix}\begin{pmatrix}
+        \frac{2}{5} & \frac{1}{5} & \frac{2}{5} \\
+        \frac{1}{10} & 0 & \frac{9}{10} \\
+        \frac{9}{11} & \frac{1}{11} & \frac{1}{11}
+    \end{pmatrix} = \begin{pmatrix}
+        \pi_1 & \pi_2 & \pi_4
+    \end{pmatrix}.
+\end{equation}
+From this, we obtain the system of the questions
+\begin{align}
+    \pi_1 &= \frac{2}{5}\pi_1 + \frac{1}{10}\pi_2 + \frac{9}{11}\pi_4, \\
+    \pi_2 &= \frac{1}{5}\pi_1 + \frac{1}{11}\pi_4,\\
+    \pi_4 &= \frac{2}{5}\pi_1 + \frac{9}{10}\pi_2 + \frac{1}{11}\pi_4.
+\end{align}
+These can then be solved in terms of $\pi_4$, along with the fact that the probabilities of these states must add up to $1$ to give
+\begin{equation}
+    \pi_4\begin{pmatrix}
+        \frac{455}{319} & 1 & \frac{120}{319}
+    \end{pmatrix} = 1. \label{eq:stable_0}
+\end{equation}
+This is then rearranged to obtain 
+\begin{equation}
+    \pi_4 = \frac{319}{894}.
+\end{equation}
+Now, we can sub this back into~(\ref{eq:stable}) to give us the stable state
+\begin{equation}
+    \begin{pmatrix}
+        \frac{455}{894} & \frac{120}{894} & \frac{319}{894} \label{eq:stable}
+    \end{pmatrix}.
+\end{equation}
+With this, we now know that the probability of being at states $X_n=i$as $n\to\infty$ and $i=1,\,2,\,4$ are given respectively in~(\ref{eq:stable}).
+
+\subsection{b}
+
+
+\section{Question 4}
+
+
+
+
+
+\end{document}
