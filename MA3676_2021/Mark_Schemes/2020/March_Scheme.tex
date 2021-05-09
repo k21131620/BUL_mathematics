@@ -248,8 +248,29 @@ We can then finalise our steady state as
 Therefore, our final probability is the steady state probability of $X=1$ which is $\frac{4}{7}$ given that we start from within this closed set (which we did, state $5$).
 
 \subsubsection{vi}
-\subsection{b}
 
+\subsection{b}
+We know one $\lambda$ value is $\frac{-1+i\sqrt{3}}{2} = e^{i2\pi/3}$, and the general formula for a periodic matrix is given as
+\begin{equation}
+    \lambda_k = e^{2i\pi k/d}
+\end{equation}
+where $d$ is the periodicity and $k=0,\,1,\ldots,\,d-1$. Therefore we can see that $k=1$ and $d=3$. This gives the other two values for this periodic set of states
+\begin{align}
+    \lambda_2 &= e^{4i\pi/3} = \frac{-1-i\sqrt{3}}{2},\\
+    \lambda_0 &= e^0 = 1.
+\end{align}
+Looking at the matrix $\mathbf{p}$ we can see that state $2$ is absorbing, so we can fill in the rest of this line with $0$s and also add another $\lambda=1$ to our list. As state $3$ is clearly not one of the periodic state, we deduce that the three periodic states must be $1,4$ and $5$. We cannot tell what order these go in, so any order should suffice. Finally, state $3$ is transient and so other than filling in the row by adding the only possible value of $\frac{1}{2}$ to the line, all we know is it's eigenvalue has a magnitude strictly less than 1.
+This leaves us with
+\begin{equation}
+    \mathbf{p}=\begin{pmatrix}
+        0 & 0 & 0 & 1 & 0 \\
+        0 & 1 & 0 & 0 & 0 \\
+        \frac{1}{2} & \frac{1}{2} & 0 & 0 & 0 \\
+        0 & 0 & 0 & 0 & 1 \\
+        1 & 0 & 0 & 0 & 0
+    \end{pmatrix}
+\end{equation}
+and the eigenvalues $\{\frac{-1+i\sqrt{3}}{2},\,1,\,r,\,\frac{-1-i\sqrt{3}}{2},\,1 \}$ where $\vert r\vert<1$.
 
 \pagebreak
 \section{Question 4}
