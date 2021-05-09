@@ -1,9 +1,17 @@
 \documentclass{article}
 \usepackage[utf8]{inputenc}
 \usepackage{url,amsmath,graphicx,amssymb,booktabs,adjustbox,subcaption,hyperref,float}
+\usepackage{titlesec}
 \usepackage[top=1.5cm, bottom=1.5cm, left=2.5cm, right=2.5cm]{geometry}
 \usepackage{tikz}
 \usetikzlibrary{positioning,shapes.multipart}
+
+\setcounter{secnumdepth}{4}
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
@@ -29,10 +37,66 @@
 \section{Question 1}
 \subsection{a}
 \subsubsection{i}
+\begin{equation}
+    \Prob[X_{j+1}=\ldots\vert X_j=\ldots,\,X_{j-1}=\ldots,\,\ldots] = \Prob[X_{j+1}=\ldots\vert X_j=\ldots] = \frac{1}{6}     
+\end{equation}
+As this does not depend on any value other than previous (which even this doesn't depend on), it is a Markov chain.
+
 \subsubsection{ii}
+We have $\Prob[X=x]=\frac{1}{6}$ for all values of $x=1,\,2,\,\ldots,\,6$. Therefore,
+\begin{align}
+    \E[X_n] &= \frac{1}{6}\cdot 1 + \frac{1}{6}\cdot 2 + \cdots + \frac{1}{6}\cdot 6 \\
+    &= \frac{1}{6}(21) \\
+    &= \frac{7}{2}
+\end{align}
+hence 
+\begin{equation}
+    \E[S_n] = \frac{7}{2}n.
+\end{equation}
+
 \subsubsection{iii}
+\begin{align}
+    \E[X_{j+1}=\ldots\vert X_j=\ldots,\,X_{j-1}=\ldots,\,\ldots] &= \E[X_{j+1}] \\
+    &\neq X_j.
+\end{align}
+As this doesn't hold true, $X_n$ is not a martingale.
+
 \subsubsection{iv}
+\paragraph{A}
+
+
+\paragraph{B}
+\begin{align}
+    \E[D_{n+1}\vert \mathcal{F}_n] &= \E[D_n+Y_{n+1}\vert \mathcal{F}_n] \\
+    &= D_n + \E[Y] 
+\end{align}
+$Y_k$ looks at the `score' obtained at each jump, so
+\begin{equation}
+    \E[Y] = \frac{1}{6}(+1) + \frac{1}{6}(-1) + \frac{2}{3}(0) = 0.
+\end{equation}
+Therefore
+\begin{equation}
+    \E[D_{n+1}\vert\mathcal{F}] = D_n
+\end{equation}
+showing that $D_n$ is a martingale.
+
+\paragraph{C}
+
 \subsection{b}
+First, we test
+\begin{align}
+    G(1) &= (2-1)^{\frac{1}{2}} \\
+    &= 1.
+\end{align}
+The first requirement is satisfied. Now, we expand $G(s)$ as follows
+\begin{align}
+    G(s) &= (2-s)^{\frac{1}{2}} \\
+    &= \sqrt{2}\left( 1-\frac{1}{2}s \right)^{\frac{1}{2}} \\
+    &= \sqrt{2}\left[ 1 - \frac{1}{2}\frac{1}{2}s - \frac{1}{2}\frac{1}{2}\frac{1}{2}\frac{1}{4}s^2 + \cdots \right] \\
+    &= \sqrt{2}\left[ 1 - \frac{1}{4}s - \frac{1}{32}s^2 + \cdots\right].
+\end{align}
+This is enough to see that, not only does the first probability take value greater than one, we also have negative probabilities. This means that $G(s)$ \underline{\textbf{is not}} a valid generator.\\
+The binomial expansion was used for the equations above.
 
 \pagebreak
 \section{Question 2}
@@ -248,6 +312,40 @@ We can then finalise our steady state as
 Therefore, our final probability is the steady state probability of $X=1$ which is $\frac{4}{7}$ given that we start from within this closed set (which we did, state $5$).
 
 \subsubsection{vi}
+The probability to get absorbed in each of the closed sets is given by the elements of 
+\begin{equation}
+    \mathbf{\tilde{V}} = (\mathbb{I}-\mathbf{Q})^{-1}\mathbf{\tilde{R}}
+\end{equation}
+where 
+\begin{equation}
+    \mathbf{\tilde{R}} = \begin{pmatrix}
+        \frac{1}{2} & 0 \\ 0 & \frac{1}{3}
+    \end{pmatrix}.
+\end{equation}
+This gives us the following
+\begin{align}
+    \mathbf{\tilde{R}} &= \left( \begin{pmatrix}
+        1 & 0 \\ 0 & 1
+    \end{pmatrix}-\begin{pmatrix}
+        0 & \frac{1}{2} \\ \frac{1}{3} & \frac{1}{3}
+    \end{pmatrix} \right)^{-1}\begin{pmatrix}
+        \frac{1}{2} & 0 \\ 0 & \frac{1}{3}
+    \end{pmatrix}.\\
+    &=  \begin{pmatrix}
+        1 & -\frac{1}{2} \\ -\frac{1}{3} & \frac{2}{3}
+    \end{pmatrix}^{-1}\begin{pmatrix}
+        \frac{1}{2} & 0 \\ 0 & \frac{1}{3}
+    \end{pmatrix}.\\
+    &= 2\begin{pmatrix}
+        \frac{2}{3} & \frac{1}{2} \\ \frac{1}{3} & 1
+    \end{pmatrix}\begin{pmatrix}
+        \frac{1}{2} & 0 \\ 0 & \frac{1}{3}
+    \end{pmatrix}.\\
+    &= \begin{pmatrix}
+        \frac{2}{3} & \frac{1}{3} \\ \frac{1}{3} & \frac{2}{3}
+    \end{pmatrix}.
+\end{align}
+From this, we can determine that the probability of transition from state $3$ to the closed set containing state $4$ is $\frac{1}{3}$. We then multiply this by the stable state distribution value for state $4$ found in the last question to give us $\frac{1}{3}\times\frac{1}{7}=\frac{1}{21}$.
 
 \subsection{b}
 We know one $\lambda$ value is $\frac{-1+i\sqrt{3}}{2} = e^{i2\pi/3}$, and the general formula for a periodic matrix is given as
